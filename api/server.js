@@ -7,121 +7,54 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Middleware to log all requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
+
 /**
  * POST /api/submit-form
  * Receives form data and syncs to Active Campaign
  */
 app.post('/api/submit-form', async (req, res) => {
   try {
+    console.log('📝 Step 1: Received form submission');
     const formData = req.body;
+    console.log('📝 Step 2: Form data:', {
+      email: formData.email,
+      income: formData.monthlyIncome,
+      expenses: formData.monthlyExpenses,
+      savings: formData.currentSavings
+    });
 
     // Validate required fields
     if (!formData.email || !formData.monthlyIncome || !formData.monthlyExpenses || !formData.currentSavings) {
+      console.log('❌ Step 3: Missing required fields');
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    console.log('📝 Received form submission:', formData.email);
+    console.log('✅ Step 4: Validation passed');
 
-    // Sync to Active Campaign via Claude API
-    const syncResult = await syncToActiveCampaign(formData);
-
-    if (syncResult.success) {
-      res.json({
-        success: true,
-        message: 'Data synced to Active Campaign',
-        contactId: syncResult.contactId
-      });
-      console.log('✅ Synced to AC - Contact ID:', syncResult.contactId);
-    } else {
-      res.status(500).json({
-        success: false,
-        error: syncResult.error
-      });
-      console.log('❌ Sync failed:', syncResult.error);
-    }
-  } catch (err) {
-    console.error('Server error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-/**
- * Sync form data to Active Campaign using Claude API + MCP
- */
-async function syncToActiveCampaign(formData) {
-  try {
-    const prompt = `You have access to Active Campaign API via MCP. Please create or update a contact with this information:
-
-EMAIL: ${formData.email}
-FIRST NAME: ${formData.firstName || 'User'}
-LAST NAME: ${formData.lastName || ''}
-PHONE: ${formData.phone || ''}
-
-FINANCIAL DATA:
-- Monthly Income: $${formData.monthlyIncome}
-- Monthly Expenses: $${formData.monthlyExpenses}
-- Monthly Surplus: $${parseInt(formData.monthlyIncome) - parseInt(formData.monthlyExpenses)}
-- Current Savings: $${formData.currentSavings}
-- Total Debt: $${formData.debt || 0}
-
-GOALS & PROFILE:
-- Financial Goal: ${formData.financialGoal}
-- Timeframe: ${formData.timeframe}
-- Investment Experience: ${formData.investmentExperience}
-- Risk Tolerance: ${formData.riskTolerance}
-
-Using the Active Campaign MCP tools available to you, please:
-1. Create or update this contact in the srglobal75904.activehosted.com account
-2. Store this information in the contact record
-3. Return the contact ID and confirmation
-
-Important: Use the ActiveCampaign tools to create/update the contact.`;
-
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      throw new Error('ANTHROPIC_API_KEY environment variable not set');
-    }
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+    // For now, just return success without calling Claude
+    // This lets us test if the backend is working at all
+    console.log('✅ Step 5: Returning success');
+    
+    res.json({
+      success: true,
+      message: 'Form received and validated',
+      contactId: `contact_${Date.now()}`
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Anthropic API error: ${response.status}`);
-    }
-
-    const result = await response.json();
-    const responseText = result.content[0]?.text || '';
-
-    // Parse contact ID from response
-    const contactIdMatch = responseText.match(/contact[_ ]id[:\s]*(\d+)/i) || 
-                          responseText.match(/ID:\s*(\d+)/i);
-    const contactId = contactIdMatch ? contactIdMatch[1] : 'created';
-
-    return {
-      success: true,
-      contactId: contactId,
-      message: responseText
-    };
-
   } catch (err) {
-    console.error('AC Sync Error:', err.message);
-    return {
-      success: false,
-      error: err.message
-    };
+    console.error('❌ CATCH BLOCK ERROR:', err.message);
+    console.error('Stack trace:', err.stack);
+    res.status(500).json({ 
+      error: err.message,
+      type: 'submit_form_error'
+    });
   }
-}
+});
 
 /**
  * POST /api/generate-analysis
@@ -129,16 +62,30 @@ Important: Use the ActiveCampaign tools to create/update the contact.`;
  */
 app.post('/api/generate-analysis', async (req, res) => {
   try {
+    console.log('🤖 Step 1: Generate analysis request received');
     const { prompt } = req.body;
 
     if (!prompt) {
+      console.log('❌ Step 2: No prompt provided');
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
+    console.log('✅ Step 3: Prompt received, length:', prompt.length);
+
+    // Check for API key
     const apiKey = process.env.ANTHROPIC_API_KEY;
+    console.log('🔑 Step 4: Checking API key...');
+    
     if (!apiKey) {
-      throw new Error('ANTHROPIC_API_KEY environment variable not set');
+      console.error('❌ Step 5: ANTHROPIC_API_KEY is NOT set!');
+      return res.status(500).json({ 
+        error: 'ANTHROPIC_API_KEY not configured',
+        type: 'missing_api_key'
+      });
     }
+
+    console.log('✅ Step 5: API key found');
+    console.log('📡 Step 6: Calling Anthropic API...');
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -149,16 +96,30 @@ app.post('/api/generate-analysis', async (req, res) => {
       body: JSON.stringify({
         model: 'claude-opus-4-6',
         max_tokens: 2000,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ 
+          role: 'user', 
+          content: prompt 
+        }]
       })
     });
 
+    console.log('📡 Step 7: API response status:', response.status);
+
     if (!response.ok) {
-      throw new Error(`Anthropic API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error('❌ Step 8: API error response:', errorText);
+      return res.status(500).json({ 
+        error: `API returned ${response.status}`,
+        type: 'anthropic_api_error',
+        details: errorText.substring(0, 200)
+      });
     }
 
     const result = await response.json();
-    const analysis = result.content[0]?.text || '';
+    console.log('✅ Step 9: API response parsed');
+    
+    const analysis = result.content[0]?.text || 'Unable to generate analysis';
+    console.log('✅ Step 10: Analysis extracted, length:', analysis.length);
 
     res.json({
       success: true,
@@ -166,8 +127,12 @@ app.post('/api/generate-analysis', async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Analysis error:', err.message);
-    res.status(500).json({ error: err.message });
+    console.error('❌ CATCH BLOCK ERROR in generate-analysis:', err.message);
+    console.error('Stack trace:', err.stack);
+    res.status(500).json({ 
+      error: err.message,
+      type: 'analysis_error'
+    });
   }
 });
 
@@ -176,10 +141,17 @@ app.post('/api/generate-analysis', async (req, res) => {
  * Health check
  */
 app.get('/api/status', (req, res) => {
+  const apiKeyStatus = process.env.ANTHROPIC_API_KEY ? '✅ Set' : '❌ Not set';
+  
   res.json({
     status: 'running',
-    timestamp: new Date(),
-    message: 'Financial Freedom Analyzer API'
+    timestamp: new Date().toISOString(),
+    message: 'Financial Freedom Analyzer API',
+    apiKey: apiKeyStatus,
+    environment: {
+      NODE_ENV: process.env.NODE_ENV || 'not set',
+      PORT: process.env.PORT || 'not set'
+    }
   });
 });
 
