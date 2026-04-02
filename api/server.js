@@ -97,7 +97,7 @@ Important: Use the ActiveCampaign tools to create/update the contact.`;
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`Anthropic API error: ${response.status} - ${error}`);
+      throw new Error(`Anthropic API error: ${response.status}`);
     }
 
     const result = await response.json();
@@ -124,10 +124,58 @@ Important: Use the ActiveCampaign tools to create/update the contact.`;
 }
 
 /**
- * GET /status
+ * POST /api/generate-analysis
+ * Generate 90-day plan using Claude
+ */
+app.post('/api/generate-analysis', async (req, res) => {
+  try {
+    const { prompt } = req.body;
+
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error('ANTHROPIC_API_KEY environment variable not set');
+    }
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-6',
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Anthropic API error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    const analysis = result.content[0]?.text || '';
+
+    res.json({
+      success: true,
+      analysis: analysis
+    });
+
+  } catch (err) {
+    console.error('Analysis error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /api/status
  * Health check
  */
-app.get('/status', (req, res) => {
+app.get('/api/status', (req, res) => {
   res.json({
     status: 'running',
     timestamp: new Date(),
