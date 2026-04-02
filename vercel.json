@@ -21,20 +21,3 @@
     }
   ]
 }
-```
-
-**If your vercel.json is different, replace it with this!**
-
----
-
-## **5. CONCEPT EXPLANATION** 📚
-
-### **Why Does Vercel Need Specific Folder Structure?**
-
-Think of it like a restaurant kitchen:
-```
-Restaurant = Vercel
-├── Front desk = public/ (what customers see)
-│   └── Menu, photos, info
-└── Kitchen = api/ (behind the scenes)
-    └── Server that processes orders
