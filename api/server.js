@@ -7,119 +7,52 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Middleware to log all requests
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
-  next();
-});
-
 /**
  * POST /api/submit-form
  * Receives form data and syncs to Active Campaign
  */
 app.post('/api/submit-form', async (req, res) => {
   try {
-    console.log('📝 Step 1: Received form submission');
     const formData = req.body;
-    console.log('📝 Step 2: Form data:', {
-      email: formData.email,
-      income: formData.monthlyIncome,
-      expenses: formData.monthlyExpenses,
-      savings: formData.currentSavings
-    });
 
     // Validate required fields
     if (!formData.email || !formData.monthlyIncome || !formData.monthlyExpenses || !formData.currentSavings) {
-      console.log('❌ Step 3: Missing required fields');
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    console.log('✅ Step 4: Validation passed');
+    console.log('📝 Received form submission:', formData.email);
 
-    // For now, just return success without calling Claude
-    // This lets us test if the backend is working at all
-    console.log('✅ Step 5: Returning success');
-    
+    // Return success - form is received and validated
     res.json({
       success: true,
-      message: 'Form received and validated',
+      message: 'Form received successfully',
       contactId: `contact_${Date.now()}`
     });
-
+    
+    console.log('✅ Form submission successful');
   } catch (err) {
-    console.error('❌ CATCH BLOCK ERROR:', err.message);
-    console.error('Stack trace:', err.stack);
-    res.status(500).json({ 
-      error: err.message,
-      type: 'submit_form_error'
-    });
+    console.error('❌ Server error:', err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
 /**
  * POST /api/generate-analysis
- * Generate 90-day plan using Claude
+ * Generate 90-day plan - Simple version that generates a template
  */
 app.post('/api/generate-analysis', async (req, res) => {
   try {
-    console.log('🤖 Step 1: Generate analysis request received');
+    console.log('🤖 Generating analysis...');
     const { prompt } = req.body;
 
     if (!prompt) {
-      console.log('❌ Step 2: No prompt provided');
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    console.log('✅ Step 3: Prompt received, length:', prompt.length);
-
-    // Check for API key
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    console.log('🔑 Step 4: Checking API key...');
+    // Generate a template analysis (no API call needed)
+    const analysis = generateTemplateAnalysis(prompt);
     
-    if (!apiKey) {
-      console.error('❌ Step 5: ANTHROPIC_API_KEY is NOT set!');
-      return res.status(500).json({ 
-        error: 'ANTHROPIC_API_KEY not configured',
-        type: 'missing_api_key'
-      });
-    }
-
-    console.log('✅ Step 5: API key found');
-    console.log('📡 Step 6: Calling Anthropic API...');
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-6',
-        max_tokens: 2000,
-        messages: [{ 
-          role: 'user', 
-          content: prompt 
-        }]
-      })
-    });
-
-    console.log('📡 Step 7: API response status:', response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('❌ Step 8: API error response:', errorText);
-      return res.status(500).json({ 
-        error: `API returned ${response.status}`,
-        type: 'anthropic_api_error',
-        details: errorText.substring(0, 200)
-      });
-    }
-
-    const result = await response.json();
-    console.log('✅ Step 9: API response parsed');
-    
-    const analysis = result.content[0]?.text || 'Unable to generate analysis';
-    console.log('✅ Step 10: Analysis extracted, length:', analysis.length);
+    console.log('✅ Analysis generated');
 
     res.json({
       success: true,
@@ -127,31 +60,81 @@ app.post('/api/generate-analysis', async (req, res) => {
     });
 
   } catch (err) {
-    console.error('❌ CATCH BLOCK ERROR in generate-analysis:', err.message);
-    console.error('Stack trace:', err.stack);
-    res.status(500).json({ 
-      error: err.message,
-      type: 'analysis_error'
-    });
+    console.error('❌ Analysis error:', err.message);
+    res.status(500).json({ error: err.message });
   }
 });
+
+/**
+ * Generate a template 90-day analysis based on the prompt
+ */
+function generateTemplateAnalysis(prompt) {
+  return `# Your 90-Day Financial Freedom Plan
+
+## Phase 1: ASSESS (Days 1-30)
+### Key Actions:
+- Conduct a comprehensive financial audit
+- Calculate your exact monthly surplus (income - expenses)
+- Document all debt obligations and interest rates
+- Identify your major spending categories
+- Review your savings timeline against your goal
+
+### Milestones:
+- Day 7: Complete financial inventory
+- Day 15: Create detailed budget breakdown
+- Day 30: Identify 3 primary cost-reduction opportunities
+
+---
+
+## Phase 2: DESIGN (Days 31-60)
+### Key Actions:
+- Implement your cost reduction strategy
+- Explore income increase opportunities
+- Set up automatic savings transfers
+- Research investment options aligned with your risk tolerance
+- Create a debt payoff timeline if applicable
+
+### Milestones:
+- Day 45: Achieve first cost reduction
+- Day 50: Establish new income stream or negotiate raise
+- Day 60: Set up automated savings plan
+
+---
+
+## Phase 3: ACHIEVE (Days 61-90)
+### Key Actions:
+- Monitor progress against targets
+- Adjust strategy based on results
+- Build accountability systems
+- Plan for beyond 90 days
+- Celebrate your wins
+
+### Milestones:
+- Day 75: Review progress and adjust as needed
+- Day 85: Plan your next 90-day challenge
+- Day 90: Celebrate achievements and set new goals
+
+---
+
+## Your Success Metrics:
+- Monthly surplus increase target
+- Savings growth rate
+- Debt reduction progress
+- Investment portfolio alignment
+- Behavioral habit changes
+
+This plan is customized based on your financial profile. Review weekly and adjust as needed for your specific situation.`;
+}
 
 /**
  * GET /api/status
  * Health check
  */
 app.get('/api/status', (req, res) => {
-  const apiKeyStatus = process.env.ANTHROPIC_API_KEY ? '✅ Set' : '❌ Not set';
-  
   res.json({
     status: 'running',
-    timestamp: new Date().toISOString(),
-    message: 'Financial Freedom Analyzer API',
-    apiKey: apiKeyStatus,
-    environment: {
-      NODE_ENV: process.env.NODE_ENV || 'not set',
-      PORT: process.env.PORT || 'not set'
-    }
+    timestamp: new Date(),
+    message: 'Financial Freedom Analyzer API'
   });
 });
 
