@@ -46,6 +46,53 @@ app.post('/submit-form', async (req, res) => {
 });
 
 /**
+ * POST /api/generate-analysis
+ * Processes the prompt via Anthropic API to generate analysis
+ */
+app.post('/generate-analysis', async (req, res) => {
+    try {
+        const { prompt } = req.body;
+
+        const apiKey = process.env.ANTHROPIC_API_KEY;
+        if (!apiKey) {
+            throw new Error('ANTHROPIC_API_KEY environment variable not set');
+        }
+
+        // Call Anthropic API for analysis
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: 'claude-opus-4-6',
+                max_tokens: 2000,
+                messages: [{ role: 'user', content: prompt }]
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Anthropic API error: ${response.status} - ${error}`);
+        }
+
+        const result = await response.json();
+
+        res.json({
+            success: true,
+            analysis: result.content[0]?.text || 'Analysis could not be generated.'
+        });
+    } catch (err) {
+        console.error('Error in /generate-analysis:', err.message);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+});
+
+/**
  * Sync form data to Active Campaign using Claude API + MCP
  */
 async function syncToActiveCampaign(formData) {
