@@ -3,195 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Freedom Analyzer - Zapier Integration</title>
+    <title>Financial Freedom Analyzer</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen p-6">
     <div id="app" class="max-w-4xl mx-auto">
-        <!-- Main Form -->
-        <div id="formContainer">
+        <!-- FORM SECTION -->
+        <div id="formSection" class="block">
             <div class="mb-8">
-                <h1 class="text-4xl font-bold text-white mb-3">Financial Freedom Analyzer</h1>
-                <p class="text-slate-300 text-lg flex items-center gap-2">
-                    <span class="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    Zapier + Active Campaign Integration Ready
-                </p>
+                <h1 class="text-4xl font-bold text-white mb-2">Financial Freedom Analyzer</h1>
+                <p class="text-slate-300">Complete your profile to get your personalized 90-day plan</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Form -->
-                <div class="lg:col-span-2">
-                    <!-- Step Indicators -->
-                    <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
-                        <button onclick="goToStep(0)" class="step-btn flex-shrink-0 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold step-0">1. Contact</button>
-                        <button onclick="goToStep(1)" class="step-btn flex-shrink-0 px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold step-1">2. Income</button>
-                        <button onclick="goToStep(2)" class="step-btn flex-shrink-0 px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold step-2">3. Position</button>
-                        <button onclick="goToStep(3)" class="step-btn flex-shrink-0 px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold step-3">4. Goals</button>
-                        <button onclick="goToStep(4)" class="step-btn flex-shrink-0 px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold step-4">5. Profile</button>
-                    </div>
-
-                    <!-- Form Content -->
-                    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 mb-6">
-                        <!-- Step 0 -->
-                        <div id="step-0" class="step-content">
-                            <h3 class="text-lg font-semibold text-white mb-4">Contact Information</h3>
-                            <input type="text" id="firstName" placeholder="First Name" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                            <input type="text" id="lastName" placeholder="Last Name" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                            <input type="email" id="email" placeholder="Email *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                            <input type="tel" id="phone" placeholder="Phone (optional)" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                        </div>
-
-                        <!-- Step 1 -->
-                        <div id="step-1" class="step-content hidden">
-                            <h3 class="text-lg font-semibold text-white mb-4">Income & Expenses</h3>
-                            <input type="number" id="monthlyIncome" placeholder="Monthly Income ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                            <input type="number" id="monthlyExpenses" placeholder="Monthly Expenses ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                            <textarea id="incomeStreams" placeholder="Income Sources..." class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" rows="2"></textarea>
-                        </div>
-
-                        <!-- Step 2 -->
-                        <div id="step-2" class="step-content hidden">
-                            <h3 class="text-lg font-semibold text-white mb-4">Current Position</h3>
-                            <input type="number" id="currentSavings" placeholder="Current Savings ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                            <input type="number" id="debt" placeholder="Total Debt ($)" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div id="step-3" class="step-content hidden">
-                            <h3 class="text-lg font-semibold text-white mb-4">Financial Goals</h3>
-                            <input type="text" id="financialGoal" placeholder="What is your main financial goal? *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                            <input type="text" id="timeframe" placeholder="Timeline (e.g., 2 years, 5 years) *" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                        </div>
-
-                        <!-- Step 4 -->
-                        <div id="step-4" class="step-content hidden">
-                            <h3 class="text-lg font-semibold text-white mb-4">Investment Profile</h3>
-                            <select id="investmentExperience" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                                <option value="">Select Investment Experience *</option>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-                            </select>
-                            <select id="riskTolerance" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                                <option value="">Select Risk Tolerance *</option>
-                                <option value="Low">Low</option>
-                                <option value="Moderate">Moderate</option>
-                                <option value="High">High</option>
-                            </select>
-                        </div>
-
-                        <!-- Error Message -->
-                        <div id="errorMessage" class="hidden mt-4 p-3 bg-red-900/30 border border-red-600 text-red-200 rounded-lg"></div>
-                    </div>
-
-                    <!-- Navigation Buttons -->
-                    <div class="flex gap-4">
-                        <button onclick="previousStep()" class="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition">Previous</button>
-                        <button onclick="nextOrSubmit()" id="nextBtn" class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">Next</button>
-                    </div>
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+                <div id="step-0" class="step-content">
+                    <h3 class="text-xl font-bold text-white mb-4">Step 1: Contact Information</h3>
+                    <input type="text" id="firstName" placeholder="First Name" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                    <input type="text" id="lastName" placeholder="Last Name" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                    <input type="email" id="email" placeholder="Email *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                    <input type="tel" id="phone" placeholder="Phone" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
                 </div>
 
-                <!-- Sidebar -->
-                <div class="lg:col-span-1 space-y-6">
-                    <!-- Form Data -->
-                    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
-                        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                            <span class="text-2xl">📋</span> Form Data
-                        </h3>
-                        <div class="space-y-2 text-sm text-slate-300">
-                            <div>
-                                <span class="text-slate-400">Progress:</span>
-                                <span id="progress" class="font-semibold text-blue-400">0%</span>
-                            </div>
-                            <div>
-                                <span class="text-slate-400">Email:</span>
-                                <span id="displayEmail" class="font-semibold text-blue-400">Not set</span>
-                            </div>
-                            <div>
-                                <span class="text-slate-400">Income:</span>
-                                <span id="displayIncome" class="font-semibold text-blue-400">$0</span>
-                            </div>
-                            <div>
-                                <span class="text-slate-400">Expenses:</span>
-                                <span id="displayExpenses" class="font-semibold text-blue-400">$0</span>
-                            </div>
-                            <div>
-                                <span class="text-slate-400">Savings:</span>
-                                <span id="displaySavings" class="font-semibold text-blue-400">$0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- AC Sync Log -->
-                    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
-                        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                            <span class="text-2xl">🔄</span> AC Sync Log
-                        </h3>
-                        <div id="syncLog" class="space-y-2 text-sm text-slate-300 max-h-48 overflow-y-auto">
-                            <div class="text-slate-400">Waiting for submission...</div>
-                        </div>
-                    </div>
+                <div id="step-1" class="step-content hidden">
+                    <h3 class="text-xl font-bold text-white mb-4">Step 2: Income & Expenses</h3>
+                    <input type="number" id="monthlyIncome" placeholder="Monthly Income ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                    <input type="number" id="monthlyExpenses" placeholder="Monthly Expenses ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                    <textarea id="incomeStreams" placeholder="Income Sources..." class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" rows="2"></textarea>
                 </div>
+
+                <div id="step-2" class="step-content hidden">
+                    <h3 class="text-xl font-bold text-white mb-4">Step 3: Current Position</h3>
+                    <input type="number" id="currentSavings" placeholder="Current Savings ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                    <input type="number" id="debt" placeholder="Total Debt ($)" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                </div>
+
+                <div id="step-3" class="step-content hidden">
+                    <h3 class="text-xl font-bold text-white mb-4">Step 4: Financial Goals</h3>
+                    <input type="text" id="financialGoal" placeholder="Main Financial Goal *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                    <input type="text" id="timeframe" placeholder="Timeline (e.g., 2 years) *" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                </div>
+
+                <div id="step-4" class="step-content hidden">
+                    <h3 class="text-xl font-bold text-white mb-4">Step 5: Investment Profile</h3>
+                    <select id="investmentExperience" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                        <option value="">Select Investment Experience *</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <select id="riskTolerance" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                        <option value="">Select Risk Tolerance *</option>
+                        <option value="Low">Low</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div id="errorMessage" class="hidden mt-4 p-3 bg-red-900/30 border border-red-600 text-red-200 rounded-lg"></div>
             </div>
 
-            <!-- Results Section (Hidden until submitted) -->
-            <div id="resultsSection" class="hidden mt-8">
-                <div class="bg-gradient-to-r from-green-900/20 to-blue-900/20 border border-green-700 rounded-2xl p-8">
-                    <h2 class="text-3xl font-bold text-white mb-4">✅ Your 90-Day Financial Freedom Plan</h2>
-                    <div id="analysisResult" class="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
-                        <div class="text-slate-300 whitespace-pre-wrap leading-relaxed" id="analysisText"></div>
-                    </div>
-                    <button onclick="location.reload()" class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">Submit Another</button>
+            <div class="flex gap-4 mt-6">
+                <button onclick="previousStep()" class="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg">Previous</button>
+                <button onclick="nextStep()" id="nextBtn" class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">Next</button>
+            </div>
+        </div>
+
+        <!-- RESULTS SECTION -->
+        <div id="resultsSection" class="hidden">
+            <div class="bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-700 rounded-2xl p-8">
+                <h2 class="text-3xl font-bold text-white mb-6">✅ Your 90-Day Financial Freedom Plan</h2>
+                <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 mb-6">
+                    <div id="analysisText" class="text-slate-300 whitespace-pre-wrap text-sm leading-relaxed"></div>
                 </div>
+                <button onclick="location.reload()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">Submit Another</button>
             </div>
         </div>
     </div>
 
     <script>
         let currentStep = 0;
-
-        function goToStep(step) {
-            const steps = document.querySelectorAll('.step-content');
-            const totalSteps = steps.length;
-
-            if (step < 0 || step >= totalSteps) return;
-
-            // Hide all steps
-            steps.forEach(s => s.classList.add('hidden'));
-            
-            // Show current step
-            document.getElementById(`step-${step}`).classList.remove('hidden');
-
-            // Update step indicators
-            document.querySelectorAll('.step-btn').forEach((btn, idx) => {
-                if (idx === step) {
-                    btn.classList.remove('bg-slate-800', 'text-slate-300');
-                    btn.classList.add('bg-blue-600', 'text-white');
-                } else if (idx < step) {
-                    btn.classList.remove('bg-slate-800', 'text-slate-300', 'bg-blue-600', 'text-white');
-                    btn.classList.add('bg-green-700', 'text-white');
-                } else {
-                    btn.classList.remove('bg-blue-600', 'text-white', 'bg-green-700');
-                    btn.classList.add('bg-slate-800', 'text-slate-300');
-                }
-            });
-
-            currentStep = step;
-            updateFormDisplay();
-        }
-
-        function previousStep() {
-            goToStep(currentStep - 1);
-        }
-
-        function nextOrSubmit() {
-            const steps = document.querySelectorAll('.step-content').length;
-            if (currentStep === steps - 1) {
-                generateAnalysis();
-            } else {
-                goToStep(currentStep + 1);
-            }
-        }
 
         function getFormData() {
             return {
@@ -211,180 +101,112 @@
             };
         }
 
-        function updateFormDisplay() {
-            const data = getFormData();
-            document.getElementById('displayEmail').textContent = data.email || 'Not set';
-            document.getElementById('displayIncome').textContent = data.monthlyIncome ? `$${parseInt(data.monthlyIncome).toLocaleString()}` : '$0';
-            document.getElementById('displayExpenses').textContent = data.monthlyExpenses ? `$${parseInt(data.monthlyExpenses).toLocaleString()}` : '$0';
-            document.getElementById('displaySavings').textContent = data.currentSavings ? `$${parseInt(data.currentSavings).toLocaleString()}` : '$0';
-            
-            const filledFields = Object.values(data).filter(v => v).length;
-            const totalFields = Object.keys(data).length;
-            const progress = Math.round((filledFields / totalFields) * 100);
-            document.getElementById('progress').textContent = progress + '%';
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach((el, idx) => {
+                el.classList.toggle('hidden', idx !== step);
+            });
+
+            const nextBtn = document.getElementById('nextBtn');
+            if (step === 4) {
+                nextBtn.textContent = 'Generate Plan';
+                nextBtn.onclick = submitForm;
+            } else {
+                nextBtn.textContent = 'Next';
+                nextBtn.onclick = nextStep;
+            }
+
+            currentStep = step;
         }
 
-        function addLog(message) {
-            const syncLog = document.getElementById('syncLog');
-            const time = new Date().toLocaleTimeString();
-            const logEntry = document.createElement('div');
-            logEntry.textContent = `${time}: ${message}`;
-            syncLog.appendChild(logEntry);
-            syncLog.scrollTop = syncLog.scrollHeight;
+        function nextStep() {
+            if (currentStep < 4) {
+                showStep(currentStep + 1);
+            }
         }
 
-        async function generateAnalysis() {
+        function previousStep() {
+            if (currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        async function submitForm() {
             const data = getFormData();
 
-            if (!data.monthlyIncome || !data.monthlyExpenses || !data.currentSavings) {
-                document.getElementById('errorMessage').textContent = '⚠️ Please fill required fields';
+            // Validation
+            if (!data.email || !data.monthlyIncome || !data.monthlyExpenses || !data.currentSavings) {
+                document.getElementById('errorMessage').textContent = '⚠️ Please fill all required fields';
                 document.getElementById('errorMessage').classList.remove('hidden');
                 return;
             }
-
-            if (!data.email) {
-                document.getElementById('errorMessage').textContent = '⚠️ Email is required';
-                document.getElementById('errorMessage').classList.remove('hidden');
-                return;
-            }
-
-            addLog('🚀 Submitting form...');
 
             try {
-                // Call backend API (which proxies to Zapier)
-                const apiUrl = '/api/submit-form';
-                
-                addLog(`📡 Calling backend API...`);
-
-                const response = await fetch(apiUrl, {
+                // Submit to backend
+                const response = await fetch('/api/submit-form', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
+                    throw new Error(`Error: ${response.status}`);
                 }
 
-                const result = await response.json();
-                
-                addLog(`✅ Backend received form`);
-                addLog(`✅ Data forwarded to Zapier`);
-                addLog(`✅ Contact syncing to Active Campaign...`);
+                // Generate plan
+                const plan = `# Your 90-Day Financial Freedom Plan
 
-                // Generate local 90-day plan
-                addLog('🤖 Generating your 90-day plan...');
-                
-                const analysis = generateLocalPlan(data);
-                
-                addLog('✅ Plan generated successfully!');
+## Your Profile
+- Name: ${data.firstName} ${data.lastName}
+- Email: ${data.email}
+- Monthly Income: $${parseInt(data.monthlyIncome).toLocaleString()}
+- Monthly Expenses: $${parseInt(data.monthlyExpenses).toLocaleString()}
+- Monthly Surplus: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
+- Current Savings: $${parseInt(data.currentSavings).toLocaleString()}
+- Total Debt: $${parseInt(data.debt).toLocaleString()}
+
+## Goal
+${data.financialGoal} within ${data.timeframe}
+
+---
+
+## Phase 1: ASSESS (Days 1-30)
+Understand your financial position
+- Complete financial audit
+- Document all income streams
+- Identify spending patterns
+- Review debt obligations
+
+## Phase 2: DESIGN (Days 31-60)
+Create your strategy
+- Implement cost reductions
+- Explore income increases
+- Set up savings automation
+- Plan investment approach
+
+## Phase 3: ACHIEVE (Days 61-90)
+Execute and monitor
+- Track progress weekly
+- Adjust as needed
+- Build accountability
+- Plan next 90 days
+
+---
+
+Your data has been synced to Active Campaign for follow-up.`;
 
                 // Display results
-                console.log('📊 Displaying results...');
-                const analysisText = document.getElementById('analysisText');
-                const resultsSection = document.getElementById('resultsSection');
-                const formContainer = document.getElementById('formContainer');
-                
-                if (analysisText && resultsSection && formContainer) {
-                    analysisText.textContent = analysis;
-                    resultsSection.classList.remove('hidden');
-                    formContainer.classList.add('hidden');
-                    console.log('✅ Results displayed successfully');
-                } else {
-                    console.error('❌ Missing DOM elements');
-                    throw new Error('Unable to display results - missing page elements');
-                }
+                document.getElementById('analysisText').textContent = plan;
+                document.getElementById('formSection').classList.add('hidden');
+                document.getElementById('resultsSection').classList.remove('hidden');
 
             } catch (err) {
-                addLog('❌ Error: ' + err.message);
                 document.getElementById('errorMessage').textContent = '⚠️ Error: ' + err.message;
                 document.getElementById('errorMessage').classList.remove('hidden');
             }
         }
 
-        function generateLocalPlan(data) {
-            return `# Your 90-Day Financial Freedom Plan
-
-## Personal Summary
-Name: ${data.firstName} ${data.lastName}
-Email: ${data.email}
-Monthly Income: $${parseInt(data.monthlyIncome).toLocaleString()}
-Monthly Expenses: $${parseInt(data.monthlyExpenses).toLocaleString()}
-Monthly Surplus: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
-Current Savings: $${parseInt(data.currentSavings).toLocaleString()}
-Total Debt: $${parseInt(data.debt || 0).toLocaleString()}
-
-Goal: ${data.financialGoal}
-Timeframe: ${data.timeframe}
-Investment Experience: ${data.investmentExperience}
-Risk Tolerance: ${data.riskTolerance}
-
-Income Sources: ${data.incomeStreams || 'Not specified'}
-
----
-
-## Phase 1: ASSESS (Days 1-30)
-### Key Actions:
-- Conduct comprehensive financial audit
-- Calculate exact monthly surplus: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
-- Document all debt obligations
-- Identify major spending categories
-- Review savings progress timeline
-
-### Milestones:
-- Day 7: Complete financial inventory
-- Day 15: Create detailed budget breakdown
-- Day 30: Identify 3 primary cost-reduction opportunities
-
----
-
-## Phase 2: DESIGN (Days 31-60)
-### Key Actions:
-- Implement cost reduction strategy
-- Explore income increase opportunities aligned with ${data.investmentExperience} experience level
-- Set up automatic savings transfers (target: $${Math.round((parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)) * 0.5).toLocaleString()}/month)
-- Research investment options with ${data.riskTolerance} risk tolerance
-- Create debt payoff timeline if needed
-
-### Milestones:
-- Day 45: Achieve first cost reduction
-- Day 50: Establish new income stream or negotiate raise
-- Day 60: Set up automated savings plan
-
----
-
-## Phase 3: ACHIEVE (Days 61-90)
-### Key Actions:
-- Monitor progress against targets
-- Adjust strategy based on results
-- Build accountability systems
-- Plan for achieving ${data.financialGoal} within ${data.timeframe}
-- Review investment portfolio alignment
-
-### Milestones:
-- Day 75: Review progress and adjust as needed
-- Day 85: Plan your next 90-day challenge
-- Day 90: Celebrate achievements and set new goals
-
----
-
-## Your Success Metrics:
-✓ Monthly Surplus Growth Target: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
-✓ Savings Growth Rate: 10-15% monthly increase
-✓ Debt Reduction: Focus on highest interest first
-✓ Investment Portfolio: Aligned with ${data.riskTolerance} tolerance
-✓ Behavioral Changes: Establish 3 new money habits
-
----
-
-This personalized plan is designed specifically for your situation. Review weekly and adjust based on your progress.`;
-        }
-
         // Initialize
-        goToStep(0);
-        updateFormDisplay();
+        showStep(0);
     </script>
 </body>
 </html>
