@@ -49,13 +49,31 @@
         .progress-bar {
             background: linear-gradient(90deg, #ff8120 var(--progress), #333333 var(--progress));
         }
+        .concept-box {
+            background: rgba(255, 129, 32, 0.05);
+            border-left: 4px solid #ff8120;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .concept-title {
+            color: #ff8120;
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .concept-text {
+            color: #c6c6c6;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body class="gradient-sr text-white min-h-screen p-4 md:p-8">
     <div id="app" class="max-w-5xl mx-auto">
 
-        <!-- FORM SECTION -->
-        <div id="formSection" class="block">
+        <!-- LEARNING FLOW SECTION -->
+        <div id="learningSection" class="block">
             <!-- Header -->
             <div class="mb-12 text-center">
                 <h1 class="text-5xl md:text-6xl font-bold mb-3 tracking-tight">
@@ -68,7 +86,7 @@
                 </p>
                 <div class="accent-line my-6 w-16 mx-auto"></div>
                 <p class="text-gray-400 text-sm max-w-xl mx-auto">
-                    Answer 5 quick questions to unlock your personalized 90-day financial freedom plan
+                    Learn wealth-building concepts, then create your personalized 90-day financial freedom plan
                 </p>
             </div>
 
@@ -78,69 +96,190 @@
                 <p class="text-xs text-gray-400 text-center mt-2"><span id="stepCounter">1</span> of 5</p>
             </div>
 
-            <!-- Form Card -->
+            <!-- Content Card -->
             <div class="card-sr rounded-2xl p-8 md:p-10 mb-8">
                 
-                <!-- Step 0: Contact Info -->
+                <!-- Step 0: Financial Awareness -->
                 <div id="step-0" class="step-content">
-                    <h3 class="text-2xl font-bold text-white mb-1">Let's Get to Know You</h3>
-                    <p class="text-gray-400 text-sm mb-6">Your information stays confidential and helps us customize your plan</p>
-                    <input type="text" id="firstName" placeholder="First Name" class="w-full mb-3 px-4 py-3 rounded-lg input-sr">
-                    <input type="text" id="lastName" placeholder="Last Name" class="w-full mb-3 px-4 py-3 rounded-lg input-sr">
-                    <input type="email" id="email" placeholder="Email Address *" class="w-full mb-3 px-4 py-3 rounded-lg input-sr" required>
-                    <input type="tel" id="phone" placeholder="Phone (optional)" class="w-full px-4 py-3 rounded-lg input-sr">
+                    <h2 class="text-3xl font-bold text-white mb-6">💡 Know Your Numbers</h2>
+                    
+                    <div class="concept-box">
+                        <div class="concept-title">WHY THIS MATTERS</div>
+                        <div class="concept-text">
+                            Before you can build wealth, you must understand where you are right now. Your income, expenses, and savings are the foundation of everything. As T. Harv Eker says: "You can't manage what you don't measure."
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white mb-4">What You'll Discover:</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Your Monthly Surplus:</strong> The gap between income and expenses—this is your raw material for wealth building</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Your Savings Capacity:</strong> How much you can realistically save and invest each month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Your Debt Reality:</strong> Understanding debt is the first step to freedom from it</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Your Financial Profile:</strong> Whether you're tight, balanced, or strong—different strategies apply</span>
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700 mb-6">
+                        <p class="text-sm text-gray-400 italic">
+                            "The richest man is not he who has the most, but he who needs the least." – This step helps you understand both sides of that equation.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Step 1: Financial Reality -->
+                <!-- Step 1: Income & Expenses -->
                 <div id="step-1" class="step-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-1">Your Financial Reality</h3>
-                    <p class="text-gray-400 text-sm mb-6">Be honest. This data is for YOUR benefit, not judgment</p>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Monthly Income</label>
-                    <input type="number" id="monthlyIncome" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Monthly Expenses</label>
-                    <input type="number" id="monthlyExpenses" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Income Sources</label>
-                    <textarea id="incomeStreams" placeholder="e.g., Employment, Side hustle, Investments" class="w-full px-4 py-3 rounded-lg input-sr" rows="2"></textarea>
+                    <h2 class="text-3xl font-bold text-white mb-6">💰 Income & Expense Awareness</h2>
+                    
+                    <div class="concept-box">
+                        <div class="concept-title">THE SPEEDWEALTH PRINCIPLE: SYSTEMIZE</div>
+                        <div class="concept-text">
+                            Before you can duplicate your success or leverage your resources, you must know exactly what's coming in and going out. This is the foundation of the SpeedWealth system.
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white mb-4">What This Reveals:</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Your Monthly Surplus:</strong> Income minus expenses = your wealth-building power</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Income Diversification:</strong> Which income streams are you relying on?</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Expense Patterns:</strong> Where can you find quick wins without sacrifice?</span>
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                        <p class="text-sm text-gray-400">
+                            💡 <strong>Key Insight:</strong> If you have a $500/month surplus, that's $6,000/year—enough to build serious wealth over 10 years. Visibility is power.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Step 2: Current Position -->
+                <!-- Step 2: Savings & Debt -->
                 <div id="step-2" class="step-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-1">Your Current Position</h3>
-                    <p class="text-gray-400 text-sm mb-6">Where you are now is where you start building</p>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Current Savings</label>
-                    <input type="number" id="currentSavings" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Total Debt</label>
-                    <input type="number" id="debt" placeholder="$0" class="w-full px-4 py-3 rounded-lg input-sr">
+                    <h2 class="text-3xl font-bold text-white mb-6">🎯 Your Financial Position</h2>
+                    
+                    <div class="concept-box">
+                        <div class="concept-title">THE SPEEDWEALTH PRINCIPLE: START WITH THE END IN MIND</div>
+                        <div class="concept-text">
+                            Your current savings and debt aren't your final position—they're your starting point. Understanding them helps you create a realistic roadmap to wealth.
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white mb-4">Why These Numbers Matter:</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Current Savings:</strong> Your emergency fund and proof of discipline. This is momentum.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Total Debt:</strong> Understanding your debt helps prioritize: pay down high-interest or invest?</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Your Runway:</strong> How long your savings would last = urgency level for income growth</span>
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                        <p class="text-sm text-gray-400">
+                            📊 <strong>Strategy:</strong> We'll show you different paths depending on whether debt or investing should be your priority.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Step 3: Financial Vision -->
+                <!-- Step 3: Goals & Vision -->
                 <div id="step-3" class="step-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-1">Your Financial Vision</h3>
-                    <p class="text-gray-400 text-sm mb-6">"Start with the end in mind" – T. Harv Eker</p>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Primary Financial Goal</label>
-                    <input type="text" id="financialGoal" placeholder="e.g., Generate $50k passive income" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
-                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Timeline</label>
-                    <input type="text" id="timeframe" placeholder="e.g., 2 years" class="w-full px-4 py-3 rounded-lg input-sr" required>
+                    <h2 class="text-3xl font-bold text-white mb-6">🚀 Your Wealth Vision</h2>
+                    
+                    <div class="concept-box">
+                        <div class="concept-title">THE SPEEDWEALTH PRINCIPLE: CASHING OUT</div>
+                        <div class="concept-text">
+                            Every great entrepreneur "starts with the end in mind." Your goal shapes every decision in your 90-day blueprint. Without clarity on where you're going, you can't create a realistic roadmap.
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white mb-4">Goal Examples (Your Unique Vision):</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="text-gray-300">Generate $50,000 in passive income within 2 years</li>
+                        <li class="text-gray-300">Pay off $100,000 in debt in 3 years</li>
+                        <li class="text-gray-300">Build a 6-month emergency fund within 18 months</li>
+                        <li class="text-gray-300">Transition to part-time work within 2 years</li>
+                        <li class="text-gray-300">Create a side business generating $2,000/month</li>
+                    </ul>
+
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                        <p class="text-sm text-gray-400">
+                            💎 <strong>Your goals don't have to be huge.</strong> They just need to be YOUR goals. We customize the 90-day plan around your unique vision.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Step 4: Investment Profile -->
+                <!-- Step 4: Investment & Risk -->
                 <div id="step-4" class="step-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-1">Your Investment Profile</h3>
-                    <p class="text-gray-400 text-sm mb-6">Customize strategies based on your experience and comfort level</p>
-                    <label class="block text-xs font-semibold mb-3" style="color: #ff8120;">Investment Experience</label>
-                    <select id="investmentExperience" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
-                        <option value="">Select your level *</option>
-                        <option value="Beginner">Beginner – Just starting</option>
-                        <option value="Intermediate">Intermediate – Some experience</option>
-                        <option value="Advanced">Advanced – Seasoned investor</option>
-                    </select>
-                    <label class="block text-xs font-semibold mb-3" style="color: #ff8120;">Risk Tolerance</label>
-                    <select id="riskTolerance" class="w-full px-4 py-3 rounded-lg input-sr" required>
-                        <option value="">Select your preference *</option>
-                        <option value="Low">Low – Safe and steady</option>
-                        <option value="Moderate">Moderate – Balanced approach</option>
-                        <option value="High">High – Growth-focused</option>
-                    </select>
+                    <h2 class="text-3xl font-bold text-white mb-6">📈 Your Investment Strategy</h2>
+                    
+                    <div class="concept-box">
+                        <div class="concept-title">THE SPEEDWEALTH PRINCIPLE: LEVERAGE</div>
+                        <div class="concept-text">
+                            Not all wealth is created equal. The most successful people leverage market returns, compound interest, and diversified income streams. Your experience and risk tolerance determine the right strategy for YOU.
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white mb-4">Investment Experience Matters Because:</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Beginners</strong> need simple, proven strategies (index funds, emergency savings)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Intermediate</strong> investors can explore real estate, dividend stocks, side businesses</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Advanced</strong> players optimize taxes, leverage, and business systems</span>
+                        </li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-white mb-4 mt-6">Risk Tolerance Shapes Implementation:</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Low Risk:</strong> Sleep well at night. Steady, compound growth. Bonds + index funds.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>Moderate:</strong> Balanced approach. Mix safety with growth opportunities.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="sr-orange mr-3">✓</span>
+                            <span class="text-gray-300"><strong>High Risk:</strong> Aggressive growth. Individual stocks, emerging markets, entrepreneurship.</span>
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                        <p class="text-sm text-gray-400">
+                            ⚡ <strong>Pro Tip:</strong> Your risk tolerance today doesn't have to be your risk tolerance in 5 years. As your experience grows, you can evolve your strategy.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Error Message -->
@@ -153,6 +292,108 @@
                     ← Back
                 </button>
                 <button onclick="nextStep()" id="nextBtn" class="flex-1 px-6 py-3 btn-primary rounded-lg">
+                    Continue →
+                </button>
+            </div>
+
+            <!-- Get Your Blueprint CTA -->
+            <div class="text-center mt-8">
+                <p class="text-gray-400 text-sm mb-4">Ready to create your personalized plan?</p>
+                <button onclick="showDataForm()" class="px-8 py-3 btn-primary rounded-lg font-semibold">
+                    Get Your Blueprint ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- DATA FORM SECTION (Hidden until requested) -->
+        <div id="dataFormSection" class="hidden">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <h1 class="text-4xl font-bold mb-3 tracking-tight" style="color: #ff8120;">
+                    Create Your Blueprint
+                </h1>
+                <p class="text-gray-400 text-sm">
+                    Share your details to generate your personalized 90-day plan
+                </p>
+                <div class="accent-line my-6 w-16 mx-auto"></div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div id="dataProgressBar" class="progress-bar h-2 rounded-full overflow-hidden" style="--progress: 0%"></div>
+                <p class="text-xs text-gray-400 text-center mt-2"><span id="dataStepCounter">1</span> of 5</p>
+            </div>
+
+            <!-- Data Form Card -->
+            <div class="card-sr rounded-2xl p-8 md:p-10 mb-8">
+                
+                <!-- Data Step 0: Contact Info -->
+                <div id="data-step-0" class="data-step-content">
+                    <h3 class="text-2xl font-bold text-white mb-6">Let's Get to Know You</h3>
+                    <input type="text" id="firstName" placeholder="First Name" class="w-full mb-3 px-4 py-3 rounded-lg input-sr">
+                    <input type="text" id="lastName" placeholder="Last Name" class="w-full mb-3 px-4 py-3 rounded-lg input-sr">
+                    <input type="email" id="email" placeholder="Email Address *" class="w-full mb-3 px-4 py-3 rounded-lg input-sr" required>
+                    <input type="tel" id="phone" placeholder="Phone (optional)" class="w-full px-4 py-3 rounded-lg input-sr">
+                </div>
+
+                <!-- Data Step 1: Financial Reality -->
+                <div id="data-step-1" class="data-step-content hidden">
+                    <h3 class="text-2xl font-bold text-white mb-6">Your Income & Expenses</h3>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Monthly Income *</label>
+                    <input type="number" id="monthlyIncome" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Monthly Expenses *</label>
+                    <input type="number" id="monthlyExpenses" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Income Sources</label>
+                    <textarea id="incomeStreams" placeholder="e.g., Employment, Side hustle, Investments" class="w-full px-4 py-3 rounded-lg input-sr" rows="2"></textarea>
+                </div>
+
+                <!-- Data Step 2: Current Position -->
+                <div id="data-step-2" class="data-step-content hidden">
+                    <h3 class="text-2xl font-bold text-white mb-6">Your Savings & Debt</h3>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Current Savings *</label>
+                    <input type="number" id="currentSavings" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Total Debt</label>
+                    <input type="number" id="debt" placeholder="$0" class="w-full px-4 py-3 rounded-lg input-sr">
+                </div>
+
+                <!-- Data Step 3: Vision -->
+                <div id="data-step-3" class="data-step-content hidden">
+                    <h3 class="text-2xl font-bold text-white mb-6">Your Financial Goal</h3>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Primary Goal *</label>
+                    <input type="text" id="financialGoal" placeholder="e.g., Generate $50k passive income" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Timeline *</label>
+                    <input type="text" id="timeframe" placeholder="e.g., 2 years" class="w-full px-4 py-3 rounded-lg input-sr" required>
+                </div>
+
+                <!-- Data Step 4: Profile -->
+                <div id="data-step-4" class="data-step-content hidden">
+                    <h3 class="text-2xl font-bold text-white mb-6">Investment Profile</h3>
+                    <label class="block text-xs font-semibold mb-3" style="color: #ff8120;">Experience Level *</label>
+                    <select id="investmentExperience" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                        <option value="">Select your level</option>
+                        <option value="Beginner">Beginner – Just starting</option>
+                        <option value="Intermediate">Intermediate – Some experience</option>
+                        <option value="Advanced">Advanced – Seasoned investor</option>
+                    </select>
+                    <label class="block text-xs font-semibold mb-3" style="color: #ff8120;">Risk Tolerance *</label>
+                    <select id="riskTolerance" class="w-full px-4 py-3 rounded-lg input-sr" required>
+                        <option value="">Select your preference</option>
+                        <option value="Low">Low – Safe and steady</option>
+                        <option value="Moderate">Moderate – Balanced approach</option>
+                        <option value="High">High – Growth-focused</option>
+                    </select>
+                </div>
+
+                <!-- Error Message -->
+                <div id="dataErrorMessage" class="hidden mt-4 p-4 bg-red-900/30 border border-red-600 text-red-200 rounded-lg text-sm"></div>
+            </div>
+
+            <!-- Data Navigation Buttons -->
+            <div class="flex gap-4">
+                <button onclick="previousDataStep()" class="flex-1 px-6 py-3 btn-secondary rounded-lg">
+                    ← Back
+                </button>
+                <button onclick="nextDataStep()" id="dataNextBtn" class="flex-1 px-6 py-3 btn-primary rounded-lg">
                     Next →
                 </button>
             </div>
@@ -198,14 +439,132 @@
         </div>
     </div>
 
+    <!-- DISCLAIMER SECTION -->
+    <footer class="mt-16 py-12 border-t border-gray-700">
+        <div class="max-w-5xl mx-auto px-4 md:px-8">
+            <div class="bg-gray-900/50 rounded-lg p-6 border border-gray-700">
+                <h4 class="text-sm font-bold mb-4" style="color: #ff8120;">DISCLAIMER</h4>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    This Wealth Blueprint tool is provided for educational and informational purposes only. Success Resources and its representatives do not provide financial, investment, tax, or legal advice. The personalized plan generated by this tool is based on information you provide and general principles, but it should not be construed as professional financial advice tailored to your specific circumstances.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">Financial Results Vary:</strong> Past performance does not guarantee future results. Your actual financial outcomes will depend on many factors including market conditions, economic factors, personal discipline, and implementation of strategies. The projections and suggestions in your blueprint are estimates and should not be relied upon as guaranteed outcomes.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">Professional Advice Required:</strong> Before making any financial decisions, including investments, debt management, tax planning, or business decisions, consult with a qualified financial advisor, accountant, tax professional, or attorney who understands your specific situation.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">No Guarantees:</strong> Success Resources makes no representations or warranties regarding the accuracy, completeness, or results of this tool. Neither Success Resources nor its representatives assume any responsibility for losses or damages resulting from your use of this tool or reliance on the information provided.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">Your Responsibility:</strong> You are solely responsible for your financial decisions and their consequences. It is your obligation to conduct due diligence and seek appropriate professional advice before taking action on any information contained in your personalized blueprint.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    By using this tool, you acknowledge that you understand and agree to these terms and that you have not relied solely on this blueprint for making financial decisions.
+                </p>
+            </div>
+            
+            <!-- Footer Links -->
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center mt-8 text-xs text-gray-500">
+                <a href="#" class="hover:text-gray-300 transition">Privacy Policy</a>
+                <span>•</span>
+                <a href="#" class="hover:text-gray-300 transition">Terms of Service</a>
+                <span>•</span>
+                <a href="#" class="hover:text-gray-300 transition">Contact</a>
+                <span>•</span>
+                <span>© 2024 Success Resources. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
     <script>
         let currentStep = 0;
+        let currentDataStep = 0;
         const totalSteps = 5;
 
+        // LEARNING FLOW
         function updateProgress() {
             const progress = ((currentStep + 1) / totalSteps * 100);
             document.getElementById('progressBar').style.setProperty('--progress', progress + '%');
             document.getElementById('stepCounter').textContent = currentStep + 1;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach((el, idx) => {
+                el.classList.toggle('hidden', idx !== step);
+            });
+
+            const nextBtn = document.getElementById('nextBtn');
+            if (step === 4) {
+                nextBtn.textContent = 'I Understand - Let\'s Continue →';
+            } else {
+                nextBtn.textContent = 'Continue →';
+            }
+
+            currentStep = step;
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        function showDataForm() {
+            document.getElementById('learningSection').classList.add('hidden');
+            document.getElementById('dataFormSection').classList.remove('hidden');
+            showDataStep(0);
+            window.scrollTo(0, 0);
+        }
+
+        // DATA FORM FLOW
+        function updateDataProgress() {
+            const progress = ((currentDataStep + 1) / totalSteps * 100);
+            document.getElementById('dataProgressBar').style.setProperty('--progress', progress + '%');
+            document.getElementById('dataStepCounter').textContent = currentDataStep + 1;
+        }
+
+        function showDataStep(step) {
+            document.querySelectorAll('.data-step-content').forEach((el, idx) => {
+                el.classList.toggle('hidden', idx !== step);
+            });
+
+            const nextBtn = document.getElementById('dataNextBtn');
+            if (step === 4) {
+                nextBtn.textContent = 'Generate My Blueprint ✓';
+                nextBtn.onclick = submitForm;
+            } else {
+                nextBtn.textContent = 'Next →';
+                nextBtn.onclick = nextDataStep;
+            }
+
+            currentDataStep = step;
+            updateDataProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function nextDataStep() {
+            if (currentDataStep < 4) {
+                showDataStep(currentDataStep + 1);
+            }
+        }
+
+        function previousDataStep() {
+            if (currentDataStep > 0) {
+                showDataStep(currentDataStep - 1);
+            } else {
+                document.getElementById('dataFormSection').classList.add('hidden');
+                document.getElementById('learningSection').classList.remove('hidden');
+                showStep(currentStep);
+            }
         }
 
         function getFormData() {
@@ -226,40 +585,9 @@
             };
         }
 
-        function showStep(step) {
-            document.querySelectorAll('.step-content').forEach((el, idx) => {
-                el.classList.toggle('hidden', idx !== step);
-            });
-
-            const nextBtn = document.getElementById('nextBtn');
-            if (step === 4) {
-                nextBtn.textContent = 'Generate My Blueprint ✓';
-                nextBtn.onclick = submitForm;
-            } else {
-                nextBtn.textContent = 'Next →';
-                nextBtn.onclick = nextStep;
-            }
-
-            currentStep = step;
-            updateProgress();
-            window.scrollTo(0, 0);
-        }
-
-        function nextStep() {
-            if (currentStep < 4) {
-                showStep(currentStep + 1);
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 0) {
-                showStep(currentStep - 1);
-            }
-        }
-
         async function submitForm() {
             const data = getFormData();
-            const errorMsg = document.getElementById('errorMessage');
+            const errorMsg = document.getElementById('dataErrorMessage');
 
             if (!data.email || !data.monthlyIncome || !data.monthlyExpenses || !data.currentSavings || 
                 !data.financialGoal || !data.timeframe || !data.investmentExperience || !data.riskTolerance) {
@@ -522,7 +850,7 @@ Visit: successresources.com/coaching`;
             `;
 
             document.getElementById('analysisText').textContent = plan;
-            document.getElementById('formSection').classList.add('hidden');
+            document.getElementById('dataFormSection').classList.add('hidden');
             document.getElementById('resultsSection').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
@@ -540,43 +868,5 @@ Visit: successresources.com/coaching`;
 
         showStep(0);
     </script>
-
-    <!-- DISCLAIMER SECTION -->
-    <footer class="mt-16 py-12 border-t border-gray-700">
-        <div class="max-w-5xl mx-auto px-4 md:px-8">
-            <div class="bg-gray-900/50 rounded-lg p-6 border border-gray-700">
-                <h4 class="text-sm font-bold mb-4" style="color: #ff8120;">DISCLAIMER</h4>
-                <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    This Wealth Blueprint tool is provided for educational and informational purposes only. Success Resources and its representatives do not provide financial, investment, tax, or legal advice. The personalized plan generated by this tool is based on information you provide and general principles, but it should not be construed as professional financial advice tailored to your specific circumstances.
-                </p>
-                <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    <strong style="color: #ff8120;">Financial Results Vary:</strong> Past performance does not guarantee future results. Your actual financial outcomes will depend on many factors including market conditions, economic factors, personal discipline, and implementation of strategies. The projections and suggestions in your blueprint are estimates and should not be relied upon as guaranteed outcomes.
-                </p>
-                <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    <strong style="color: #ff8120;">Professional Advice Required:</strong> Before making any financial decisions, including investments, debt management, tax planning, or business decisions, consult with a qualified financial advisor, accountant, tax professional, or attorney who understands your specific situation.
-                </p>
-                <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    <strong style="color: #ff8120;">No Guarantees:</strong> Success Resources makes no representations or warranties regarding the accuracy, completeness, or results of this tool. Neither Success Resources nor its representatives assume any responsibility for losses or damages resulting from your use of this tool or reliance on the information provided.
-                </p>
-                <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    <strong style="color: #ff8120;">Your Responsibility:</strong> You are solely responsible for your financial decisions and their consequences. It is your obligation to conduct due diligence and seek appropriate professional advice before taking action on any information contained in your personalized blueprint.
-                </p>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    By using this tool, you acknowledge that you understand and agree to these terms and that you have not relied solely on this blueprint for making financial decisions.
-                </p>
-            </div>
-            
-            <!-- Footer Links -->
-            <div class="flex flex-col md:flex-row gap-4 justify-center items-center mt-8 text-xs text-gray-500">
-                <a href="#" class="hover:text-gray-300 transition">Privacy Policy</a>
-                <span>•</span>
-                <a href="#" class="hover:text-gray-300 transition">Terms of Service</a>
-                <span>•</span>
-                <a href="#" class="hover:text-gray-300 transition">Contact</a>
-                <span>•</span>
-                <span>© 2024 Success Resources. All rights reserved.</span>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>
