@@ -248,12 +248,12 @@
             addLog('🚀 Submitting to Active Campaign...');
 
             try {
-                // Step 1: Submit to backend which syncs to Active Campaign
-                const submitUrl = '/api/submit-form';
+                // Step 1: Submit to Zapier webhook which syncs to Active Campaign
+                const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjs6w4/';
                 
-                addLog(`📡 Calling API: ${submitUrl}`);
+                addLog(`📡 Calling Zapier: ${zapierWebhookUrl}`);
 
-                const submitResponse = await fetch(submitUrl, {
+                const submitResponse = await fetch(zapierWebhookUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -262,11 +262,10 @@
                 });
 
                 if (!submitResponse.ok) {
-                    throw new Error(`API error: ${submitResponse.status}`);
+                    throw new Error(`Zapier error: ${submitResponse.status}`);
                 }
 
-                const submitResult = await submitResponse.json();
-                addLog(`✅ Active Campaign sync: ${submitResult.message || 'Success'}`);
+                addLog(`✅ Zapier received data - syncing to Active Campaign...`);
 
                 // Step 2: Generate analysis via backend
                 addLog('🤖 Generating your 90-day plan...');
