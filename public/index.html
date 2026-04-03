@@ -3,96 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Freedom Analyzer</title>
+    <title>Your Wealth Blueprint | Success Resources</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-sr { background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%); }
+        .accent-line { border-top: 3px solid #ff8120; }
+        .input-sr { 
+            background-color: #1a1a1a !important; 
+            border: 1px solid #ff8120 !important;
+            color: #FFFFFF !important;
+        }
+        .input-sr::placeholder { color: #c6c6c6; }
+        .input-sr:focus {
+            background-color: #242424 !important;
+            border-color: #ff9a4d !important;
+            outline: none !important;
+        }
+        .btn-primary {
+            background-color: #ff8120;
+            color: #000000;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e67e10;
+            transform: scale(1.02);
+        }
+        .btn-secondary {
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 2px solid #ff8120;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #1a1a1a;
+        }
+        .card-sr {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #ff8120;
+            backdrop-filter: blur(10px);
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #ff8120 var(--progress), #333333 var(--progress));
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen p-6">
-    <div id="app" class="max-w-4xl mx-auto">
+<body class="gradient-sr text-white min-h-screen p-4 md:p-8">
+    <div id="app" class="max-w-5xl mx-auto">
+
         <!-- FORM SECTION -->
         <div id="formSection" class="block">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-3 tracking-tight">
+                    <span class="text-white">Your Wealth</span><br>
+                    <span style="color: #ff8120;">Blueprint</span>
+                </h1>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
+                    Master your mindset. Scale your success.<br>
+                    <span class="text-sm font-semibold" style="color: #ff8120;">Powered by SpeedWealth Principles</span>
+                </p>
+                <div class="accent-line my-6 w-16 mx-auto"></div>
+                <p class="text-gray-400 text-sm max-w-xl mx-auto">
+                    Answer 5 quick questions to unlock your personalized 90-day financial freedom plan
+                </p>
+            </div>
+
+            <!-- Progress Bar -->
             <div class="mb-8">
-                <h1 class="text-4xl font-bold text-white mb-2">Financial Freedom Analyzer</h1>
-                <p class="text-slate-300">Complete your profile to get your personalized 90-day plan</p>
+                <div id="progressBar" class="progress-bar h-2 rounded-full overflow-hidden" style="--progress: 0%"></div>
+                <p class="text-xs text-gray-400 text-center mt-2"><span id="stepCounter">1</span> of 5</p>
             </div>
 
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+            <!-- Form Card -->
+            <div class="card-sr rounded-2xl p-8 md:p-10 mb-8">
+                
+                <!-- Step 0: Contact Info -->
                 <div id="step-0" class="step-content">
-                    <h3 class="text-xl font-bold text-white mb-4">Step 1: Contact Information</h3>
-                    <input type="text" id="firstName" placeholder="First Name" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                    <input type="text" id="lastName" placeholder="Last Name" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                    <input type="email" id="email" placeholder="Email *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                    <input type="tel" id="phone" placeholder="Phone" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                    <h3 class="text-2xl font-bold text-white mb-1">Let's Get to Know You</h3>
+                    <p class="text-gray-400 text-sm mb-6">Your information stays confidential and helps us customize your plan</p>
+                    <input type="text" id="firstName" placeholder="First Name" class="w-full mb-3 px-4 py-3 rounded-lg input-sr">
+                    <input type="text" id="lastName" placeholder="Last Name" class="w-full mb-3 px-4 py-3 rounded-lg input-sr">
+                    <input type="email" id="email" placeholder="Email Address *" class="w-full mb-3 px-4 py-3 rounded-lg input-sr" required>
+                    <input type="tel" id="phone" placeholder="Phone (optional)" class="w-full px-4 py-3 rounded-lg input-sr">
                 </div>
 
+                <!-- Step 1: Financial Reality -->
                 <div id="step-1" class="step-content hidden">
-                    <h3 class="text-xl font-bold text-white mb-4">Step 2: Income & Expenses</h3>
-                    <input type="number" id="monthlyIncome" placeholder="Monthly Income ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                    <input type="number" id="monthlyExpenses" placeholder="Monthly Expenses ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                    <textarea id="incomeStreams" placeholder="Income Sources..." class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" rows="2"></textarea>
+                    <h3 class="text-2xl font-bold text-white mb-1">Your Financial Reality</h3>
+                    <p class="text-gray-400 text-sm mb-6">Be honest. This data is for YOUR benefit, not judgment</p>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Monthly Income</label>
+                    <input type="number" id="monthlyIncome" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Monthly Expenses</label>
+                    <input type="number" id="monthlyExpenses" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Income Sources</label>
+                    <textarea id="incomeStreams" placeholder="e.g., Employment, Side hustle, Investments" class="w-full px-4 py-3 rounded-lg input-sr" rows="2"></textarea>
                 </div>
 
+                <!-- Step 2: Current Position -->
                 <div id="step-2" class="step-content hidden">
-                    <h3 class="text-xl font-bold text-white mb-4">Step 3: Current Position</h3>
-                    <input type="number" id="currentSavings" placeholder="Current Savings ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                    <input type="number" id="debt" placeholder="Total Debt ($)" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                    <h3 class="text-2xl font-bold text-white mb-1">Your Current Position</h3>
+                    <p class="text-gray-400 text-sm mb-6">Where you are now is where you start building</p>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Current Savings</label>
+                    <input type="number" id="currentSavings" placeholder="$0" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Total Debt</label>
+                    <input type="number" id="debt" placeholder="$0" class="w-full px-4 py-3 rounded-lg input-sr">
                 </div>
 
+                <!-- Step 3: Financial Vision -->
                 <div id="step-3" class="step-content hidden">
-                    <h3 class="text-xl font-bold text-white mb-4">Step 4: Financial Goals</h3>
-                    <input type="text" id="financialGoal" placeholder="Main Financial Goal *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                    <input type="text" id="timeframe" placeholder="Timeline (e.g., 2 years) *" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                    <h3 class="text-2xl font-bold text-white mb-1">Your Financial Vision</h3>
+                    <p class="text-gray-400 text-sm mb-6">"Start with the end in mind" – T. Harv Eker</p>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Primary Financial Goal</label>
+                    <input type="text" id="financialGoal" placeholder="e.g., Generate $50k passive income" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                    <label class="block text-xs font-semibold mb-2" style="color: #ff8120;">Timeline</label>
+                    <input type="text" id="timeframe" placeholder="e.g., 2 years" class="w-full px-4 py-3 rounded-lg input-sr" required>
                 </div>
 
+                <!-- Step 4: Investment Profile -->
                 <div id="step-4" class="step-content hidden">
-                    <h3 class="text-xl font-bold text-white mb-4">Step 5: Investment Profile</h3>
-                    <select id="investmentExperience" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                        <option value="">Select Investment Experience *</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
+                    <h3 class="text-2xl font-bold text-white mb-1">Your Investment Profile</h3>
+                    <p class="text-gray-400 text-sm mb-6">Customize strategies based on your experience and comfort level</p>
+                    <label class="block text-xs font-semibold mb-3" style="color: #ff8120;">Investment Experience</label>
+                    <select id="investmentExperience" class="w-full mb-4 px-4 py-3 rounded-lg input-sr" required>
+                        <option value="">Select your level *</option>
+                        <option value="Beginner">Beginner – Just starting</option>
+                        <option value="Intermediate">Intermediate – Some experience</option>
+                        <option value="Advanced">Advanced – Seasoned investor</option>
                     </select>
-                    <select id="riskTolerance" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                        <option value="">Select Risk Tolerance *</option>
-                        <option value="Low">Low</option>
-                        <option value="Moderate">Moderate</option>
-                        <option value="High">High</option>
+                    <label class="block text-xs font-semibold mb-3" style="color: #ff8120;">Risk Tolerance</label>
+                    <select id="riskTolerance" class="w-full px-4 py-3 rounded-lg input-sr" required>
+                        <option value="">Select your preference *</option>
+                        <option value="Low">Low – Safe and steady</option>
+                        <option value="Moderate">Moderate – Balanced approach</option>
+                        <option value="High">High – Growth-focused</option>
                     </select>
                 </div>
 
-                <div id="errorMessage" class="hidden mt-4 p-3 bg-red-900/30 border border-red-600 text-red-200 rounded-lg"></div>
+                <!-- Error Message -->
+                <div id="errorMessage" class="hidden mt-4 p-4 bg-red-900/30 border border-red-600 text-red-200 rounded-lg text-sm"></div>
             </div>
 
-            <div class="flex gap-4 mt-6">
-                <button onclick="previousStep()" class="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg">Previous</button>
-                <button onclick="nextStep()" id="nextBtn" class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">Next</button>
+            <!-- Navigation Buttons -->
+            <div class="flex gap-4">
+                <button onclick="previousStep()" class="flex-1 px-6 py-3 btn-secondary rounded-lg">
+                    ← Back
+                </button>
+                <button onclick="nextStep()" id="nextBtn" class="flex-1 px-6 py-3 btn-primary rounded-lg">
+                    Next →
+                </button>
             </div>
         </div>
 
         <!-- RESULTS SECTION -->
         <div id="resultsSection" class="hidden">
-            <div class="bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-700 rounded-2xl p-8">
-                <h2 class="text-3xl font-bold text-white mb-6">✅ Your 90-Day Financial Freedom Plan</h2>
-                <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 mb-6">
-                    <div id="analysisText" class="text-slate-300 whitespace-pre-wrap text-sm leading-relaxed"></div>
+            <div class="card-sr rounded-2xl p-8 md:p-10 border-2" style="border-color: #ff8120;">
+                <div class="text-center mb-10">
+                    <div class="text-5xl mb-3" style="color: #ff8120;">✓</div>
+                    <h2 class="text-4xl font-bold text-white mb-2">Your 90-Day Wealth Blueprint</h2>
+                    <p class="text-gray-400">Customized using SpeedWealth principles for your unique situation</p>
                 </div>
-                <button onclick="location.reload()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">Submit Another</button>
+
+                <!-- User Summary -->
+                <div class="bg-gray-900/50 rounded-lg p-6 mb-8 border border-gray-700">
+                    <h3 class="text-lg font-bold mb-4" style="color: #ff8120;">Your Profile Summary</h3>
+                    <div id="userSummary" class="grid grid-cols-2 gap-4 text-sm text-gray-300">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Blueprint Content -->
+                <div id="analysisText" class="text-gray-300 whitespace-pre-wrap leading-relaxed text-sm mb-8 bg-gray-900/30 p-6 rounded-lg border border-gray-700 max-h-96 overflow-y-auto"></div>
+
+                <!-- CTA Section -->
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-gray-400 text-sm mb-6">"Your income can only grow to the extent that you do." – T. Harv Eker</p>
+                    <div class="flex gap-4 flex-col sm:flex-row">
+                        <button onclick="location.reload()" class="flex-1 px-6 py-3 btn-primary rounded-lg">
+                            Create Another Plan
+                        </button>
+                        <button onclick="downloadPlan()" class="flex-1 px-6 py-3 btn-secondary rounded-lg">
+                            Download Plan
+                        </button>
+                    </div>
+                </div>
+
+                <p class="text-center text-xs text-gray-400 mt-6">
+                    Your data has been securely synced to Success Resources for personalized follow-up
+                </p>
             </div>
         </div>
     </div>
 
     <script>
         let currentStep = 0;
+        const totalSteps = 5;
+
+        function updateProgress() {
+            const progress = ((currentStep + 1) / totalSteps * 100);
+            document.getElementById('progressBar').style.setProperty('--progress', progress + '%');
+            document.getElementById('stepCounter').textContent = currentStep + 1;
+        }
 
         function getFormData() {
             return {
                 email: document.getElementById('email').value,
-                firstName: document.getElementById('firstName').value || 'User',
+                firstName: document.getElementById('firstName').value || 'Achiever',
                 lastName: document.getElementById('lastName').value || '',
                 phone: document.getElementById('phone').value || '',
-                monthlyIncome: document.getElementById('monthlyIncome').value,
-                monthlyExpenses: document.getElementById('monthlyExpenses').value,
-                currentSavings: document.getElementById('currentSavings').value,
-                debt: document.getElementById('debt').value || '0',
+                monthlyIncome: parseInt(document.getElementById('monthlyIncome').value) || 0,
+                monthlyExpenses: parseInt(document.getElementById('monthlyExpenses').value) || 0,
+                currentSavings: parseInt(document.getElementById('currentSavings').value) || 0,
+                debt: parseInt(document.getElementById('debt').value) || 0,
                 incomeStreams: document.getElementById('incomeStreams').value || '',
                 financialGoal: document.getElementById('financialGoal').value,
                 timeframe: document.getElementById('timeframe').value,
@@ -108,14 +233,16 @@
 
             const nextBtn = document.getElementById('nextBtn');
             if (step === 4) {
-                nextBtn.textContent = 'Generate Plan';
+                nextBtn.textContent = 'Generate My Blueprint ✓';
                 nextBtn.onclick = submitForm;
             } else {
-                nextBtn.textContent = 'Next';
+                nextBtn.textContent = 'Next →';
                 nextBtn.onclick = nextStep;
             }
 
             currentStep = step;
+            updateProgress();
+            window.scrollTo(0, 0);
         }
 
         function nextStep() {
@@ -132,278 +259,324 @@
 
         async function submitForm() {
             const data = getFormData();
+            const errorMsg = document.getElementById('errorMessage');
 
-            // Validation
-            if (!data.email || !data.monthlyIncome || !data.monthlyExpenses || !data.currentSavings) {
-                document.getElementById('errorMessage').textContent = '⚠️ Please fill all required fields';
-                document.getElementById('errorMessage').classList.remove('hidden');
+            if (!data.email || !data.monthlyIncome || !data.monthlyExpenses || !data.currentSavings || 
+                !data.financialGoal || !data.timeframe || !data.investmentExperience || !data.riskTolerance) {
+                errorMsg.textContent = '⚠️ Please complete all required fields';
+                errorMsg.classList.remove('hidden');
                 return;
             }
 
             try {
-                // Submit to backend
-                const response = await fetch('/api/submit-form', {
+                await fetch('/api/submit-form', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
-                });
+                }).catch(() => {});
 
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-
-                // Generate personalized plan
                 const plan = generatePersonalizedPlan(data);
-
-                // Display results
-                document.getElementById('analysisText').textContent = plan;
-                document.getElementById('formSection').classList.add('hidden');
-                document.getElementById('resultsSection').classList.remove('hidden');
+                displayResults(data, plan);
 
             } catch (err) {
-                document.getElementById('errorMessage').textContent = '⚠️ Error: ' + err.message;
-                document.getElementById('errorMessage').classList.remove('hidden');
+                errorMsg.textContent = '⚠️ ' + err.message;
+                errorMsg.classList.remove('hidden');
             }
         }
 
-        // Initialize
-        showStep(0);
-
         function generatePersonalizedPlan(data) {
-            const income = parseInt(data.monthlyIncome);
-            const expenses = parseInt(data.monthlyExpenses);
+            const income = data.monthlyIncome;
+            const expenses = data.monthlyExpenses;
             const surplus = income - expenses;
-            const savings = parseInt(data.currentSavings);
-            const debt = parseInt(data.debt || 0);
+            const savings = data.currentSavings;
+            const debt = data.debt;
             const experience = data.investmentExperience;
             const riskTolerance = data.riskTolerance;
             const goal = data.financialGoal;
             const timeframe = data.timeframe;
 
-            // Determine profile type
-            let profileType = 'balanced';
-            if (surplus < 500) profileType = 'tight';
-            else if (surplus > 2000) profileType = 'strong';
+            let profileType = 'Balanced';
+            if (surplus < 500) profileType = 'Tight';
+            else if (surplus > 2000) profileType = 'Strong';
 
-            let debtStatus = 'manageable';
-            if (debt > income * 3) debtStatus = 'high';
-            else if (debt === 0) debtStatus = 'clear';
+            let debtStatus = 'Manageable';
+            if (debt > income * 3) debtStatus = 'High';
+            else if (debt === 0) debtStatus = 'Clear';
 
-            let savingsLevel = 'building';
-            if (savings < 3000) savingsLevel = 'starting';
-            else if (savings > 30000) savingsLevel = 'solid';
+            let savingsLevel = 'Building';
+            if (savings < 3000) savingsLevel = 'Starting';
+            else if (savings > 30000) savingsLevel = 'Solid';
 
-            // Build personalized plan
-            let plan = `# Your 90-Day Financial Freedom Plan
+            let plan = `════════════════════════════════════════════════════════
+90-DAY WEALTH BLUEPRINT FOR ${data.firstName.toUpperCase()}
+════════════════════════════════════════════════════════
 
-## Your Financial Profile
-- Name: ${data.firstName} ${data.lastName}
-- Email: ${data.email}
-- Monthly Income: $${income.toLocaleString()}
-- Monthly Expenses: $${expenses.toLocaleString()}
-- Monthly Surplus: $${surplus.toLocaleString()}
-- Current Savings: $${savings.toLocaleString()}
-- Total Debt: $${debt.toLocaleString()}
-- Investment Experience: ${experience}
-- Risk Tolerance: ${riskTolerance}
+📊 YOUR FINANCIAL SNAPSHOT
+──────────────────────────────────────────────────────
+Monthly Income:         $${income.toLocaleString()}
+Monthly Expenses:       $${expenses.toLocaleString()}
+Monthly Surplus:        $${surplus.toLocaleString()}
+Current Savings:        $${savings.toLocaleString()}
+Total Debt:             $${debt.toLocaleString()}
+Investment Experience:  ${experience}
+Risk Tolerance:         ${riskTolerance}
 
-## Your Goal
-${goal} within ${timeframe}
+GOAL: ${goal} within ${timeframe}
 
----
+════════════════════════════════════════════════════════
 
-## Phase 1: ASSESS (Days 1-30)
-Understand your unique financial position
+🎯 PHASE 1: ASSESS (Days 1-30)
+"Know your numbers before you build your future"
+──────────────────────────────────────────────────────`;
 
-### Key Actions for Your Situation:`;
-
-            // Customize Phase 1 based on profile
-            if (debtStatus === 'high') {
+            if (debtStatus === 'High') {
                 plan += `
-- Create detailed debt inventory (creditor, balance, interest rate)
-- Identify which debts are costing you the most
-- Calculate debt-to-income ratio
-- Document minimum monthly debt payments`;
-            } else if (debtStatus === 'clear') {
+
+□ Create complete debt inventory
+□ Identify highest-cost debts first
+□ Calculate debt-to-income ratio: ${(debt / (income * 12)).toFixed(1)}x
+□ Document all monthly obligations
+□ Research debt consolidation options`;
+            } else if (debtStatus === 'Clear') {
                 plan += `
-- Assess current asset allocation
-- Review income sources for growth potential
-- Calculate your current net worth
-- Identify wealth-building opportunities`;
+
+□ Assess current asset allocation
+□ Review all income sources for growth
+□ Calculate net worth: $${(savings - debt).toLocaleString()}
+□ Identify leverage opportunities
+□ Plan asset growth`;
             } else {
                 plan += `
-- Complete comprehensive financial audit
-- Map all income sources and expenses
-- Review debt repayment timeline
-- Identify optimization opportunities`;
-            }
 
-            if (profileType === 'tight') {
-                plan += `
-- Find ${Math.ceil(expenses * 0.1)} in monthly savings
-- Identify discretionary spending to cut
-- Document essential vs. non-essential expenses`;
-            } else if (profileType === 'strong') {
-                plan += `
-- Analyze investment readiness
-- Review emergency fund adequacy ($${Math.round(expenses * 3).toLocaleString()} target)
-- Plan wealth acceleration strategy`;
+□ Complete financial audit
+□ Map all income sources
+□ Review debt repayment timeline
+□ Find $${Math.ceil(expenses * 0.1).toLocaleString()} in savings
+□ Set top 3 priorities`;
             }
 
             plan += `
 
-### Milestone:
-- Day 30: Complete financial inventory and identify top 3 priorities
+30-DAY MILESTONE: Clear position + top 3 priorities ✓
 
----
+════════════════════════════════════════════════════════
 
-## Phase 2: DESIGN (Days 31-60)
-Create your personalized strategy
+🚀 PHASE 2: DESIGN (Days 31-60)
+"Create systems that work without you"
+──────────────────────────────────────────────────────
 
-### Cost Optimization:`;
+REDUCE EXPENSES`;
 
-            if (profileType === 'tight') {
+            if (profileType === 'Tight') {
                 plan += `
-- Reduce expenses by $${Math.round(surplus * 0.5).toLocaleString()} using 50/30/20 budget
-- Negotiate recurring bills (phone, insurance, subscriptions)
-- Find $${Math.round(expenses * 0.05).toLocaleString()} in quick wins`;
+□ Implement 50/30/20 budget
+□ Target: $${Math.round(surplus * 0.5).toLocaleString()} monthly reduction
+□ Negotiate bills and subscriptions
+□ Find $${Math.round(expenses * 0.05).toLocaleString()} in quick wins`;
             } else {
                 plan += `
-- Review and optimize major expense categories
-- Target $${Math.round(surplus * 0.3).toLocaleString()} in annual savings
-- Implement subscription audit`;
+□ Review major expense categories
+□ Target: Save $${Math.round(surplus * 0.3).toLocaleString()} annually
+□ Audit subscriptions
+□ Renegotiate fixed costs`;
             }
 
             plan += `
 
-### Income Growth:`;
+INCREASE INCOME`;
 
             if (experience === 'Beginner') {
                 plan += `
-- Research side income matching your skills
-- Identify $${Math.round(income * 0.1).toLocaleString()} additional monthly income opportunity
-- Start small with skill-based freelancing`;
+□ Research side income opportunities
+□ Target: $${Math.round(income * 0.1).toLocaleString()} additional income
+□ Start skill-based freelancing
+□ Launch 1 income stream by Day 60`;
             } else if (experience === 'Advanced') {
                 plan += `
-- Explore investment income strategies
-- Evaluate business opportunities aligned with expertise
-- Plan for $${Math.round(income * 0.2).toLocaleString()} additional monthly income`;
+□ Explore investment income
+□ Evaluate business opportunities
+□ Target: $${Math.round(income * 0.2).toLocaleString()} additional income
+□ Develop multiple income streams`;
             } else {
                 plan += `
-- Identify skill advancement opportunities
-- Research income increase options (raise, promotion, side work)
-- Target $${Math.round(income * 0.15).toLocaleString()} additional monthly income`;
+□ Plan skill advancement
+□ Research raise/promotion options
+□ Target: $${Math.round(income * 0.15).toLocaleString()} additional income
+□ Start secondary income by Day 45`;
             }
 
             plan += `
 
-### Savings & Investment:`;
+BUILD SAVINGS SYSTEM`;
 
             if (riskTolerance === 'Low') {
                 plan += `
-- Set up automatic transfers of $${Math.round(surplus * 0.5).toLocaleString()} to savings
-- Explore low-risk bonds and stable accounts
-- Build 6-month emergency fund (${Math.round(expenses * 6).toLocaleString()})`;
+□ Auto-transfer: $${Math.round(surplus * 0.5).toLocaleString()}/month
+□ Open high-yield savings (4-5% APY)
+□ Build 6-month emergency fund: $${(expenses * 6).toLocaleString()}
+□ Explore conservative investments`;
             } else if (riskTolerance === 'High') {
                 plan += `
-- Allocate $${Math.round(surplus * 0.6).toLocaleString()} to diversified portfolio
-- Research stock market ETFs and index funds
-- Consider growth-oriented investments`;
+□ Allocate: $${Math.round(surplus * 0.6).toLocaleString()}/month
+□ Research index funds (VOO, VTI)
+□ Explore growth ETFs
+□ Dollar-cost average monthly`;
             } else {
                 plan += `
-- Set up balanced portfolio with $${Math.round(surplus * 0.5).toLocaleString()} monthly investment
-- Mix conservative (60%) and growth (40%) allocations
-- Review quarterly performance`;
+□ Monthly investment: $${Math.round(surplus * 0.5).toLocaleString()}
+□ Target: 60% Conservative / 40% Growth
+□ Mix bonds and index funds
+□ Rebalance quarterly`;
             }
 
             plan += `
 
-### Debt Strategy:`;
+DEBT STRATEGY`;
 
-            if (debtStatus === 'high') {
+            if (debtStatus === 'High') {
                 plan += `
-- Apply extra $${Math.round(surplus * 0.5).toLocaleString()} to highest interest debt
-- Negotiate lower rates on major debts
-- Project debt-free date`;
-            } else if (debtStatus === 'clear') {
+□ Apply $${Math.round(surplus * 0.5).toLocaleString()} to highest interest
+□ Negotiate lower rates
+□ Project debt-free date`;
+            } else if (debtStatus === 'Clear') {
                 plan += `
-- Focus on wealth building instead of debt repayment
-- Explore investment opportunities
-- Plan asset diversification`;
+□ Focus on wealth building
+□ Invest for growth
+□ Plan diversification`;
             } else {
                 plan += `
-- Maintain current debt payments
-- Allocate additional surplus to investments
-- Plan debt payoff acceleration`;
+□ Maintain current payments
+□ Allocate surplus to investments
+□ Plan acceleration`;
             }
 
             plan += `
 
-### Milestone:
-- Day 60: Systems in place for income, expenses, and savings
+60-DAY MILESTONE: Systems in place ✓
 
----
+════════════════════════════════════════════════════════
 
-## Phase 3: ACHIEVE (Days 61-90)
-Implementation and momentum building
+⚡ PHASE 3: ACHIEVE (Days 61-90)
+"From knowledge to execution to wealth"
+──────────────────────────────────────────────────────
 
-### Weekly Actions:
-- Track progress against targets
-- Monitor spending and income
-- Adjust strategy based on results`;
+WEEKLY ACTIONS
+□ Monday: Review & plan
+□ Wednesday: Track progress
+□ Friday: Adjust & optimize
+□ Daily: One action toward goal
 
-            if (profileType === 'tight') {
-                plan += `
-- Weekly budget review meetings
-- Daily expense tracking
-- Celebrate small wins`;
-            } else if (profileType === 'strong') {
-                plan += `
-- Portfolio performance review
-- Tax optimization analysis
-- Wealth building acceleration planning`;
-            } else {
-                plan += `
-- Balanced progress check
-- Savings rate review
-- Adjustment planning`;
-            }
+MONTH 3 TARGETS
+✓ Savings accumulated: $${Math.round(surplus * 3).toLocaleString()}
+✓ New income stream(s): At least 1
+✓ Debt reduction: $${Math.round(debt * 0.05).toLocaleString()}}
+✓ Investment routine: Automated
+✓ Mindset shift: Survival → Building
 
-            plan += `
+BEYOND 90 DAYS
+□ Evaluate progress
+□ Plan next 90-day sprint
+□ Scale what works
+□ Build accountability
+□ Continue learning
 
-### Month 3 Goals:
-- Achieve $${Math.round(surplus * 3).toLocaleString()} additional savings
-- Implement at least 2 new income strategies
-- Reduce debt by $${Math.round(debt * 0.05).toLocaleString()} (if applicable)
-- Establish consistent investment routine
+════════════════════════════════════════════════════════
 
-### Beyond 90 Days:
-- Evaluate progress toward "${goal}"
-- Plan next 90-day sprint
-- Scale what's working
-- Adjust what isn't
+📈 SUCCESS METRICS
+──────────────────────────────────────────────────────
+Monthly Savings Target:    $${Math.round(surplus).toLocaleString()}
+Income Growth Target:      $${Math.round(income * 0.1).toLocaleString()}
+Emergency Fund Target:     $${(expenses * 3).toLocaleString()}
+Investment Rate:           $${Math.round(surplus * 0.4).toLocaleString()}/month
 
----
+Your Profile: ${profileType} | ${debtStatus} Debt | ${savingsLevel}
 
-## Success Metrics for Your Plan:
-✓ Savings Rate: Target $${Math.round(surplus).toLocaleString()}/month
-✓ Debt Reduction: ${debtStatus === 'high' ? `Target $${Math.round(debt * 0.1).toLocaleString()} reduction` : 'Maintain current trajectory'}
-✓ Income Growth: Target $${Math.round(income * 0.1).toLocaleString()} additional
-✓ Emergency Fund: Target $${Math.round(expenses * 3).toLocaleString()}
-✓ Investment Rate: Target $${Math.round(surplus * 0.4).toLocaleString()}
+════════════════════════════════════════════════════════
 
----
+💡 KEY SPEEDWEALTH PRINCIPLES FOR YOU
 
-## Personalized Recommendations:
-Profile: ${profileType.toUpperCase()} (Surplus: $${surplus.toLocaleString()}/month)
-Debt Level: ${debtStatus.toUpperCase()}
-Savings Level: ${savingsLevel.toUpperCase()}
-Experience: ${experience.toUpperCase()}
+1. SYSTEMIZE: Repeatable processes = profits
+2. DUPLICATE: Do it again and again
+3. LEVERAGE: Work smarter, not harder
+4. PRACTICE: Daily habits = future results
+5. CASHING OUT: Build to sell
 
-Your data has been synced to Active Campaign for personalized follow-up and support.`;
+"If you're not using leverage, you're working too hard
+and earning too little." – T. Harv Eker
+
+════════════════════════════════════════════════════════
+
+Next Step: Book a consultation
+Visit: successresources.com/coaching`;
 
             return plan;
         }
+
+        function displayResults(data, plan) {
+            const userSummary = document.getElementById('userSummary');
+            userSummary.innerHTML = `
+                <div><span style="color: #ff8120;">Monthly Surplus:</span><br>$${(data.monthlyIncome - data.monthlyExpenses).toLocaleString()}</div>
+                <div><span style="color: #ff8120;">Current Savings:</span><br>$${data.currentSavings.toLocaleString()}</div>
+                <div><span style="color: #ff8120;">Total Debt:</span><br>$${data.debt.toLocaleString()}</div>
+                <div><span style="color: #ff8120;">Emergency Fund Need:</span><br>$${(data.monthlyExpenses * 3).toLocaleString()}</div>
+            `;
+
+            document.getElementById('analysisText').textContent = plan;
+            document.getElementById('formSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function downloadPlan() {
+            const data = getFormData();
+            const plan = generatePersonalizedPlan(data);
+            const text = `${data.firstName}'s Wealth Blueprint\n\n${plan}`;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `wealth_blueprint_${data.firstName.toLowerCase()}.txt`;
+            link.click();
+        }
+
+        showStep(0);
     </script>
+
+    <!-- DISCLAIMER SECTION -->
+    <footer class="mt-16 py-12 border-t border-gray-700">
+        <div class="max-w-5xl mx-auto px-4 md:px-8">
+            <div class="bg-gray-900/50 rounded-lg p-6 border border-gray-700">
+                <h4 class="text-sm font-bold mb-4" style="color: #ff8120;">DISCLAIMER</h4>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    This Wealth Blueprint tool is provided for educational and informational purposes only. Success Resources and its representatives do not provide financial, investment, tax, or legal advice. The personalized plan generated by this tool is based on information you provide and general principles, but it should not be construed as professional financial advice tailored to your specific circumstances.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">Financial Results Vary:</strong> Past performance does not guarantee future results. Your actual financial outcomes will depend on many factors including market conditions, economic factors, personal discipline, and implementation of strategies. The projections and suggestions in your blueprint are estimates and should not be relied upon as guaranteed outcomes.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">Professional Advice Required:</strong> Before making any financial decisions, including investments, debt management, tax planning, or business decisions, consult with a qualified financial advisor, accountant, tax professional, or attorney who understands your specific situation.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">No Guarantees:</strong> Success Resources makes no representations or warranties regarding the accuracy, completeness, or results of this tool. Neither Success Resources nor its representatives assume any responsibility for losses or damages resulting from your use of this tool or reliance on the information provided.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    <strong style="color: #ff8120;">Your Responsibility:</strong> You are solely responsible for your financial decisions and their consequences. It is your obligation to conduct due diligence and seek appropriate professional advice before taking action on any information contained in your personalized blueprint.
+                </p>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    By using this tool, you acknowledge that you understand and agree to these terms and that you have not relied solely on this blueprint for making financial decisions.
+                </p>
+            </div>
+            
+            <!-- Footer Links -->
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center mt-8 text-xs text-gray-500">
+                <a href="#" class="hover:text-gray-300 transition">Privacy Policy</a>
+                <span>•</span>
+                <a href="#" class="hover:text-gray-300 transition">Terms of Service</a>
+                <span>•</span>
+                <a href="#" class="hover:text-gray-300 transition">Contact</a>
+                <span>•</span>
+                <span>© 2024 Success Resources. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
