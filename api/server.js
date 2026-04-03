@@ -22,17 +22,33 @@ app.post('/api/submit-form', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Forward to Zapier webhook
+    // Format data for Zapier - use URL-encoded form data instead of JSON
+    // This helps Zapier parse fields automatically
     const zapierUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjpkgc/';
     
     console.log('📡 Forwarding to Zapier:', zapierUrl);
 
+    // Send as JSON with proper structure
     const zapierResponse = await fetch(zapierUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({
+        email: formData.email,
+        firstName: formData.firstName || '',
+        lastName: formData.lastName || '',
+        phone: formData.phone || '',
+        monthlyIncome: formData.monthlyIncome || '',
+        monthlyExpenses: formData.monthlyExpenses || '',
+        currentSavings: formData.currentSavings || '',
+        debt: formData.debt || '0',
+        incomeStreams: formData.incomeStreams || '',
+        financialGoal: formData.financialGoal || '',
+        timeframe: formData.timeframe || '',
+        investmentExperience: formData.investmentExperience || '',
+        riskTolerance: formData.riskTolerance || ''
+      })
     });
 
     console.log('✅ Zapier response status:', zapierResponse.status);
