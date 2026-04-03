@@ -86,8 +86,8 @@
 
                     <!-- Navigation Buttons -->
                     <div class="flex gap-4">
-                        <button onclick="goToStep(currentStep - 1)" class="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition">Previous</button>
-                        <button onclick="goToStep(currentStep + 1)" id="nextBtn" class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">Next</button>
+                        <button onclick="previousStep()" class="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition">Previous</button>
+                        <button onclick="nextOrSubmit()" id="nextBtn" class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">Next</button>
                     </div>
                 </div>
 
@@ -162,18 +162,6 @@
             // Show current step
             document.getElementById(`step-${step}`).classList.remove('hidden');
 
-            // Update buttons
-            document.querySelector('button:nth-of-type(1)').disabled = step === 0;
-            
-            const nextBtn = document.getElementById('nextBtn');
-            if (step === totalSteps - 1) {
-                nextBtn.textContent = 'Generate Your Plan';
-                nextBtn.onclick = generateAnalysis;
-            } else {
-                nextBtn.textContent = 'Next';
-                nextBtn.onclick = () => goToStep(step + 1);
-            }
-
             // Update step indicators
             document.querySelectorAll('.step-btn').forEach((btn, idx) => {
                 if (idx === step) {
@@ -190,6 +178,19 @@
 
             currentStep = step;
             updateFormDisplay();
+        }
+
+        function previousStep() {
+            goToStep(currentStep - 1);
+        }
+
+        function nextOrSubmit() {
+            const steps = document.querySelectorAll('.step-content').length;
+            if (currentStep === steps - 1) {
+                generateAnalysis();
+            } else {
+                goToStep(currentStep + 1);
+            }
         }
 
         function getFormData() {
@@ -225,9 +226,8 @@
 
         function addLog(message) {
             const syncLog = document.getElementById('syncLog');
-            const logEntry = document.createElement('div');
-            logEntry.className = 'text-slate-300';
             const time = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
             logEntry.textContent = `${time}: ${message}`;
             syncLog.appendChild(logEntry);
             syncLog.scrollTop = syncLog.scrollHeight;
@@ -248,20 +248,31 @@
                 return;
             }
 
-            addLog('🚀 Submitting to Zapier...');
+            addLog('🚀 Submitting form...');
 
             try {
-                // Submit to Zapier webhook
-                const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjs6w4/';
+                // Call backend API (which proxies to Zapier)
+                const apiUrl = '/api/submit-form';
                 
-                addLog(`📡 Calling Zapier webhook...`);
+                addLog(`📡 Calling backend API...`);
 
-                const response = await fetch(zapierWebhookUrl, {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(data)
                 });
 
-                addLog(`✅ Zapier received data - Contact syncing to Active Campaign...`);
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                addLog(`✅ Backend received form`);
+                addLog(`✅ Data forwarded to Zapier`);
+                addLog(`✅ Contact syncing to Active Campaign...`);
 
                 // Generate local 90-day plan
                 addLog('🤖 Generating your 90-day plan...');
@@ -298,6 +309,8 @@ Goal: ${data.financialGoal}
 Timeframe: ${data.timeframe}
 Investment Experience: ${data.investmentExperience}
 Risk Tolerance: ${data.riskTolerance}
+
+Income Sources: ${data.incomeStreams || 'Not specified'}
 
 ---
 
@@ -352,11 +365,6 @@ Risk Tolerance: ${data.riskTolerance}
 ✓ Debt Reduction: Focus on highest interest first
 ✓ Investment Portfolio: Aligned with ${data.riskTolerance} tolerance
 ✓ Behavioral Changes: Establish 3 new money habits
-
----
-
-## Income Sources:
-${data.incomeStreams || 'Not specified'}
 
 ---
 
