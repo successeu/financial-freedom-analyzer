@@ -23,7 +23,7 @@ app.post('/api/submit-form', async (req, res) => {
     }
 
     // Forward to Zapier webhook
-    const zapierUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjs6w4/';
+    const zapierUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjpkgc/';
     
     console.log('📡 Forwarding to Zapier:', zapierUrl);
 
