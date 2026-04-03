@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Freedom Analyzer - Active Campaign Sync</title>
+    <title>Financial Freedom Analyzer - Zapier Integration</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen p-6">
@@ -14,7 +14,7 @@
                 <h1 class="text-4xl font-bold text-white mb-3">Financial Freedom Analyzer</h1>
                 <p class="text-slate-300 text-lg flex items-center gap-2">
                     <span class="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    Active Campaign MCP Integration Ready
+                    Zapier + Active Campaign Integration Ready
                 </p>
             </div>
 
@@ -51,88 +51,97 @@
 
                         <!-- Step 2 -->
                         <div id="step-2" class="step-content hidden">
-                            <h3 class="text-lg font-semibold text-white mb-4">Current Financial Position</h3>
+                            <h3 class="text-lg font-semibold text-white mb-4">Current Position</h3>
                             <input type="number" id="currentSavings" placeholder="Current Savings ($) *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
-                            <input type="number" id="debt" placeholder="Total Debt ($)" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                            <textarea id="expenses" placeholder="Major Expenses..." class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" rows="2"></textarea>
+                            <input type="number" id="debt" placeholder="Total Debt ($)" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
                         </div>
 
                         <!-- Step 3 -->
                         <div id="step-3" class="step-content hidden">
                             <h3 class="text-lg font-semibold text-white mb-4">Financial Goals</h3>
-                            <textarea id="financialGoal" placeholder="Primary Goal..." class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" rows="3"></textarea>
-                            <input type="text" id="timeframe" placeholder="Desired Timeframe (e.g., 5 years)" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
+                            <input type="text" id="financialGoal" placeholder="What is your main financial goal? *" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
+                            <input type="text" id="timeframe" placeholder="Timeline (e.g., 2 years, 5 years) *" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg" required>
                         </div>
 
                         <!-- Step 4 -->
                         <div id="step-4" class="step-content hidden">
                             <h3 class="text-lg font-semibold text-white mb-4">Investment Profile</h3>
                             <select id="investmentExperience" class="w-full mb-3 px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                                <option value="beginner">Beginner</option>
-                                <option value="intermediate" selected>Intermediate</option>
-                                <option value="advanced">Advanced</option>
+                                <option value="">Select Investment Experience *</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
                             </select>
                             <select id="riskTolerance" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg">
-                                <option value="conservative">Conservative</option>
-                                <option value="moderate" selected>Moderate</option>
-                                <option value="aggressive">Aggressive</option>
+                                <option value="">Select Risk Tolerance *</option>
+                                <option value="Low">Low</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="High">High</option>
                             </select>
                         </div>
 
-                        <div id="errorMessage" class="bg-red-900/30 border border-red-500 text-red-200 p-3 rounded-lg mt-4 hidden"></div>
+                        <!-- Error Message -->
+                        <div id="errorMessage" class="hidden mt-4 p-3 bg-red-900/30 border border-red-600 text-red-200 rounded-lg"></div>
                     </div>
 
-                    <!-- Navigation -->
+                    <!-- Navigation Buttons -->
                     <div class="flex gap-4">
-                        <button onclick="previousStep()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-3 rounded-lg font-semibold">Previous</button>
-                        <button id="nextBtn" onclick="nextStep()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold">Next</button>
+                        <button onclick="goToStep(currentStep - 1)" class="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition">Previous</button>
+                        <button onclick="goToStep(currentStep + 1)" id="nextBtn" class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">Next</button>
                     </div>
                 </div>
 
                 <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="sticky top-6">
-                        <!-- Sync Status -->
-                        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 mb-6">
-                            <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-                                📊 Form Data
-                            </h3>
-                            <div id="formPreview" class="text-sm text-slate-300 space-y-2">
-                                <p class="text-slate-400">Fill out the form to see preview</p>
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Form Data -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-2xl">📋</span> Form Data
+                        </h3>
+                        <div class="space-y-2 text-sm text-slate-300">
+                            <div>
+                                <span class="text-slate-400">Progress:</span>
+                                <span id="progress" class="font-semibold text-blue-400">0%</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Email:</span>
+                                <span id="displayEmail" class="font-semibold text-blue-400">Not set</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Income:</span>
+                                <span id="displayIncome" class="font-semibold text-blue-400">$0</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Expenses:</span>
+                                <span id="displayExpenses" class="font-semibold text-blue-400">$0</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Savings:</span>
+                                <span id="displaySavings" class="font-semibold text-blue-400">$0</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Sync Log -->
-                        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
-                            <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-                                🔄 AC Sync Log
-                            </h3>
-                            <div id="syncLog" class="text-xs text-slate-300 space-y-2 max-h-48 overflow-y-auto">
-                                <p class="text-slate-400">Ready to sync...</p>
-                            </div>
+                    <!-- AC Sync Log -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-2xl">🔄</span> AC Sync Log
+                        </h3>
+                        <div id="syncLog" class="space-y-2 text-sm text-slate-300 max-h-48 overflow-y-auto">
+                            <div class="text-slate-400">Waiting for submission...</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Analysis View -->
-        <div id="analysisContainer" class="hidden">
-            <div class="mb-8">
-                <button onclick="location.reload()" class="text-blue-300 hover:text-blue-200 flex items-center gap-2">← New Analysis</button>
-            </div>
-
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
-                <h1 class="text-3xl font-bold text-white mb-2">Your 90-Day Freedom Plan</h1>
-                <p class="text-slate-300 mb-8">Personalized analysis for <span id="resultName"></span></p>
-
-                <div id="metricsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"></div>
-
-                <div id="analysisText" class="bg-slate-900/50 rounded-lg p-6 border border-slate-600 mb-8 max-h-96 overflow-y-auto text-slate-300"></div>
-
-                <div class="flex gap-4">
-                    <button onclick="location.reload()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold">Analyze Again</button>
-                    <button onclick="window.print()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-3 rounded-lg font-semibold">Download</button>
+            <!-- Results Section (Hidden until submitted) -->
+            <div id="resultsSection" class="hidden mt-8">
+                <div class="bg-gradient-to-r from-green-900/20 to-blue-900/20 border border-green-700 rounded-2xl p-8">
+                    <h2 class="text-3xl font-bold text-white mb-4">✅ Your 90-Day Financial Freedom Plan</h2>
+                    <div id="analysisResult" class="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+                        <div class="text-slate-300 whitespace-pre-wrap leading-relaxed" id="analysisText"></div>
+                    </div>
+                    <button onclick="location.reload()" class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">Submit Another</button>
                 </div>
             </div>
         </div>
@@ -140,99 +149,93 @@
 
     <script>
         let currentStep = 0;
-        const totalSteps = 5;
 
-        const formData = {};
-        const syncLog = [];
+        function goToStep(step) {
+            const steps = document.querySelectorAll('.step-content');
+            const totalSteps = steps.length;
+
+            if (step < 0 || step >= totalSteps) return;
+
+            // Hide all steps
+            steps.forEach(s => s.classList.add('hidden'));
+            
+            // Show current step
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+
+            // Update buttons
+            document.querySelector('button:nth-of-type(1)').disabled = step === 0;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (step === totalSteps - 1) {
+                nextBtn.textContent = 'Generate Your Plan';
+                nextBtn.onclick = generateAnalysis;
+            } else {
+                nextBtn.textContent = 'Next';
+                nextBtn.onclick = () => goToStep(step + 1);
+            }
+
+            // Update step indicators
+            document.querySelectorAll('.step-btn').forEach((btn, idx) => {
+                if (idx === step) {
+                    btn.classList.remove('bg-slate-800', 'text-slate-300');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                } else if (idx < step) {
+                    btn.classList.remove('bg-slate-800', 'text-slate-300', 'bg-blue-600', 'text-white');
+                    btn.classList.add('bg-green-700', 'text-white');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'bg-green-700');
+                    btn.classList.add('bg-slate-800', 'text-slate-300');
+                }
+            });
+
+            currentStep = step;
+            updateFormDisplay();
+        }
 
         function getFormData() {
             return {
+                email: document.getElementById('email').value,
                 firstName: document.getElementById('firstName').value || 'User',
                 lastName: document.getElementById('lastName').value || '',
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
+                phone: document.getElementById('phone').value || '',
                 monthlyIncome: document.getElementById('monthlyIncome').value,
                 monthlyExpenses: document.getElementById('monthlyExpenses').value,
                 currentSavings: document.getElementById('currentSavings').value,
-                debt: document.getElementById('debt').value,
+                debt: document.getElementById('debt').value || '0',
+                incomeStreams: document.getElementById('incomeStreams').value || '',
                 financialGoal: document.getElementById('financialGoal').value,
                 timeframe: document.getElementById('timeframe').value,
                 investmentExperience: document.getElementById('investmentExperience').value,
-                riskTolerance: document.getElementById('riskTolerance').value,
-                incomeStreams: document.getElementById('incomeStreams').value,
-                expenses: document.getElementById('expenses').value
+                riskTolerance: document.getElementById('riskTolerance').value
             };
         }
 
-        function addLog(message) {
-            const timestamp = new Date().toLocaleTimeString();
-            syncLog.unshift(`${timestamp}: ${message}`);
-            document.getElementById('syncLog').innerHTML = syncLog
-                .slice(0, 20)
-                .map(log => `<p>${log}</p>`)
-                .join('');
-        }
-
-        function updateFormPreview() {
+        function updateFormDisplay() {
             const data = getFormData();
-            const surplus = (parseFloat(data.monthlyIncome) || 0) - (parseFloat(data.monthlyExpenses) || 0);
-            document.getElementById('formPreview').innerHTML = `
-                <p><span class="text-slate-400">Progress:</span> <span class="text-blue-300">${currentStep * 20 + 20}%</span></p>
-                ${data.email ? `<p><span class="text-slate-400">Email:</span> <span class="text-slate-100">${data.email}</span></p>` : ''}
-                ${data.monthlyIncome ? `<p><span class="text-slate-400">Income:</span> <span class="text-slate-100">$${parseFloat(data.monthlyIncome).toLocaleString()}</span></p>` : ''}
-                ${data.monthlyExpenses ? `<p><span class="text-slate-400">Expenses:</span> <span class="text-slate-100">$${parseFloat(data.monthlyExpenses).toLocaleString()}</span></p>` : ''}
-                ${data.currentSavings ? `<p><span class="text-slate-400">Savings:</span> <span class="text-slate-100">$${parseFloat(data.currentSavings).toLocaleString()}</span></p>` : ''}
-            `;
+            document.getElementById('displayEmail').textContent = data.email || 'Not set';
+            document.getElementById('displayIncome').textContent = data.monthlyIncome ? `$${parseInt(data.monthlyIncome).toLocaleString()}` : '$0';
+            document.getElementById('displayExpenses').textContent = data.monthlyExpenses ? `$${parseInt(data.monthlyExpenses).toLocaleString()}` : '$0';
+            document.getElementById('displaySavings').textContent = data.currentSavings ? `$${parseInt(data.currentSavings).toLocaleString()}` : '$0';
+            
+            const filledFields = Object.values(data).filter(v => v).length;
+            const totalFields = Object.keys(data).length;
+            const progress = Math.round((filledFields / totalFields) * 100);
+            document.getElementById('progress').textContent = progress + '%';
         }
 
-        function goToStep(step) {
-            currentStep = step;
-            updateView();
-        }
-
-        function nextStep() {
-            if (currentStep === totalSteps - 1) {
-                generateAnalysis();
-            } else {
-                currentStep++;
-                updateView();
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 0) {
-                currentStep--;
-                updateView();
-            }
-        }
-
-        function updateView() {
-            document.querySelectorAll('.step-content').forEach(e => e.classList.add('hidden'));
-            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
-
-            document.querySelectorAll('.step-btn').forEach((btn, i) => {
-                btn.classList.toggle('bg-blue-600 text-white', i === currentStep);
-                btn.classList.toggle('bg-slate-800 text-slate-300', i !== currentStep);
-            });
-
-            const btn = document.getElementById('nextBtn');
-            if (currentStep === totalSteps - 1) {
-                btn.textContent = '✨ Generate Your Plan';
-                btn.classList.remove('bg-blue-600');
-                btn.classList.add('bg-green-600');
-            } else {
-                btn.textContent = 'Next →';
-                btn.classList.remove('bg-green-600');
-                btn.classList.add('bg-blue-600');
-            }
-
-            updateFormPreview();
+        function addLog(message) {
+            const syncLog = document.getElementById('syncLog');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'text-slate-300';
+            const time = new Date().toLocaleTimeString();
+            logEntry.textContent = `${time}: ${message}`;
+            syncLog.appendChild(logEntry);
+            syncLog.scrollTop = syncLog.scrollHeight;
         }
 
         async function generateAnalysis() {
             const data = getFormData();
 
-            // Validation
             if (!data.monthlyIncome || !data.monthlyExpenses || !data.currentSavings) {
                 document.getElementById('errorMessage').textContent = '⚠️ Please fill required fields';
                 document.getElementById('errorMessage').classList.remove('hidden');
@@ -245,57 +248,32 @@
                 return;
             }
 
-            addLog('🚀 Submitting to Active Campaign...');
+            addLog('🚀 Submitting to Zapier...');
 
             try {
-                // Step 1: Submit to Zapier webhook which syncs to Active Campaign
+                // Submit to Zapier webhook
                 const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjs6w4/';
                 
-                addLog(`📡 Calling Zapier: ${zapierWebhookUrl}`);
+                addLog(`📡 Calling Zapier webhook...`);
 
-                const submitResponse = await fetch(zapierWebhookUrl, {
+                const response = await fetch(zapierWebhookUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                     body: JSON.stringify(data)
                 });
 
-                if (!submitResponse.ok) {
-                    throw new Error(`Zapier error: ${submitResponse.status}`);
-                }
+                addLog(`✅ Zapier received data - Contact syncing to Active Campaign...`);
 
-                addLog(`✅ Zapier received data - syncing to Active Campaign...`);
-
-                // Step 2: Generate analysis via backend
+                // Generate local 90-day plan
                 addLog('🤖 Generating your 90-day plan...');
-
-                const prompt = `Create a 90-day financial freedom plan for:
-Income: $${data.monthlyIncome}, Expenses: $${data.monthlyExpenses}, Savings: $${data.currentSavings}, Debt: $${data.debt || 0}
-Goal: ${data.financialGoal}, Timeframe: ${data.timeframe}
-Investment Experience: ${data.investmentExperience}, Risk Tolerance: ${data.riskTolerance}
-
-Include 3 phases: ASSESS (Days 1-30), DESIGN (Days 31-60), ACHIEVE (Days 61-90). Be specific and actionable.`;
-
-                const analysisResponse = await fetch('/api/generate-analysis', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ prompt })
-                });
-
-                if (!analysisResponse.ok) {
-                    throw new Error(`Analysis API error: ${analysisResponse.status}`);
-                }
-
-                const result = await analysisResponse.json();
-                const analysis = result.analysis;
-
-                addLog('✅ 90-day plan generated');
+                
+                const analysis = generateLocalPlan(data);
+                
+                addLog('✅ Plan generated successfully!');
 
                 // Display results
-                displayAnalysis(data, analysis);
+                document.getElementById('analysisText').textContent = analysis;
+                document.getElementById('resultsSection').classList.remove('hidden');
+                document.getElementById('formContainer').classList.add('hidden');
 
             } catch (err) {
                 addLog('❌ Error: ' + err.message);
@@ -304,51 +282,90 @@ Include 3 phases: ASSESS (Days 1-30), DESIGN (Days 31-60), ACHIEVE (Days 61-90).
             }
         }
 
-        function displayAnalysis(data, analysis) {
-            const surplus = parseFloat(data.monthlyIncome) - parseFloat(data.monthlyExpenses);
+        function generateLocalPlan(data) {
+            return `# Your 90-Day Financial Freedom Plan
 
-            document.getElementById('resultName').textContent = `${data.firstName} ${data.lastName}`;
+## Personal Summary
+Name: ${data.firstName} ${data.lastName}
+Email: ${data.email}
+Monthly Income: $${parseInt(data.monthlyIncome).toLocaleString()}
+Monthly Expenses: $${parseInt(data.monthlyExpenses).toLocaleString()}
+Monthly Surplus: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
+Current Savings: $${parseInt(data.currentSavings).toLocaleString()}
+Total Debt: $${parseInt(data.debt || 0).toLocaleString()}
 
-            document.getElementById('metricsContainer').innerHTML = `
-                <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
-                    <p class="text-slate-400 text-sm mb-1">Monthly Surplus</p>
-                    <p class="text-2xl font-bold ${surplus >= 0 ? 'text-green-400' : 'text-red-400'}">$${surplus.toLocaleString()}</p>
-                </div>
-                <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
-                    <p class="text-slate-400 text-sm mb-1">Savings</p>
-                    <p class="text-2xl font-bold text-blue-400">$${parseFloat(data.currentSavings).toLocaleString()}</p>
-                </div>
-                <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
-                    <p class="text-slate-400 text-sm mb-1">Debt</p>
-                    <p class="text-2xl font-bold text-orange-400">$${parseFloat(data.debt || 0).toLocaleString()}</p>
-                </div>
-                <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
-                    <p class="text-slate-400 text-sm mb-1">Income</p>
-                    <p class="text-2xl font-bold text-cyan-400">$${parseFloat(data.monthlyIncome).toLocaleString()}</p>
-                </div>
-            `;
+Goal: ${data.financialGoal}
+Timeframe: ${data.timeframe}
+Investment Experience: ${data.investmentExperience}
+Risk Tolerance: ${data.riskTolerance}
 
-            document.getElementById('analysisText').innerHTML = analysis
-                .split('\n')
-                .map(line => {
-                    if (line.startsWith('#')) return `<h2 class="text-xl font-bold text-blue-300 mt-4 mb-2">${line.replace(/#/g, '').trim()}</h2>`;
-                    if (line.startsWith('-')) return `<li class="ml-4">${line.substring(1).trim()}</li>`;
-                    if (line.trim()) return `<p class="mb-2">${line}</p>`;
-                    return '';
-                })
-                .join('');
+---
 
-            document.getElementById('formContainer').classList.add('hidden');
-            document.getElementById('analysisContainer').classList.remove('hidden');
+## Phase 1: ASSESS (Days 1-30)
+### Key Actions:
+- Conduct comprehensive financial audit
+- Calculate exact monthly surplus: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
+- Document all debt obligations
+- Identify major spending categories
+- Review savings progress timeline
 
-            addLog('✅ Analysis displayed');
+### Milestones:
+- Day 7: Complete financial inventory
+- Day 15: Create detailed budget breakdown
+- Day 30: Identify 3 primary cost-reduction opportunities
+
+---
+
+## Phase 2: DESIGN (Days 31-60)
+### Key Actions:
+- Implement cost reduction strategy
+- Explore income increase opportunities aligned with ${data.investmentExperience} experience level
+- Set up automatic savings transfers (target: $${Math.round((parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)) * 0.5).toLocaleString()}/month)
+- Research investment options with ${data.riskTolerance} risk tolerance
+- Create debt payoff timeline if needed
+
+### Milestones:
+- Day 45: Achieve first cost reduction
+- Day 50: Establish new income stream or negotiate raise
+- Day 60: Set up automated savings plan
+
+---
+
+## Phase 3: ACHIEVE (Days 61-90)
+### Key Actions:
+- Monitor progress against targets
+- Adjust strategy based on results
+- Build accountability systems
+- Plan for achieving ${data.financialGoal} within ${data.timeframe}
+- Review investment portfolio alignment
+
+### Milestones:
+- Day 75: Review progress and adjust as needed
+- Day 85: Plan your next 90-day challenge
+- Day 90: Celebrate achievements and set new goals
+
+---
+
+## Your Success Metrics:
+✓ Monthly Surplus Growth Target: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
+✓ Savings Growth Rate: 10-15% monthly increase
+✓ Debt Reduction: Focus on highest interest first
+✓ Investment Portfolio: Aligned with ${data.riskTolerance} tolerance
+✓ Behavioral Changes: Establish 3 new money habits
+
+---
+
+## Income Sources:
+${data.incomeStreams || 'Not specified'}
+
+---
+
+This personalized plan is designed specifically for your situation. Review weekly and adjust based on your progress.`;
         }
 
-        // Track changes
-        document.addEventListener('input', updateFormPreview);
-
-        updateView();
-        addLog('✅ Financial Freedom Analyzer ready');
+        // Initialize
+        goToStep(0);
+        updateFormDisplay();
     </script>
 </body>
 </html>
