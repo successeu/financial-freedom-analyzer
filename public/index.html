@@ -152,47 +152,8 @@
                     throw new Error(`Error: ${response.status}`);
                 }
 
-                // Generate plan
-                const plan = `# Your 90-Day Financial Freedom Plan
-
-## Your Profile
-- Name: ${data.firstName} ${data.lastName}
-- Email: ${data.email}
-- Monthly Income: $${parseInt(data.monthlyIncome).toLocaleString()}
-- Monthly Expenses: $${parseInt(data.monthlyExpenses).toLocaleString()}
-- Monthly Surplus: $${(parseInt(data.monthlyIncome) - parseInt(data.monthlyExpenses)).toLocaleString()}
-- Current Savings: $${parseInt(data.currentSavings).toLocaleString()}
-- Total Debt: $${parseInt(data.debt).toLocaleString()}
-
-## Goal
-${data.financialGoal} within ${data.timeframe}
-
----
-
-## Phase 1: ASSESS (Days 1-30)
-Understand your financial position
-- Complete financial audit
-- Document all income streams
-- Identify spending patterns
-- Review debt obligations
-
-## Phase 2: DESIGN (Days 31-60)
-Create your strategy
-- Implement cost reductions
-- Explore income increases
-- Set up savings automation
-- Plan investment approach
-
-## Phase 3: ACHIEVE (Days 61-90)
-Execute and monitor
-- Track progress weekly
-- Adjust as needed
-- Build accountability
-- Plan next 90 days
-
----
-
-Your data has been synced to Active Campaign for follow-up.`;
+                // Generate personalized plan
+                const plan = generatePersonalizedPlan(data);
 
                 // Display results
                 document.getElementById('analysisText').textContent = plan;
@@ -207,6 +168,242 @@ Your data has been synced to Active Campaign for follow-up.`;
 
         // Initialize
         showStep(0);
+
+        function generatePersonalizedPlan(data) {
+            const income = parseInt(data.monthlyIncome);
+            const expenses = parseInt(data.monthlyExpenses);
+            const surplus = income - expenses;
+            const savings = parseInt(data.currentSavings);
+            const debt = parseInt(data.debt || 0);
+            const experience = data.investmentExperience;
+            const riskTolerance = data.riskTolerance;
+            const goal = data.financialGoal;
+            const timeframe = data.timeframe;
+
+            // Determine profile type
+            let profileType = 'balanced';
+            if (surplus < 500) profileType = 'tight';
+            else if (surplus > 2000) profileType = 'strong';
+
+            let debtStatus = 'manageable';
+            if (debt > income * 3) debtStatus = 'high';
+            else if (debt === 0) debtStatus = 'clear';
+
+            let savingsLevel = 'building';
+            if (savings < 3000) savingsLevel = 'starting';
+            else if (savings > 30000) savingsLevel = 'solid';
+
+            // Build personalized plan
+            let plan = `# Your 90-Day Financial Freedom Plan
+
+## Your Financial Profile
+- Name: ${data.firstName} ${data.lastName}
+- Email: ${data.email}
+- Monthly Income: $${income.toLocaleString()}
+- Monthly Expenses: $${expenses.toLocaleString()}
+- Monthly Surplus: $${surplus.toLocaleString()}
+- Current Savings: $${savings.toLocaleString()}
+- Total Debt: $${debt.toLocaleString()}
+- Investment Experience: ${experience}
+- Risk Tolerance: ${riskTolerance}
+
+## Your Goal
+${goal} within ${timeframe}
+
+---
+
+## Phase 1: ASSESS (Days 1-30)
+Understand your unique financial position
+
+### Key Actions for Your Situation:`;
+
+            // Customize Phase 1 based on profile
+            if (debtStatus === 'high') {
+                plan += `
+- Create detailed debt inventory (creditor, balance, interest rate)
+- Identify which debts are costing you the most
+- Calculate debt-to-income ratio
+- Document minimum monthly debt payments`;
+            } else if (debtStatus === 'clear') {
+                plan += `
+- Assess current asset allocation
+- Review income sources for growth potential
+- Calculate your current net worth
+- Identify wealth-building opportunities`;
+            } else {
+                plan += `
+- Complete comprehensive financial audit
+- Map all income sources and expenses
+- Review debt repayment timeline
+- Identify optimization opportunities`;
+            }
+
+            if (profileType === 'tight') {
+                plan += `
+- Find ${Math.ceil(expenses * 0.1)} in monthly savings
+- Identify discretionary spending to cut
+- Document essential vs. non-essential expenses`;
+            } else if (profileType === 'strong') {
+                plan += `
+- Analyze investment readiness
+- Review emergency fund adequacy ($${Math.round(expenses * 3).toLocaleString()} target)
+- Plan wealth acceleration strategy`;
+            }
+
+            plan += `
+
+### Milestone:
+- Day 30: Complete financial inventory and identify top 3 priorities
+
+---
+
+## Phase 2: DESIGN (Days 31-60)
+Create your personalized strategy
+
+### Cost Optimization:`;
+
+            if (profileType === 'tight') {
+                plan += `
+- Reduce expenses by $${Math.round(surplus * 0.5).toLocaleString()} using 50/30/20 budget
+- Negotiate recurring bills (phone, insurance, subscriptions)
+- Find $${Math.round(expenses * 0.05).toLocaleString()} in quick wins`;
+            } else {
+                plan += `
+- Review and optimize major expense categories
+- Target $${Math.round(surplus * 0.3).toLocaleString()} in annual savings
+- Implement subscription audit`;
+            }
+
+            plan += `
+
+### Income Growth:`;
+
+            if (experience === 'Beginner') {
+                plan += `
+- Research side income matching your skills
+- Identify $${Math.round(income * 0.1).toLocaleString()} additional monthly income opportunity
+- Start small with skill-based freelancing`;
+            } else if (experience === 'Advanced') {
+                plan += `
+- Explore investment income strategies
+- Evaluate business opportunities aligned with expertise
+- Plan for $${Math.round(income * 0.2).toLocaleString()} additional monthly income`;
+            } else {
+                plan += `
+- Identify skill advancement opportunities
+- Research income increase options (raise, promotion, side work)
+- Target $${Math.round(income * 0.15).toLocaleString()} additional monthly income`;
+            }
+
+            plan += `
+
+### Savings & Investment:`;
+
+            if (riskTolerance === 'Low') {
+                plan += `
+- Set up automatic transfers of $${Math.round(surplus * 0.5).toLocaleString()} to savings
+- Explore low-risk bonds and stable accounts
+- Build 6-month emergency fund (${Math.round(expenses * 6).toLocaleString()})`;
+            } else if (riskTolerance === 'High') {
+                plan += `
+- Allocate $${Math.round(surplus * 0.6).toLocaleString()} to diversified portfolio
+- Research stock market ETFs and index funds
+- Consider growth-oriented investments`;
+            } else {
+                plan += `
+- Set up balanced portfolio with $${Math.round(surplus * 0.5).toLocaleString()} monthly investment
+- Mix conservative (60%) and growth (40%) allocations
+- Review quarterly performance`;
+            }
+
+            plan += `
+
+### Debt Strategy:`;
+
+            if (debtStatus === 'high') {
+                plan += `
+- Apply extra $${Math.round(surplus * 0.5).toLocaleString()} to highest interest debt
+- Negotiate lower rates on major debts
+- Project debt-free date`;
+            } else if (debtStatus === 'clear') {
+                plan += `
+- Focus on wealth building instead of debt repayment
+- Explore investment opportunities
+- Plan asset diversification`;
+            } else {
+                plan += `
+- Maintain current debt payments
+- Allocate additional surplus to investments
+- Plan debt payoff acceleration`;
+            }
+
+            plan += `
+
+### Milestone:
+- Day 60: Systems in place for income, expenses, and savings
+
+---
+
+## Phase 3: ACHIEVE (Days 61-90)
+Implementation and momentum building
+
+### Weekly Actions:
+- Track progress against targets
+- Monitor spending and income
+- Adjust strategy based on results`;
+
+            if (profileType === 'tight') {
+                plan += `
+- Weekly budget review meetings
+- Daily expense tracking
+- Celebrate small wins`;
+            } else if (profileType === 'strong') {
+                plan += `
+- Portfolio performance review
+- Tax optimization analysis
+- Wealth building acceleration planning`;
+            } else {
+                plan += `
+- Balanced progress check
+- Savings rate review
+- Adjustment planning`;
+            }
+
+            plan += `
+
+### Month 3 Goals:
+- Achieve $${Math.round(surplus * 3).toLocaleString()} additional savings
+- Implement at least 2 new income strategies
+- Reduce debt by $${Math.round(debt * 0.05).toLocaleString()} (if applicable)
+- Establish consistent investment routine
+
+### Beyond 90 Days:
+- Evaluate progress toward "${goal}"
+- Plan next 90-day sprint
+- Scale what's working
+- Adjust what isn't
+
+---
+
+## Success Metrics for Your Plan:
+✓ Savings Rate: Target $${Math.round(surplus).toLocaleString()}/month
+✓ Debt Reduction: ${debtStatus === 'high' ? `Target $${Math.round(debt * 0.1).toLocaleString()} reduction` : 'Maintain current trajectory'}
+✓ Income Growth: Target $${Math.round(income * 0.1).toLocaleString()} additional
+✓ Emergency Fund: Target $${Math.round(expenses * 3).toLocaleString()}
+✓ Investment Rate: Target $${Math.round(surplus * 0.4).toLocaleString()}
+
+---
+
+## Personalized Recommendations:
+Profile: ${profileType.toUpperCase()} (Surplus: $${surplus.toLocaleString()}/month)
+Debt Level: ${debtStatus.toUpperCase()}
+Savings Level: ${savingsLevel.toUpperCase()}
+Experience: ${experience.toUpperCase()}
+
+Your data has been synced to Active Campaign for personalized follow-up and support.`;
+
+            return plan;
+        }
     </script>
 </body>
 </html>
