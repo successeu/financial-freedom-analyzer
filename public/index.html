@@ -282,9 +282,20 @@
                 addLog('✅ Plan generated successfully!');
 
                 // Display results
-                document.getElementById('analysisText').textContent = analysis;
-                document.getElementById('resultsSection').classList.remove('hidden');
-                document.getElementById('formContainer').classList.add('hidden');
+                console.log('📊 Displaying results...');
+                const analysisText = document.getElementById('analysisText');
+                const resultsSection = document.getElementById('resultsSection');
+                const formContainer = document.getElementById('formContainer');
+                
+                if (analysisText && resultsSection && formContainer) {
+                    analysisText.textContent = analysis;
+                    resultsSection.classList.remove('hidden');
+                    formContainer.classList.add('hidden');
+                    console.log('✅ Results displayed successfully');
+                } else {
+                    console.error('❌ Missing DOM elements');
+                    throw new Error('Unable to display results - missing page elements');
+                }
 
             } catch (err) {
                 addLog('❌ Error: ' + err.message);
