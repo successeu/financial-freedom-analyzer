@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const puppeteer = require('puppeteer');
+const { put } = require('@vercel/blob');
 
 const app = express();
 
