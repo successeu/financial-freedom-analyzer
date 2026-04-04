@@ -1,7 +1,7 @@
 {
   "name": "financial-freedom-analyzer",
   "version": "1.0.0",
-  "description": "90-Day Wealth Blueprint Generator with PDF Download Links",
+  "description": "Financial Freedom Analyzer with Active Campaign integration",
   "main": "api/server.js",
   "scripts": {
     "dev": "vercel dev",
