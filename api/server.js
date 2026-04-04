@@ -459,7 +459,6 @@ async function generatePDFFromHTML(htmlContent) {
 
 /**
  * Upload PDF to Vercel Blob and get download URL
- * THIS IS THE NEW FUNCTION YOU WERE MISSING!
  */
 async function uploadPDFAndGetURL(pdfBuffer, fileName) {
   try {
@@ -501,10 +500,10 @@ app.post('/api/submit-form', async (req, res) => {
     const pdfBuffer = await generatePDFFromHTML(htmlContent);
     console.log('✅ Professional PDF generated (', pdfBuffer.length, 'bytes)');
 
-    // Convert to base64 (for AC storage if needed)
     const pdfBase64 = pdfBuffer.toString('base64');
     const pdfFileName = `blueprint_${formData.firstName}_${formData.lastName}_${Date.now()}.pdf`;
-    
+    console.log('✅ PDF ready:', pdfFileName);
+
     // Upload to Vercel Blob and get download URL
     const pdfDownloadURL = await uploadPDFAndGetURL(pdfBuffer, pdfFileName);
     console.log('✅ PDF download URL ready:', pdfDownloadURL);
