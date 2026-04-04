@@ -30,7 +30,7 @@ app.post('/api/submit-form', async (req, res) => {
     console.log('✅ Validation passed');
 
     // Forward to Zapier webhook
-    const zapierUrl = 'https://hooks.zapier.com/hooks/catch/3435365/unjpkgc/';
+    const zapierUrl = 'https://hooks.zapier.com/hooks/catch/3435365/u7o9p8p/';
     console.log('📡 Sending to Zapier:', zapierUrl);
 
     const zapierPayload = {
@@ -38,13 +38,17 @@ app.post('/api/submit-form', async (req, res) => {
       firstName: formData.firstName || '',
       lastName: formData.lastName || '',
       phone: formData.phone || '',
-      monthlyIncome: formData.monthlyIncome || '',
-      monthlyExpenses: formData.monthlyExpenses || '',
-      currentSavings: formData.currentSavings || '',
-      debt: formData.debt || '0',
-      incomeStreams: formData.incomeStreams || '',
+      country: formData.country || '',
+      currency: formData.currency || '',
+      monthlyIncome: formData.monthlyIncome || 0,
+      monthlyExpenses: formData.monthlyExpenses || 0,
+      monthlySurplus: (formData.monthlyIncome || 0) - (formData.monthlyExpenses || 0),
+      currentSavings: formData.currentSavings || 0,
+      totalDebt: formData.totalDebt || 0,
       financialGoal: formData.financialGoal || '',
       timeframe: formData.timeframe || '',
+      incomeStreams: formData.incomeStreams || '',
+      incomeInterest: formData.incomeInterest || '',
       investmentExperience: formData.investmentExperience || '',
       riskTolerance: formData.riskTolerance || '',
       submittedAt: new Date().toISOString()
