@@ -761,30 +761,39 @@
                 <div id="analysisText" class="text-gray-300 whitespace-pre-wrap leading-relaxed text-sm mb-8 bg-gray-900/30 p-6 rounded-lg border border-gray-700 max-h-96 overflow-y-auto"></div>
 
                 <!-- CTA Section -->
-                <div class="border-t border-gray-700 pt-8 text-center">
-                    <p class="text-gray-400 text-sm mb-6">"Your income can only grow to the extent that you do." – T. Harv Eker</p>
-                    <button onclick="downloadPlan()" class="px-8 py-3 btn-primary rounded-lg font-semibold">
+                <div class="border-t border-gray-700 pt-10 pb-8 text-center">
+                    <p class="text-gray-400 text-sm mb-8" style="font-style: italic; letter-spacing: 0.5px;">"Your income can only grow to the extent that you do." – T. Harv Eker</p>
+                    <button onclick="downloadPlan()" class="px-10 py-3 btn-primary rounded-lg font-semibold text-base">
                         Download Your Blueprint
                     </button>
                 </div>
 
-                <div id="emailConfirmation" class="hidden mt-8 p-8 rounded-lg text-center shadow-2xl" style="background-color: #0a3d24; border: 3px solid #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); margin-left: -2rem; margin-right: -2rem; margin-bottom: -2rem; padding-left: 2rem !important; padding-right: 2rem !important;">
-                    <p style="color: #a7f3d0; font-size: 1.25rem; font-weight: bold; margin-bottom: 0.75rem;">
-                        ✓ Blueprint Downloaded Successfully!
-                    </p>
-                    <p style="color: #6ee7b7; font-size: 0.9375rem; margin-bottom: 1rem;">
-                        Your personalized 90-Day Wealth Blueprint has been downloaded and will also be delivered to:
-                    </p>
-                    <p id="confirmationEmail" style="color: #ecfdf5; font-size: 1.125rem; font-weight: 700; background-color: #064e3b; padding: 0.75rem 1.5rem; border-radius: 0.5rem; display: inline-block; margin-bottom: 1rem; border: 2px solid #10b981;">
-                        <!-- Email will be inserted here -->
-                    </p>
-                    <p style="color: #6ee7b7; font-size: 0.8125rem;">
-                        Check your email for your blueprint and follow-up coaching opportunities from Success Resources.
-                    </p>
+                <div id="emailConfirmation" class="hidden mt-10 p-0 rounded-xl text-center shadow-2xl" style="background: linear-gradient(135deg, rgba(255, 129, 32, 0.1) 0%, rgba(255, 129, 32, 0.05) 100%); border: 2px solid #ff8120; box-shadow: 0 8px 32px rgba(255, 129, 32, 0.2);">
+                    <!-- Header Section -->
+                    <div style="background-color: rgba(255, 129, 32, 0.12); padding: 1.5rem; border-bottom: 1px solid #ff8120;">
+                        <p style="color: #ff8120; font-size: 1.5rem; font-weight: 800; margin: 0; letter-spacing: 0.5px;">
+                            ✓ Blueprint Downloaded
+                        </p>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div style="padding: 2rem 2.5rem; text-align: center;">
+                        <p style="color: #ffffff; font-size: 0.9375rem; margin: 0 0 1.5rem 0; line-height: 1.6;">
+                            Your personalized 90-Day Wealth Blueprint is on its way to:
+                        </p>
+                        
+                        <div id="confirmationEmail" style="color: #ff8120; font-size: 1.0625rem; font-weight: 700; background-color: rgba(0, 0, 0, 0.3); padding: 1rem 1.5rem; border-radius: 0.625rem; margin: 0 0 1.5rem 0; border: 1.5px solid #ff8120; word-break: break-all;">
+                            <!-- Email will be inserted here -->
+                        </div>
+
+                        <p style="color: #c6c6c6; font-size: 0.8125rem; margin: 0; line-height: 1.5;">
+                            Check your inbox for your blueprint and exclusive follow-up coaching opportunities from Success Resources.
+                        </p>
+                    </div>
                 </div>
 
-                <p class="text-center text-xs text-gray-400 mt-6">
-                    Your data has been securely synced to Success Resources. Check your email for your personalized blueprint and follow-up guidance.
+                <p class="text-center text-xs text-gray-500 mt-8 pt-6 border-t border-gray-700">
+                    Your data has been securely synced to Success Resources for your coaching journey.
                 </p>
             </div>
         </div>
@@ -1221,18 +1230,40 @@
             const riskTolerance = data.riskTolerance;
             const goal = data.financialGoal;
             const timeframe = data.timeframe;
+            const symbol = currencySymbolMap[data.currency] || '$';
+
+            // Adjust thresholds based on currency for realistic categorization
+            const currencyThresholds = {
+                'USD': { tightSurplus: 500, strongSurplus: 2000, startingSavings: 3000, solidSavings: 30000, debtMultiplier: 3 },
+                'GBP': { tightSurplus: 400, strongSurplus: 1600, startingSavings: 2400, solidSavings: 24000, debtMultiplier: 3 },
+                'EUR': { tightSurplus: 450, strongSurplus: 1800, startingSavings: 2700, solidSavings: 27000, debtMultiplier: 3 },
+                'AUD': { tightSurplus: 750, strongSurplus: 3000, startingSavings: 4500, solidSavings: 45000, debtMultiplier: 3 },
+                'CAD': { tightSurplus: 600, strongSurplus: 2400, startingSavings: 3600, solidSavings: 36000, debtMultiplier: 3 },
+                'SGD': { tightSurplus: 600, strongSurplus: 2400, startingSavings: 3600, solidSavings: 36000, debtMultiplier: 3 },
+                'INR': { tightSurplus: 40000, strongSurplus: 160000, startingSavings: 240000, solidSavings: 2400000, debtMultiplier: 3 },
+                'JPY': { tightSurplus: 55000, strongSurplus: 220000, startingSavings: 330000, solidSavings: 3300000, debtMultiplier: 3 },
+                'CNY': { tightSurplus: 3500, strongSurplus: 14000, startingSavings: 21000, solidSavings: 210000, debtMultiplier: 3 },
+                'HKD': { tightSurplus: 3900, strongSurplus: 15600, startingSavings: 23400, solidSavings: 234000, debtMultiplier: 3 },
+                'MYR': { tightSurplus: 2050, strongSurplus: 8200, startingSavings: 12300, solidSavings: 123000, debtMultiplier: 3 },
+                'THB': { tightSurplus: 17500, strongSurplus: 70000, startingSavings: 105000, solidSavings: 1050000, debtMultiplier: 3 },
+                'PHP': { tightSurplus: 27500, strongSurplus: 110000, startingSavings: 165000, solidSavings: 1650000, debtMultiplier: 3 },
+                'BRL': { tightSurplus: 2500, strongSurplus: 10000, startingSavings: 15000, solidSavings: 150000, debtMultiplier: 3 },
+                'ZAR': { tightSurplus: 9000, strongSurplus: 36000, startingSavings: 54000, solidSavings: 540000, debtMultiplier: 3 }
+            };
+
+            const thresholds = currencyThresholds[data.currency] || currencyThresholds['USD'];
 
             let profileType = 'Balanced';
-            if (surplus < 500) profileType = 'Tight';
-            else if (surplus > 2000) profileType = 'Strong';
+            if (surplus < thresholds.tightSurplus) profileType = 'Tight';
+            else if (surplus > thresholds.strongSurplus) profileType = 'Strong';
 
             let debtStatus = 'Manageable';
-            if (debt > income * 3) debtStatus = 'High';
+            if (debt > income * thresholds.debtMultiplier) debtStatus = 'High';
             else if (debt === 0) debtStatus = 'Clear';
 
             let savingsLevel = 'Building';
-            if (savings < 3000) savingsLevel = 'Starting';
-            else if (savings > 30000) savingsLevel = 'Solid';
+            if (savings < thresholds.startingSavings) savingsLevel = 'Starting';
+            else if (savings > thresholds.solidSavings) savingsLevel = 'Solid';
 
             let plan = `════════════════════════════════════════════════════════
 90-DAY WEALTH BLUEPRINT
@@ -1240,11 +1271,11 @@
 
 📊 YOUR FINANCIAL SNAPSHOT
 ──────────────────────────────────────────────────────
-Monthly Income:         $${income.toLocaleString()}
-Monthly Expenses:       $${expenses.toLocaleString()}
-Monthly Surplus:        $${surplus.toLocaleString()}
-Current Savings:        $${savings.toLocaleString()}
-Total Debt:             $${debt.toLocaleString()}
+Monthly Income:         ${symbol}${income.toLocaleString()}
+Monthly Expenses:       ${symbol}${expenses.toLocaleString()}
+Monthly Surplus:        ${symbol}${surplus.toLocaleString()}
+Current Savings:        ${symbol}${savings.toLocaleString()}
+Total Debt:             ${symbol}${debt.toLocaleString()}
 Investment Experience:  ${experience}
 Risk Tolerance:         ${riskTolerance}
 
@@ -1260,6 +1291,10 @@ TARGET TIMELINE: ${timeframe}
             if (debtStatus === 'High') {
                 plan += `
 
+📌 KEY INSIGHT: Your debt-to-savings ratio determines your strategy. 
+High debt? Focus on debt reduction first. Low debt? Accelerate investments. 
+Both are valid paths.
+
 □ Create complete debt inventory (balance, interest rate, minimum payment)
 □ Identify highest-cost debts first (focus on APR/interest rate)
 □ Calculate debt-to-income ratio: ${(debt / (income * 12)).toFixed(1)}x
@@ -1268,18 +1303,25 @@ TARGET TIMELINE: ${timeframe}
             } else if (debtStatus === 'Clear') {
                 plan += `
 
+📌 KEY INSIGHT: With zero debt, you have maximum flexibility. 
+Accelerate investments and build multiple income streams 
+for exponential wealth growth.
+
 □ Assess current asset allocation and diversification
 □ Review all income sources for growth opportunities
-□ Calculate your net worth: $${(savings - debt).toLocaleString()}
+□ Calculate your net worth: ${symbol}${(savings - debt).toLocaleString()}
 □ Identify high-leverage wealth-building opportunities
 □ Plan aggressive asset growth strategy`;
             } else {
                 plan += `
 
+📌 KEY INSIGHT: Your debt-to-savings ratio determines your strategy. 
+Balanced debt and savings is a strong foundation for growth.
+
 □ Complete comprehensive financial audit
 □ Map all income sources and categorize expenses
 □ Review debt repayment timeline
-□ Find $${Math.ceil(expenses * 0.1).toLocaleString()} in savings opportunities
+□ Find ${symbol}${Math.ceil(expenses * 0.1).toLocaleString()} in savings opportunities
 □ Set top 3 financial priorities`;
             }
 
@@ -1298,13 +1340,13 @@ REDUCE EXPENSES`;
             if (profileType === 'Tight') {
                 plan += `
 □ Implement 50/30/20 budget (50% needs, 30% wants, 20% savings)
-□ Target: Save $${Math.round(surplus * 0.5).toLocaleString()} monthly
+□ Target: Save ${symbol}${Math.round(surplus * 0.5).toLocaleString()} monthly
 □ Renegotiate major bills (insurance, phone, utilities, internet)
-□ Find and cut $${Math.round(expenses * 0.05).toLocaleString()} in quick wins`;
+□ Find and cut ${symbol}${Math.round(expenses * 0.05).toLocaleString()} in quick wins`;
             } else {
                 plan += `
 □ Review major expense categories (housing, transportation, food)
-□ Target: Save $${Math.round(surplus * 0.3).toLocaleString()} annually
+□ Target: Save ${symbol}${Math.round(surplus * 0.3).toLocaleString()} annually
 □ Conduct complete subscription and services audit
 □ Renegotiate major recurring costs`;
             }
@@ -1316,20 +1358,20 @@ INCREASE INCOME`;
             if (experience === 'Beginner') {
                 plan += `
 □ Research side income opportunities aligned with your skills
-□ Target: Develop path to $${Math.round(income * 0.1).toLocaleString()} additional monthly income
+□ Target: Develop path to ${symbol}${Math.round(income * 0.1).toLocaleString()} additional monthly income
 □ Start with skill-based freelancing or part-time work
 □ Launch 1 income stream by Day 60`;
             } else if (experience === 'Advanced') {
                 plan += `
 □ Explore investment income strategies and business opportunities
-□ Target: $${Math.round(income * 0.2).toLocaleString()} additional monthly income
+□ Target: ${symbol}${Math.round(income * 0.2).toLocaleString()} additional monthly income
 □ Develop multiple income stream portfolio
 □ Plan scaling and exit strategies`;
             } else {
                 plan += `
 □ Identify skill advancement and promotion opportunities
 □ Research side income or consulting possibilities
-□ Target: $${Math.round(income * 0.15).toLocaleString()} additional monthly income
+□ Target: ${symbol}${Math.round(income * 0.15).toLocaleString()} additional monthly income
 □ Start secondary income by Day 45`;
             }
 
@@ -1339,19 +1381,19 @@ BUILD SAVINGS SYSTEM (SYSTEMIZE)`;
 
             if (riskTolerance === 'Low') {
                 plan += `
-□ Set up automatic monthly transfer: $${Math.round(surplus * 0.5).toLocaleString()}/month
-□ Open high-yield savings account (currently 4-5% APY)
-□ Build 6-month emergency fund: $${(expenses * 6).toLocaleString()}
+□ Set up automatic monthly transfer: ${symbol}${Math.round(surplus * 0.5).toLocaleString()}/month
+□ Open high-yield savings account
+□ Build 6-month emergency fund: ${symbol}${(expenses * 6).toLocaleString()}
 □ Explore conservative bonds and fixed-income investments`;
             } else if (riskTolerance === 'High') {
                 plan += `
-□ Allocate $${Math.round(surplus * 0.6).toLocaleString()}/month to growth portfolio
-□ Research low-cost index funds (VOO, VTI, VXUS)
-□ Explore individual stocks and emerging ETFs
-□ Implement monthly dollar-cost averaging`;
+□ Allocate ${symbol}${Math.round(surplus * 0.6).toLocaleString()}/month to growth portfolio
+□ Research low-cost index funds and ETFs
+□ Explore individual stocks and emerging market opportunities
+□ Implement monthly dollar-cost averaging strategy`;
             } else {
                 plan += `
-□ Create balanced portfolio: $${Math.round(surplus * 0.5).toLocaleString()}/month
+□ Create balanced portfolio: ${symbol}${Math.round(surplus * 0.5).toLocaleString()}/month
 □ Target allocation: 60% Conservative / 40% Growth
 □ Mix: Bonds + Index Funds + Dividend Stocks
 □ Schedule quarterly review and annual rebalancing`;
@@ -1363,15 +1405,15 @@ DEBT STRATEGY`;
 
             if (debtStatus === 'High') {
                 plan += `
-□ Apply extra $${Math.round(surplus * 0.5).toLocaleString()} to highest interest debt
+□ Apply extra ${symbol}${Math.round(surplus * 0.5).toLocaleString()} to highest interest debt
 □ Negotiate lower rates on major debts
 □ Project debt-free date and celebrate milestone
 □ Explore consolidation if rates are excessive`;
             } else if (debtStatus === 'Clear') {
                 plan += `
 □ Focus 100% on wealth building and investments
-□ Explore asset diversification
-□ Plan sustainable growth strategy`;
+□ Explore asset diversification opportunities
+□ Plan sustainable growth strategy for long-term wealth`;
             } else {
                 plan += `
 □ Maintain current debt payments on schedule
@@ -1396,9 +1438,9 @@ WEEKLY EXECUTION CHECKLIST
 □ Daily: One action toward primary goal
 
 MONTH 3 SUCCESS TARGETS
-✓ Savings accumulated: $${Math.round(surplus * 3).toLocaleString()}
+✓ Savings accumulated: ${symbol}${Math.round(surplus * 3).toLocaleString()}
 ✓ New income streams launched: Minimum 1
-✓ Debt reduction: $${Math.round(debt * 0.05).toLocaleString()}}
+✓ Debt reduction: ${symbol}${Math.round(debt * 0.05).toLocaleString()}
 ✓ Investment automation: 100% complete
 ✓ Mindset shift: From survival to building
 
@@ -1413,10 +1455,10 @@ BEYOND 90 DAYS
 
 📈 YOUR SUCCESS METRICS
 ──────────────────────────────────────────────────────
-Monthly Savings Target:    $${Math.round(surplus).toLocaleString()}
-Income Growth Target:      $${Math.round(income * 0.1).toLocaleString()}
-Emergency Fund Target:     $${(expenses * 3).toLocaleString()}
-Monthly Investment Rate:   $${Math.round(surplus * 0.4).toLocaleString()}
+Monthly Savings Target:    ${symbol}${Math.round(surplus).toLocaleString()}
+Income Growth Target:      ${symbol}${Math.round(income * 0.1).toLocaleString()}
+Emergency Fund Target:     ${symbol}${(expenses * 3).toLocaleString()}
+Monthly Investment Rate:   ${symbol}${Math.round(surplus * 0.4).toLocaleString()}
 
 Your Profile: ${profileType} Cashflow | ${debtStatus} Debt | ${savingsLevel} Savings
 
