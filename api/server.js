@@ -458,6 +458,28 @@ async function generatePDFFromHTML(htmlContent) {
 }
 
 /**
+ * Upload PDF to Vercel Blob and get download URL
+ * THIS IS THE NEW FUNCTION YOU WERE MISSING!
+ */
+async function uploadPDFAndGetURL(pdfBuffer, fileName) {
+  try {
+    console.log('📤 Uploading PDF to Vercel Blob...');
+    
+    const blob = await put(fileName, pdfBuffer, {
+      access: 'public',
+      contentType: 'application/pdf'
+    });
+    
+    console.log('✅ PDF uploaded successfully:', blob.url);
+    return blob.url;
+    
+  } catch (error) {
+    console.error('❌ Blob upload error:', error);
+    throw error;
+  }
+}
+
+/**
  * POST /api/submit-form
  */
 app.post('/api/submit-form', async (req, res) => {
@@ -479,9 +501,13 @@ app.post('/api/submit-form', async (req, res) => {
     const pdfBuffer = await generatePDFFromHTML(htmlContent);
     console.log('✅ Professional PDF generated (', pdfBuffer.length, 'bytes)');
 
+    // Convert to base64 (for AC storage if needed)
     const pdfBase64 = pdfBuffer.toString('base64');
     const pdfFileName = `blueprint_${formData.firstName}_${formData.lastName}_${Date.now()}.pdf`;
-    console.log('✅ PDF ready:', pdfFileName);
+    
+    // Upload to Vercel Blob and get download URL
+    const pdfDownloadURL = await uploadPDFAndGetURL(pdfBuffer, pdfFileName);
+    console.log('✅ PDF download URL ready:', pdfDownloadURL);
 
     const zapierUrl = 'https://hooks.zapier.com/hooks/catch/3435365/u7o9p8p/';
     const zapierPayload = {
@@ -503,7 +529,7 @@ app.post('/api/submit-form', async (req, res) => {
       investmentExperience: formData.investmentExperience || '',
       riskTolerance: formData.riskTolerance || '',
       blueprintContent: blueprintContent,
-      blueprintPDFBase64: pdfBase64,
+      blueprintPDFDownloadURL: pdfDownloadURL,
       blueprintPDFFileName: pdfFileName,
       submittedAt: new Date().toISOString()
     };
