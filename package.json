@@ -1,7 +1,7 @@
 {
   "name": "financial-freedom-analyzer",
   "version": "1.0.0",
-  "description": "Financial Freedom Analyzer with Active Campaign integration",
+  "description": "90-Day Wealth Blueprint Generator with PDF Download Links",
   "main": "api/server.js",
   "scripts": {
     "dev": "vercel dev",
@@ -11,12 +11,12 @@
   "keywords": ["financial", "freedom", "90-day", "active-campaign"],
   "author": "Success Resources",
   "license": "MIT",
- "dependencies": {
+  "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "puppeteer": "^20.0.0",
     "@vercel/blob": "^0.20.0"
-  }
+  },
   "engines": {
     "node": "18.x"
   }
