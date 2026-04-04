@@ -1,14 +1,18 @@
 {
   "name": "financial-freedom-analyzer",
   "version": "1.0.0",
-  "description": "Financial Freedom Analyzer with Active Campaign integration",
+  "description": "Financial Freedom Analyzer",
   "main": "api/server.js",
   "scripts": {
     "dev": "vercel dev",
-    "build": "echo 'Build complete'",
+    "build": "echo Build complete",
     "start": "node api/server.js"
   },
-  "keywords": ["financial", "freedom", "90-day", "active-campaign"],
+  "keywords": [
+    "financial",
+    "freedom",
+    "blueprint"
+  ],
   "author": "Success Resources",
   "license": "MIT",
   "dependencies": {
