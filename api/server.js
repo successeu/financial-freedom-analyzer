@@ -16,7 +16,9 @@ app.use(express.json({ limit: '50mb' }));
  * Returns downloadable PDF URL
  */
 app.post('/api/generate-pdf', async (req, res) => {
+    let browser;
     try {
+        console.log('📄 PDF Generation started');
         const {
             firstName, lastName, email, phoneCode, phone,
             income, expenses, savings, debt, surplus,
@@ -26,8 +28,14 @@ app.post('/api/generate-pdf', async (req, res) => {
 
         // Validate required fields
         if (!firstName || !email || income === undefined) {
-            return res.status(400).json({ error: 'Missing required fields: firstName, email, income' });
+            console.error('❌ Validation failed: missing required fields');
+            return res.status(400).json({ 
+                error: 'Missing required fields: firstName, email, income',
+                success: false
+            });
         }
+
+        console.log(`✅ Generating blueprint for ${firstName} ${lastName}`);
 
         // Build blueprint data object
         const blueprintData = {
@@ -40,23 +48,55 @@ app.post('/api/generate-pdf', async (req, res) => {
         // Generate premium blueprint HTML
         const blueprintHTML = generatePremiumBlueprintHTML(blueprintData);
 
-        // Generate PDF using Puppeteer
-        const browser = await puppeteer.launch({
-            headless: 'new',
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        // Launch Puppeteer with Vercel-optimized settings
+        console.log('🚀 Launching Puppeteer browser...');
+        browser = await puppeteer.launch({
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--single-process',
+                '--no-first-run',
+                '--no-zygote'
+            ],
+            timeout: 30000
         });
 
+        console.log('📝 Creating page...');
         const page = await browser.createPage();
-        await page.setContent(blueprintHTML, { waitUntil: 'networkidle0' });
         
+        // Set viewport and navigate to content
+        await page.setViewport({ width: 1024, height: 1280 });
+        await page.setContent(blueprintHTML, { 
+            waitUntil: 'domcontentloaded',
+            timeout: 30000
+        });
+
+        console.log('🎨 Generating PDF...');
         const pdfBuffer = await page.pdf({
             format: 'A4',
-            margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
+            margin: { 
+                top: '20px', 
+                right: '20px', 
+                bottom: '20px', 
+                left: '20px' 
+            },
+            printBackground: true,
+            timeout: 30000
         });
 
-        await browser.close();
+        console.log('✅ PDF generated successfully');
+
+        // Close browser
+        if (browser) {
+            await browser.close();
+            console.log('🔒 Browser closed');
+        }
 
         // Upload PDF to Vercel Blob
+        console.log('☁️ Uploading to Vercel Blob...');
         const timestamp = Date.now();
         const fileName = `${firstName}_${lastName}_90Day_Wealth_Blueprint_${timestamp}.pdf`;
         const blob = await put(fileName, pdfBuffer, {
@@ -65,14 +105,18 @@ app.post('/api/generate-pdf', async (req, res) => {
         });
 
         const pdfDownloadURL = blob.url;
+        console.log('✅ PDF uploaded successfully');
 
         // Send data to Active Campaign via Zapier webhook
+        console.log('📤 Sending to Active Campaign...');
         await sendToActiveCampaign({
             ...blueprintData,
             blueprintPDFDownloadURL: pdfDownloadURL,
             blueprintPDFFileName: fileName,
             submittedAt: new Date().toISOString()
         });
+
+        console.log('✅ Active Campaign integration complete');
 
         // Return success response
         res.json({
@@ -83,10 +127,22 @@ app.post('/api/generate-pdf', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('PDF Generation Error:', error);
+        console.error('❌ PDF Generation Error:', error);
+        console.error('Error Stack:', error.stack);
+
+        // Close browser if it's still open
+        if (browser) {
+            try {
+                await browser.close();
+            } catch (e) {
+                console.error('Error closing browser:', e);
+            }
+        }
+
         res.status(500).json({
             error: 'Failed to generate PDF',
-            details: error.message
+            details: error.message,
+            success: false
         });
     }
 });
@@ -122,20 +178,27 @@ async function sendToActiveCampaign(data) {
             submittedAt: data.submittedAt
         };
 
-        // Send to Zapier
+        // Send to Zapier with timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
         const response = await fetch(webhookURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            signal: controller.signal
         });
 
+        clearTimeout(timeoutId);
+
         if (!response.ok) {
-            console.warn('Zapier webhook response status:', response.status);
+            console.warn('⚠️ Zapier webhook response status:', response.status);
         }
 
+        console.log('✅ Zapier webhook sent successfully');
         return true;
     } catch (error) {
-        console.error('Error sending to Active Campaign:', error);
+        console.error('⚠️ Error sending to Active Campaign:', error.message);
         // Don't throw - PDF generation should succeed even if webhook fails
         return false;
     }
@@ -338,11 +401,6 @@ function generatePremiumBlueprintHTML(data) {
             .goal-stat-label { color: #666; }
             .goal-stat-value { color: #ff8120; font-weight: bold; }
             
-            .opportunity { border-left-color: #33cc66; }
-            .opportunity h4 { color: #33cc66; }
-            .risk { border-left-color: #ff4444; }
-            .risk h4 { color: #ff4444; }
-            
             p { margin-bottom: 12px; color: #444; }
             strong { color: #000; }
             
@@ -535,8 +593,8 @@ function generatePremiumBlueprintHTML(data) {
                 <h2>Opportunities Identified</h2>
                 
                 ${surplus > 0 ? `
-                <div class="goal-plan opportunity">
-                    <h4>Wealth Compounding Potential</h4>
+                <div class="goal-plan">
+                    <h4 style="color: #33cc66;">Wealth Compounding Potential</h4>
                     <p>Your ${formatCurrency(surplus)} monthly surplus compounds dramatically over time:</p>
                     <div class="goal-stat">
                         <span>5-Year Projection (7% growth):</span>
@@ -546,8 +604,8 @@ function generatePremiumBlueprintHTML(data) {
                 </div>
                 ` : ''}
                 
-                <div class="goal-plan opportunity">
-                    <h4>Income Growth Potential</h4>
+                <div class="goal-plan">
+                    <h4 style="color: #33cc66;">Income Growth Potential</h4>
                     <p>Current sources: <strong>${incomeSources || 'Primary income'}</strong></p>
                     <p><strong>Opportunity:</strong> +15-25% income growth within 12 months through strategic action.</p>
                     <p style="margin-top: 10px; font-size: 14px;"><strong>Action:</strong> Identify one high-leverage income stream this month.</p>
@@ -558,8 +616,8 @@ function generatePremiumBlueprintHTML(data) {
                 <h2>Risks to Monitor</h2>
                 
                 ${surplus > (income * 0.2) ? `
-                <div class="goal-plan risk">
-                    <h4>Risk: Lifestyle Inflation</h4>
+                <div class="goal-plan">
+                    <h4 style="color: #ff4444;">Risk: Lifestyle Inflation</h4>
                     <p>As surplus increases, expenses tend to rise proportionally, reducing wealth-building capacity.</p>
                     <p><strong>Protection:</strong> Lock current lifestyle baseline. Direct all new surplus to wealth systems.</p>
                     <p style="margin-top: 10px; font-size: 14px; color: #ff4444;"><strong>Impact if unchecked:</strong> 50-60% reduction in wealth-building capacity</p>
@@ -567,8 +625,8 @@ function generatePremiumBlueprintHTML(data) {
                 ` : ''}
                 
                 ${debt > 0 ? `
-                <div class="goal-plan risk">
-                    <h4>Risk: Debt Interest Drain</h4>
+                <div class="goal-plan">
+                    <h4 style="color: #ff4444;">Risk: Debt Interest Drain</h4>
                     <div class="goal-stat">
                         <span>Annual Interest Cost (est. 5%):</span>
                         <span style="color: #ff4444; font-weight: bold;">${formatCurrency(debt * 0.05)}</span>
