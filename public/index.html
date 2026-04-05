@@ -95,245 +95,227 @@
             font-size: 1.75rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
         }
-        .question-label {
-            color: #ff8120;
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            display: block;
+        .step-subtitle {
+            font-size: 1.1rem;
+            color: #c6c6c6;
+            margin-bottom: 2rem;
+            font-weight: 500;
         }
-        .question-description {
-            color: #999999;
+        .step-indicator {
             font-size: 0.875rem;
+            color: #ff8120;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
             margin-bottom: 1rem;
-            line-height: 1.5;
         }
         .question-block {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #333333;
+            margin-bottom: 2rem;
         }
-        .question-block:last-child {
-            border-bottom: none;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0;
+        .question-label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .question-description {
+            font-size: 0.875rem;
+            color: #999999;
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
         .insight-box {
             background: rgba(100, 150, 255, 0.08);
             border-left: 4px solid #6496ff;
-            padding: 1rem;
+            padding: 1.25rem;
             border-radius: 0.5rem;
             margin-top: 2rem;
         }
         .insight-text {
-            color: #9db9ff;
-            font-size: 0.875rem;
-            line-height: 1.5;
+            color: #c6c6c6;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
+        .step-content { transition: opacity 0.3s ease; }
+        .hidden { display: none; }
     </style>
 </head>
-<body class="gradient-sr text-white min-h-screen p-4 md:p-8">
-    <div id="app" class="max-w-4xl mx-auto">
-
-        <!-- LEARNING FLOW SECTION -->
-        <div id="learningSection" class="block">
-            <!-- Header -->
-            <div class="mb-12 text-center">
-                <h1 class="text-5xl md:text-6xl font-bold mb-3 tracking-tight">
-                    <span class="text-white">Your Wealth</span><br>
-                    <span style="color: #ff8120;">Blueprint</span>
-                </h1>
-                <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
-                    Master your mindset. Scale your success.<br>
-                    <span class="text-sm font-semibold" style="color: #ff8120;">Powered by SpeedWealth Principles</span>
-                </p>
-                <div class="accent-line my-6 w-16 mx-auto"></div>
-                <p class="text-gray-400 text-sm max-w-xl mx-auto">
-                    Discover wealth-building concepts through guided learning, then create your personalized 90-day financial plan
-                </p>
-            </div>
-
-            <!-- Progress Bar -->
+<body class="gradient-sr text-white">
+    <div class="min-h-screen flex items-center justify-center py-8 px-4">
+        <div class="w-full max-w-2xl">
+            <!-- Progress bar at top -->
             <div class="mb-8">
-                <div id="progressBar" class="progress-bar h-2 rounded-full overflow-hidden" style="--progress: 0%"></div>
+                <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="progress-bar h-full rounded-full transition-all duration-500" style="--progress: 0%; width: 0%;"></div>
+                </div>
                 <p class="text-xs text-gray-400 text-center mt-2">Step <span id="stepCounter">1</span> of 7</p>
             </div>
 
-            <!-- Content Card -->
-            <div class="card-sr rounded-2xl p-8 md:p-10 mb-8">
+            <div class="card-sr rounded-2xl p-8 md:p-12">
                 
-                <!-- Step 0: Country & Currency -->
+                <!-- STEP 0: Country & Currency Selection -->
                 <div id="step-0" class="step-content">
-                    <h2 class="question-header">
-                        <span class="step-number">01</span>
-                        Let's Customize for Your Location
-                    </h2>
+                    <h1 class="text-4xl md:text-5xl font-black text-white mb-2">
+                        Your Wealth <span style="color: #ff8120;">Blueprint</span>
+                    </h1>
+                    <p class="text-lg text-gray-400 mb-2">Master your mindset. Scale your success.</p>
+                    <p class="text-orange-400 font-semibold mb-8">Powered by SpeedWealth Principles</p>
                     
-                    <div class="concept-box">
-                        <div class="concept-title">Why This Matters</div>
-                        <div class="concept-text">
-                            Your financial blueprint will be customized based on your location and currency. This ensures all recommendations, investments, and strategies are relevant to your specific market and economic context.
+                    <div class="accent-line mb-8"></div>
+
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-6 leading-relaxed">
+                            Discover wealth-building concepts through guided learning, then create your personalized 90-day financial plan. Based on T. Harv Eker's proven SpeedWealth framework, this assessment reveals your financial foundation and charts your path to financial freedom.
+                        </p>
+                        
+                        <div class="question-block">
+                            <label class="question-label">Select your country</label>
+                            <select id="country" class="w-full rounded-lg input-sr">
+                                <option value="">Choose a country...</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Bangladesh">Bangladesh</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Brazil">Brazil</option>
+                                <option value="Cambodia">Cambodia</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Chile">Chile</option>
+                                <option value="China">China</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="Costa Rica">Costa Rica</option>
+                                <option value="Czech Republic">Czech Republic</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Egypt">Egypt</option>
+                                <option value="Finland">Finland</option>
+                                <option value="France">France</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Greece">Greece</option>
+                                <option value="Hong Kong">Hong Kong</option>
+                                <option value="Hungary">Hungary</option>
+                                <option value="India">India</option>
+                                <option value="Indonesia">Indonesia</option>
+                                <option value="Iran">Iran</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Israel">Israel</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Jamaica">Jamaica</option>
+                                <option value="Japan">Japan</option>
+                                <option value="Jordan">Jordan</option>
+                                <option value="Kenya">Kenya</option>
+                                <option value="Lebanon">Lebanon</option>
+                                <option value="Malaysia">Malaysia</option>
+                                <option value="Mexico">Mexico</option>
+                                <option value="Morocco">Morocco</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="New Zealand">New Zealand</option>
+                                <option value="Nigeria">Nigeria</option>
+                                <option value="Norway">Norway</option>
+                                <option value="Pakistan">Pakistan</option>
+                                <option value="Peru">Peru</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="Qatar">Qatar</option>
+                                <option value="Romania">Romania</option>
+                                <option value="Russia">Russia</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="South Africa">South Africa</option>
+                                <option value="South Korea">South Korea</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Sri Lanka">Sri Lanka</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Taiwan">Taiwan</option>
+                                <option value="Thailand">Thailand</option>
+                                <option value="Turkey">Turkey</option>
+                                <option value="Ukraine">Ukraine</option>
+                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="United States">United States</option>
+                                <option value="Venezuela">Venezuela</option>
+                                <option value="Vietnam">Vietnam</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <h3 class="text-base font-semibold text-white mb-4">Let us know where you are:</h3>
-
-                    <div class="question-block">
-                        <label class="question-label">Which country are you in?</label>
-                        <p class="question-description">
-                            This helps us provide location-specific financial strategies and investment recommendations.
-                        </p>
-                        <select id="country" class="w-full rounded-lg input-sr" onchange="updateCountryCode()">
-                            <option value="">Select your country</option>
-                            <option value="Argentina">Argentina</option>
-                            <option value="Australia">Australia</option>
-                            <option value="Austria">Austria</option>
-                            <option value="Bangladesh">Bangladesh</option>
-                            <option value="Belgium">Belgium</option>
-                            <option value="Brazil">Brazil</option>
-                            <option value="Cambodia">Cambodia</option>
-                            <option value="Canada">Canada</option>
-                            <option value="Chile">Chile</option>
-                            <option value="China">China</option>
-                            <option value="Colombia">Colombia</option>
-                            <option value="Costa Rica">Costa Rica</option>
-                            <option value="Czech Republic">Czech Republic</option>
-                            <option value="Denmark">Denmark</option>
-                            <option value="Egypt">Egypt</option>
-                            <option value="Finland">Finland</option>
-                            <option value="France">France</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Greece">Greece</option>
-                            <option value="Hong Kong">Hong Kong</option>
-                            <option value="Hungary">Hungary</option>
-                            <option value="India">India</option>
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Iran">Iran</option>
-                            <option value="Ireland">Ireland</option>
-                            <option value="Israel">Israel</option>
-                            <option value="Italy">Italy</option>
-                            <option value="Jamaica">Jamaica</option>
-                            <option value="Japan">Japan</option>
-                            <option value="Jordan">Jordan</option>
-                            <option value="Kenya">Kenya</option>
-                            <option value="Lebanon">Lebanon</option>
-                            <option value="Malaysia">Malaysia</option>
-                            <option value="Mexico">Mexico</option>
-                            <option value="Morocco">Morocco</option>
-                            <option value="Netherlands">Netherlands</option>
-                            <option value="New Zealand">New Zealand</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Norway">Norway</option>
-                            <option value="Pakistan">Pakistan</option>
-                            <option value="Peru">Peru</option>
-                            <option value="Philippines">Philippines</option>
-                            <option value="Poland">Poland</option>
-                            <option value="Portugal">Portugal</option>
-                            <option value="Qatar">Qatar</option>
-                            <option value="Romania">Romania</option>
-                            <option value="Russia">Russia</option>
-                            <option value="Saudi Arabia">Saudi Arabia</option>
-                            <option value="Singapore">Singapore</option>
-                            <option value="South Africa">South Africa</option>
-                            <option value="South Korea">South Korea</option>
-                            <option value="Spain">Spain</option>
-                            <option value="Sri Lanka">Sri Lanka</option>
-                            <option value="Sweden">Sweden</option>
-                            <option value="Switzerland">Switzerland</option>
-                            <option value="Taiwan">Taiwan</option>
-                            <option value="Thailand">Thailand</option>
-                            <option value="Turkey">Turkey</option>
-                            <option value="Ukraine">Ukraine</option>
-                            <option value="United Arab Emirates">United Arab Emirates</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="United States">United States</option>
-                            <option value="Venezuela">Venezuela</option>
-                            <option value="Vietnam">Vietnam</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="question-block">
-                        <label class="question-label">What is your preferred currency?</label>
-                        <p class="question-description">
-                            All financial figures in your blueprint will be displayed in this currency.
-                        </p>
-                        <select id="currency" class="w-full rounded-lg input-sr" onchange="updateCurrencySymbols()">
-                            <option value="">Select your currency</option>
-                            <option value="AED">AED – UAE Dirham (د.إ)</option>
-                            <option value="ARS">ARS – Argentine Peso ($)</option>
-                            <option value="AUD">AUD – Australian Dollar ($)</option>
-                            <option value="BDT">BDT – Bangladeshi Taka (৳)</option>
-                            <option value="BRL">BRL – Brazilian Real (R$)</option>
-                            <option value="CAD">CAD – Canadian Dollar ($)</option>
-                            <option value="CHP">CHP – Swiss Franc (Fr)</option>
-                            <option value="CLP">CLP – Chilean Peso ($)</option>
-                            <option value="CNY">CNY – Chinese Yuan (¥)</option>
-                            <option value="COP">COP – Colombian Peso ($)</option>
-                            <option value="CRC">CRC – Costa Rican Colón (₡)</option>
-                            <option value="CZK">CZK – Czech Koruna (Kč)</option>
-                            <option value="DKK">DKK – Danish Krone (kr)</option>
-                            <option value="EGP">EGP – Egyptian Pound (E£)</option>
-                            <option value="EUR">EUR – Euro (€)</option>
-                            <option value="GBP">GBP – British Pound (£)</option>
-                            <option value="HKD">HKD – Hong Kong Dollar ($)</option>
-                            <option value="HUF">HUF – Hungarian Forint (Ft)</option>
-                            <option value="IDR">IDR – Indonesian Rupiah (Rp)</option>
-                            <option value="ILS">ILS – Israeli Shekel (₪)</option>
-                            <option value="INR">INR – Indian Rupee (₹)</option>
-                            <option value="IRR">IRR – Iranian Rial (﷼)</option>
-                            <option value="JMD">JMD – Jamaican Dollar ($)</option>
-                            <option value="JOD">JOD – Jordanian Dinar (د.ا)</option>
-                            <option value="JPY">JPY – Japanese Yen (¥)</option>
-                            <option value="KES">KES – Kenyan Shilling (Sh)</option>
-                            <option value="KHR">KHR – Cambodian Riel (៛)</option>
-                            <option value="KRW">KRW – South Korean Won (₩)</option>
-                            <option value="LBP">LBP – Lebanese Pound (ل.ل)</option>
-                            <option value="LKR">LKR – Sri Lankan Rupee (Rs)</option>
-                            <option value="MAD">MAD – Moroccan Dirham (د.م.)</option>
-                            <option value="MXN">MXN – Mexican Peso ($)</option>
-                            <option value="MYR">MYR – Malaysian Ringgit (RM)</option>
-                            <option value="NGN">NGN – Nigerian Naira (₦)</option>
-                            <option value="NOK">NOK – Norwegian Krone (kr)</option>
-                            <option value="NZD">NZD – New Zealand Dollar ($)</option>
-                            <option value="PEN">PEN – Peruvian Sol (S/)</option>
-                            <option value="PHP">PHP – Philippine Peso (₱)</option>
-                            <option value="PKR">PKR – Pakistani Rupee (₨)</option>
-                            <option value="PLN">PLN – Polish Zloty (zł)</option>
-                            <option value="QAR">QAR – Qatari Riyal (ر.ق)</option>
-                            <option value="RON">RON – Romanian Leu (lei)</option>
-                            <option value="RUB">RUB – Russian Ruble (₽)</option>
-                            <option value="SAR">SAR – Saudi Riyal (﷼)</option>
-                            <option value="SEK">SEK – Swedish Krona (kr)</option>
-                            <option value="SGD">SGD – Singapore Dollar ($)</option>
-                            <option value="THB">THB – Thai Baht (฿)</option>
-                            <option value="TRY">TRY – Turkish Lira (₺)</option>
-                            <option value="TWD">TWD – Taiwan Dollar (NT$)</option>
-                            <option value="UAH">UAH – Ukrainian Hryvnia (₴)</option>
-                            <option value="USD">USD – United States Dollar ($)</option>
-                            <option value="VES">VES – Venezuelan Bolívar (Bs.)</option>
-                            <option value="VND">VND – Vietnamese Dong (₫)</option>
-                            <option value="ZAR">ZAR – South African Rand (R)</option>
-                        </select>
-                    </div>
-
-                    <div class="insight-box">
-                        <p class="insight-text">
-                            🌍 <strong style="color: #6496ff;">Location-Specific Strategies:</strong> We'll recommend investments, tax strategies, and financial products suitable for your country, and all numbers will be in your local currency.
-                        </p>
+                        <div class="question-block">
+                            <label class="question-label">Select your currency</label>
+                            <select id="currency" class="w-full rounded-lg input-sr" onchange="updateCurrencySymbols()">
+                                <option value="">Select your currency</option>
+                                <option value="AED">AED – UAE Dirham (د.إ)</option>
+                                <option value="ARS">ARS – Argentine Peso ($)</option>
+                                <option value="AUD">AUD – Australian Dollar ($)</option>
+                                <option value="BDT">BDT – Bangladeshi Taka (৳)</option>
+                                <option value="BRL">BRL – Brazilian Real (R$)</option>
+                                <option value="CAD">CAD – Canadian Dollar ($)</option>
+                                <option value="CHP">CHP – Swiss Franc (Fr)</option>
+                                <option value="CLP">CLP – Chilean Peso ($)</option>
+                                <option value="CNY">CNY – Chinese Yuan (¥)</option>
+                                <option value="COP">COP – Colombian Peso ($)</option>
+                                <option value="CRC">CRC – Costa Rican Colón (₡)</option>
+                                <option value="CZK">CZK – Czech Koruna (Kč)</option>
+                                <option value="DKK">DKK – Danish Krone (kr)</option>
+                                <option value="EGP">EGP – Egyptian Pound (E£)</option>
+                                <option value="EUR">EUR – Euro (€)</option>
+                                <option value="GBP">GBP – British Pound (£)</option>
+                                <option value="HKD">HKD – Hong Kong Dollar ($)</option>
+                                <option value="HUF">HUF – Hungarian Forint (Ft)</option>
+                                <option value="IDR">IDR – Indonesian Rupiah (Rp)</option>
+                                <option value="ILS">ILS – Israeli Shekel (₪)</option>
+                                <option value="INR">INR – Indian Rupee (₹)</option>
+                                <option value="IRR">IRR – Iranian Rial (﷼)</option>
+                                <option value="JMD">JMD – Jamaican Dollar ($)</option>
+                                <option value="JOD">JOD – Jordanian Dinar (د.ا)</option>
+                                <option value="JPY">JPY – Japanese Yen (¥)</option>
+                                <option value="KES">KES – Kenyan Shilling (Sh)</option>
+                                <option value="KHR">KHR – Cambodian Riel (៛)</option>
+                                <option value="KRW">KRW – South Korean Won (₩)</option>
+                                <option value="LBP">LBP – Lebanese Pound (ل.ل)</option>
+                                <option value="LKR">LKR – Sri Lankan Rupee (Rs)</option>
+                                <option value="MAD">MAD – Moroccan Dirham (د.م.)</option>
+                                <option value="MXN">MXN – Mexican Peso ($)</option>
+                                <option value="MYR">MYR – Malaysian Ringgit (RM)</option>
+                                <option value="NGN">NGN – Nigerian Naira (₦)</option>
+                                <option value="NOK">NOK – Norwegian Krone (kr)</option>
+                                <option value="NZD">NZD – New Zealand Dollar ($)</option>
+                                <option value="PEN">PEN – Peruvian Sol (S/)</option>
+                                <option value="PHP">PHP – Philippine Peso (₱)</option>
+                                <option value="PKR">PKR – Pakistani Rupee (₨)</option>
+                                <option value="PLN">PLN – Polish Zloty (zł)</option>
+                                <option value="QAR">QAR – Qatari Riyal (ر.ق)</option>
+                                <option value="RON">RON – Romanian Leu (lei)</option>
+                                <option value="RUB">RUB – Russian Ruble (₽)</option>
+                                <option value="SAR">SAR – Saudi Riyal (﷼)</option>
+                                <option value="SEK">SEK – Swedish Krona (kr)</option>
+                                <option value="SGD">SGD – Singapore Dollar ($)</option>
+                                <option value="THB">THB – Thai Baht (฿)</option>
+                                <option value="TRY">TRY – Turkish Lira (₺)</option>
+                                <option value="TWD">TWD – Taiwan Dollar (NT$)</option>
+                                <option value="UAH">UAH – Ukrainian Hryvnia (₴)</option>
+                                <option value="USD">USD – United States Dollar ($)</option>
+                                <option value="VES">VES – Venezuelan Bolívar (Bs.)</option>
+                                <option value="VND">VND – Vietnamese Dong (₫)</option>
+                                <option value="ZAR">ZAR – South African Rand (R)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Step 1: Intro -->
+                <!-- STEP 1: Understanding Your Foundation -->
                 <div id="step-1" class="step-content hidden">
+                    <div class="step-indicator">Step 2 of 7</div>
                     <h2 class="question-header">
                         <span class="step-number">02</span>
                         Understanding Your Foundation
                     </h2>
+                    <p class="step-subtitle">Your Financial Capacity Awaits Discovery</p>
                     
                     <div class="concept-box">
                         <div class="concept-title">Why This Matters</div>
@@ -357,20 +339,16 @@
                             <span class="text-gray-300"><strong>Your Personalized Strategy:</strong> A 90-day plan customized to YOUR unique situation</span>
                         </li>
                     </ul>
-
-                    <div class="insight-box">
-                        <p class="insight-text">
-                            <strong style="color: #6496ff;">Key Principle:</strong> Every successful entrepreneur starts by understanding their numbers. This assessment takes 5 minutes and opens the door to real wealth-building.
-                        </p>
-                    </div>
                 </div>
 
-                <!-- Step 1: Income & Expenses -->
-                <div id="step-1" class="step-content hidden">
+                <!-- STEP 2: Your Financial Snapshot -->
+                <div id="step-2" class="step-content hidden">
+                    <div class="step-indicator">Step 3 of 7</div>
                     <h2 class="question-header">
                         <span class="step-number">03</span>
-                        Your Income & Expenses
+                        Your Financial Snapshot
                     </h2>
+                    <p class="step-subtitle">Let's Understand Where You Are Today</p>
                     
                     <div class="concept-box">
                         <div class="concept-title">The SpeedWealth Principle: SYSTEMIZE</div>
@@ -404,696 +382,361 @@
                             <input type="number" id="monthlyExpenses" placeholder="Example: 3500" class="flex-1 rounded-lg input-sr">
                         </div>
                     </div>
-
-                    <div class="insight-box">
-                        <p class="insight-text" id="insightBox">
-                            💡 <strong style="color: #6496ff;">Did you know?</strong> If you have a $1,500 monthly surplus, that's $18,000/year—enough to build significant wealth in just a few years through compound growth and smart investing.
-                        </p>
-                    </div>
                 </div>
 
-                <!-- Step 2: Savings & Debt -->
-                <div id="step-2" class="step-content hidden">
+                <!-- STEP 3: Your Current Position (Savings & Debt) -->
+                <div id="step-3" class="step-content hidden">
+                    <div class="step-indicator">Step 4 of 7</div>
                     <h2 class="question-header">
                         <span class="step-number">04</span>
-                        Your Current Position
+                        Your Financial Health
                     </h2>
+                    <p class="step-subtitle">Building on Your Foundation</p>
                     
                     <div class="concept-box">
-                        <div class="concept-title">The SpeedWealth Principle: START WITH THE END IN MIND</div>
+                        <div class="concept-title">Assets & Liabilities Matter</div>
                         <div class="concept-text">
-                            Your current savings and debt are your starting point, not your destination. Understanding them clearly helps you create a realistic roadmap to your wealth vision.
+                            Your current savings and debt load determine your starting point. Smart wealth-building means knowing both what you have and what you owe—then creating a strategic path forward.
                         </div>
                     </div>
 
                     <div class="question-block">
-                        <label class="question-label">How much do you currently have in savings?</label>
+                        <label class="question-label">How much do you have in current savings?</label>
                         <p class="question-description">
-                            Total accessible savings: emergency fund, savings account, money market account, cash reserves—anything you can access within 30 days.
+                            Total amount in savings accounts, emergency funds, and liquid assets. This is money you can access quickly if needed.
                         </p>
                         <div class="flex gap-2">
                             <div class="flex-shrink-0">
                                 <input type="text" id="currencySymbolSavings" placeholder="$" class="w-16 rounded-lg input-sr text-center" readonly>
                             </div>
-                            <input type="number" id="currentSavings" placeholder="Example: 15000" class="flex-1 rounded-lg input-sr">
+                            <input type="number" id="currentSavings" placeholder="Example: 10000" class="flex-1 rounded-lg input-sr">
                         </div>
                     </div>
 
                     <div class="question-block">
-                        <label class="question-label">What is your total outstanding debt?</label>
+                        <label class="question-label">What is your total debt?</label>
                         <p class="question-description">
-                            Combined balance of all debts: credit cards, personal loans, student loans, car loans, mortgage, or any other borrowing.
+                            Sum of all outstanding debt: credit cards, student loans, car loans, mortgages, personal loans, and any other liabilities.
                         </p>
                         <div class="flex gap-2">
                             <div class="flex-shrink-0">
                                 <input type="text" id="currencySymbolDebt" placeholder="$" class="w-16 rounded-lg input-sr text-center" readonly>
                             </div>
-                            <input type="number" id="totalDebt" placeholder="Example: 45000" class="flex-1 rounded-lg input-sr">
+                            <input type="number" id="totalDebt" placeholder="Example: 25000" class="flex-1 rounded-lg input-sr">
                         </div>
-                    </div>
-
-                    <div class="insight-box">
-                        <p class="insight-text">
-                            📊 <strong style="color: #6496ff;">This matters because:</strong> Your debt-to-savings ratio determines your strategy. High debt? Focus on debt reduction first. Low debt? Accelerate investments. Both are valid paths.
-                        </p>
                     </div>
                 </div>
 
-                <!-- Step 3: Goals & Vision -->
-                <div id="step-3" class="step-content hidden">
+                <!-- STEP 4: Your Financial Vision (Goals) -->
+                <div id="step-4" class="step-content hidden">
+                    <div class="step-indicator">Step 5 of 7</div>
                     <h2 class="question-header">
                         <span class="step-number">05</span>
-                        Your Wealth Vision
+                        Your Financial Vision
                     </h2>
+                    <p class="step-subtitle">What Does Success Look Like For You?</p>
                     
                     <div class="concept-box">
-                        <div class="concept-title">The SpeedWealth Principle: CASHING OUT</div>
+                        <div class="concept-title">Dreams Drive Action</div>
                         <div class="concept-text">
-                            Every successful entrepreneur starts with a clear vision. Your goal shapes every decision in your blueprint. Without clarity on where you're going, you're building without direction.
+                            Every millionaire started with a goal. What's yours? Your primary financial goal shapes everything in your 90-day blueprint. Be specific. Be bold.
                         </div>
                     </div>
 
                     <div class="question-block">
-                        <label class="question-label">What are your primary financial goals?</label>
+                        <label class="question-label">What is your primary financial goal?</label>
                         <p class="question-description">
-                            Select one or more goals that matter to you. Goals are customized based on your country and currency. You can also add custom goals below.
+                            Select what matters most to you right now. Your blueprint will be customized around this goal.
                         </p>
-                        
-                        <div id="goalsContainer" class="space-y-2 mb-4">
-                            <!-- Goals will be dynamically populated based on country -->
-                        </div>
-
-                        <div>
-                            <label class="question-label text-sm">Add Custom Goals (Optional)</label>
-                            <p class="question-description text-xs">
-                                Add any other financial goals not listed above
-                            </p>
-                            <textarea id="customGoals" placeholder="Example: Build investment portfolio worth $500k, Create online course income, Buy vacation property..." class="w-full rounded-lg input-sr h-16"></textarea>
+                        <div class="space-y-3">
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="goal-emergency" class="mr-3 w-4 h-4 accent-orange-400"> Build emergency fund
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="goal-passive" class="mr-3 w-4 h-4 accent-orange-400"> Generate passive income
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="goal-debt" class="mr-3 w-4 h-4 accent-orange-400"> Pay off all debt
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="goal-investment" class="mr-3 w-4 h-4 accent-orange-400"> Build investment portfolio
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="goal-purchase" class="mr-3 w-4 h-4 accent-orange-400"> Save for major purchase
+                            </label>
                         </div>
                     </div>
 
                     <div class="question-block">
-                        <label class="question-label">What is your target timeline?</label>
+                        <label class="question-label">What's your timeline?</label>
                         <p class="question-description">
-                            When do you want to achieve this goal? Select a realistic timeframe.
+                            How long do you want to achieve this goal?
                         </p>
                         <select id="timeframe" class="w-full rounded-lg input-sr">
-                            <option value="">Select your target timeline</option>
-                            <option value="3 months">3 months</option>
+                            <option value="">Select timeline...</option>
                             <option value="6 months">6 months</option>
-                            <option value="9 months">9 months</option>
                             <option value="1 year">1 year</option>
-                            <option value="18 months">18 months</option>
                             <option value="2 years">2 years</option>
                             <option value="3 years">3 years</option>
                             <option value="5 years">5 years</option>
-                            <option value="10 years">10 years</option>
+                            <option value="10 years">10+ years</option>
                         </select>
-                    </div>
-
-                    <div class="insight-box">
-                        <p class="insight-text">
-                            🎯 <strong style="color: #6496ff;">Pro Tip:</strong> Specific, time-bound goals create accountability. Your blueprint will break this vision into actionable monthly steps.
-                        </p>
                     </div>
                 </div>
 
-                <!-- Step 4: Income Sources -->
-                <div id="step-4" class="step-content hidden">
+                <!-- STEP 5: Know Your Starting Point (Risk & Experience) -->
+                <div id="step-5" class="step-content hidden">
+                    <div class="step-indicator">Step 6 of 7</div>
                     <h2 class="question-header">
                         <span class="step-number">06</span>
-                        Your Income Streams
+                        Know Your Starting Point
                     </h2>
+                    <p class="step-subtitle">Understanding Your Investment Comfort Level</p>
                     
                     <div class="concept-box">
-                        <div class="concept-title">The SpeedWealth Principle: DUPLICATE & LEVERAGE</div>
+                        <div class="concept-title">Risk Tolerance Matters</div>
                         <div class="concept-text">
-                            Understanding your current income sources is the first step to diversification. Successful wealth builders never rely on a single income stream.
+                            T. Harv Eker: "Match your strategy to your personality, not to market trends." Your comfort with risk determines your investment approach. No judgment—only strategy.
                         </div>
                     </div>
 
                     <div class="question-block">
-                        <label class="question-label">What are your current sources of income?</label>
+                        <label class="question-label">What's your investment experience level?</label>
                         <p class="question-description">
-                            Select one or more income sources. You can also add custom sources below.
-                        </p>
-                        
-                        <div class="space-y-2 mb-4">
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Full-time employment" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Full-time employment / Salary job
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Part-time work" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Part-time work
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Freelance / Consulting" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Freelance / Consulting
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Side business / Gig work" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Side business / Gig work
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Passive income (dividends)" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Passive income (dividends, interest)
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Rental income" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Rental income
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Investment income (stocks, crypto)" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Investment income (stocks, crypto)
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Online business / E-commerce" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Online business / E-commerce
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Content creation (YouTube, blogs)" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Content creation (YouTube, blogs)
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Affiliate marketing" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Affiliate marketing
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Retirement / Pension" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Retirement / Pension
-                            </label>
-                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
-                                <input type="checkbox" name="incomeSource" value="Government benefits / Grants" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                                Government benefits / Grants
-                            </label>
-                        </div>
-
-                        <div>
-                            <label class="question-label text-sm">Add Other Income Sources (Optional)</label>
-                            <p class="question-description text-xs">
-                                Add any additional income sources not listed above
-                            </p>
-                            <textarea id="incomeStreams" placeholder="Example: Royalties, Teaching, Coaching, Selling digital products..." class="w-full rounded-lg input-sr h-16"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="question-block">
-                        <label class="question-label">Are you interested in developing additional income streams?</label>
-                        <p class="question-description">
-                            Your blueprint will include strategies for income growth. This helps us prioritize beginner-friendly vs. advanced opportunities.
-                        </p>
-                        <select id="incomeInterest" class="w-full rounded-lg input-sr">
-                            <option value="">Select your interest level</option>
-                            <option value="Not Interested">Not interested—focused on current job</option>
-                            <option value="Somewhat Interested">Somewhat interested—exploring options</option>
-                            <option value="Very Interested">Very interested—ready to develop new streams</option>
-                        </select>
-                    </div>
-
-                    <div class="insight-box">
-                        <p class="insight-text">
-                            💡 <strong style="color: #6496ff;">Key Insight:</strong> The wealthy typically have 3-5 income streams. Even adding one additional stream could increase your annual surplus by $5,000-$20,000+.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 5: Investment Profile -->
-                <div id="step-5" class="step-content hidden">
-                    <h2 class="question-header">
-                        <span class="step-number">07</span>
-                        Your Investment Strategy
-                    </h2>
-                    
-                    <div class="concept-box">
-                        <div class="concept-title">The SpeedWealth Principle: LEVERAGE</div>
-                        <div class="concept-text">
-                            The most successful wealth builders use leverage—compound interest, market returns, and diversified investments. Your experience level and risk tolerance determine the right strategy for YOU.
-                        </div>
-                    </div>
-
-                    <div class="question-block">
-                        <label class="question-label">What is your investment experience level?</label>
-                        <p class="question-description">
-                            Select the option that best describes you. This helps us recommend strategies you'll actually implement and understand.
+                            How familiar are you with investing?
                         </p>
                         <select id="investmentExperience" class="w-full rounded-lg input-sr">
-                            <option value="">Select your experience level</option>
-                            <option value="Beginner">Beginner – New to investing, want simple strategies</option>
-                            <option value="Intermediate">Intermediate – Some experience, familiar with stocks/funds</option>
-                            <option value="Advanced">Advanced – Seasoned investor with active portfolio</option>
+                            <option value="">Select experience level...</option>
+                            <option value="Beginner">Beginner - I'm just starting</option>
+                            <option value="Intermediate">Intermediate - I have some experience</option>
+                            <option value="Advanced">Advanced - I'm experienced</option>
                         </select>
                     </div>
 
                     <div class="question-block">
-                        <label class="question-label">What is your risk tolerance?</label>
+                        <label class="question-label">What's your risk tolerance?</label>
                         <p class="question-description">
-                            How comfortable are you with market fluctuations? This shapes your portfolio mix and investment recommendations.
+                            How comfortable are you with market volatility?
                         </p>
                         <select id="riskTolerance" class="w-full rounded-lg input-sr">
-                            <option value="">Select your risk preference</option>
-                            <option value="Low">Low – Sleep soundly at night, prioritize safety</option>
-                            <option value="Moderate">Moderate – Balanced approach, some growth with stability</option>
-                            <option value="High">High – Growth-focused, comfortable with volatility</option>
+                            <option value="">Select risk tolerance...</option>
+                            <option value="Low">Low - I prefer stability</option>
+                            <option value="Moderate">Moderate - Balanced approach</option>
+                            <option value="High">High - I'm comfortable with volatility</option>
                         </select>
                     </div>
 
-                    <div class="insight-box">
-                        <p class="insight-text">
-                            ⚡ <strong style="color: #6496ff;">Important:</strong> Your risk tolerance can evolve as your experience and assets grow. Your blueprint adapts to where you are today.
+                    <div class="question-block">
+                        <label class="question-label">What are your current income sources?</label>
+                        <p class="question-description">
+                            Select all that apply
                         </p>
-                    </div>
-                </div>
-
-                <!-- Error Message -->
-                <div id="errorMessage" class="hidden mt-4 p-4 bg-red-900/30 border border-red-600 text-red-200 rounded-lg text-sm"></div>
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="flex gap-4">
-                <button onclick="previousStep()" id="backBtn" class="flex-1 px-6 py-3 btn-secondary rounded-lg hidden">
-                    ← Back
-                </button>
-                <button onclick="nextStep()" id="nextBtn" class="flex-1 px-6 py-3 btn-primary rounded-lg">
-                    Continue →
-                </button>
-            </div>
-
-            <!-- Get Your Blueprint CTA - Only on last step -->
-            <div id="blueprintCTA" class="hidden text-center mt-8">
-                <p class="text-gray-400 text-sm mb-4">Ready to create your personalized 90-day plan?</p>
-                <button onclick="generateBlueprint()" class="px-8 py-3 btn-primary rounded-lg font-semibold">
-                    Generate My Blueprint ✓
-                </button>
-            </div>
-        </div>
-
-        <!-- CONTACT FORM SECTION -->
-        <div id="contactFormSection" class="hidden">
-            <div class="card-sr rounded-2xl p-8 md:p-10 mb-8">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-white mb-2">Almost There!</h2>
-                    <p class="text-gray-400">Share your contact information to receive your personalized blueprint</p>
-                </div>
-
-                <div class="max-w-md mx-auto">
-                    <div class="question-block">
-                        <label class="question-label">First Name *</label>
-                        <input type="text" id="contactFirstName" placeholder="Enter your first name" class="w-full rounded-lg input-sr">
-                    </div>
-
-                    <div class="question-block">
-                        <label class="question-label">Last Name *</label>
-                        <input type="text" id="contactLastName" placeholder="Enter your last name" class="w-full rounded-lg input-sr">
-                    </div>
-
-                    <div class="question-block">
-                        <label class="question-label">Email Address *</label>
-                        <p class="question-description">We'll send your blueprint and personalized guidance here</p>
-                        <input type="email" id="contactEmail" placeholder="Enter your email" class="w-full rounded-lg input-sr">
-                    </div>
-
-                    <div class="question-block">
-                        <label class="question-label">Phone Number (Optional)</label>
-                        <p class="question-description">For follow-up coaching offers</p>
-                        <div class="flex gap-2">
-                            <div class="flex-shrink-0">
-                                <input type="text" id="countryCode" placeholder="+1" class="w-20 rounded-lg input-sr text-center" readonly>
-                            </div>
-                            <input type="tel" id="contactPhone" placeholder="Enter your phone number" class="flex-1 rounded-lg input-sr">
+                        <div class="space-y-3">
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="income-employment" class="mr-3 w-4 h-4 accent-orange-400"> Employment/Salary
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="income-freelance" class="mr-3 w-4 h-4 accent-orange-400"> Freelance/Gig work
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="income-business" class="mr-3 w-4 h-4 accent-orange-400"> Business/Entrepreneurship
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="income-investment" class="mr-3 w-4 h-4 accent-orange-400"> Investment income
+                            </label>
+                            <label class="flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition">
+                                <input type="checkbox" id="income-other" class="mr-3 w-4 h-4 accent-orange-400"> Other sources
+                            </label>
                         </div>
                     </div>
 
-                    <!-- Error Message -->
-                    <div id="contactError" class="hidden mt-4 p-4 bg-red-900/30 border border-red-600 text-red-200 rounded-lg text-sm"></div>
-
-                    <!-- Buttons -->
-                    <div class="flex gap-4 mt-8">
-                        <button onclick="backToLearning()" class="flex-1 px-6 py-3 btn-secondary rounded-lg">
-                            ← Back
-                        </button>
-                        <button onclick="submitAndGenerateBlueprint()" class="flex-1 px-6 py-3 btn-primary rounded-lg">
-                            Generate Blueprint ✓
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RESULTS SECTION -->
-        <div id="resultsSection" class="hidden">
-            <div class="card-sr rounded-2xl p-8 md:p-10 border-2" style="border-color: #ff8120; background-color: rgba(10, 10, 10, 0.8) !important;">
-                <div class="text-center mb-10">
-                    <div class="text-5xl mb-3" style="color: #ff8120;">✓</div>
-                    <h2 class="text-4xl font-bold text-white mb-2">Your 90-Day Wealth Blueprint</h2>
-                    <p class="text-gray-400">Customized using SpeedWealth principles for your unique situation</p>
-                </div>
-
-                <!-- User Summary -->
-                <div class="bg-gray-900/50 rounded-lg p-6 mb-8 border border-gray-700">
-                    <h3 class="text-lg font-bold mb-4" style="color: #ff8120;">Your Financial Profile</h3>
-                    <div id="userSummary" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-300">
-                        <!-- Populated by JS -->
+                    <div class="question-block">
+                        <label class="question-label">Are you interested in additional income streams?</label>
+                        <p class="question-description">
+                            Would you like your blueprint to include strategies for creating additional income?
+                        </p>
+                        <select id="incomeInterest" class="w-full rounded-lg input-sr">
+                            <option value="">Select your interest...</option>
+                            <option value="Yes">Yes - Show me opportunities</option>
+                            <option value="No">No - Focus on optimizing current income</option>
+                            <option value="Maybe">Maybe - I'm open to ideas</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- Blueprint Content -->
-                <div id="analysisText" class="text-gray-300 whitespace-pre-wrap leading-relaxed text-sm mb-8 bg-gray-900/30 p-6 rounded-lg border border-gray-700 max-h-96 overflow-y-auto"></div>
+                <!-- STEP 6: Blueprint Generation (Loading) -->
+                <div id="step-6" class="step-content hidden text-center">
+                    <div class="step-indicator">Step 7 of 7</div>
+                    <h2 class="question-header justify-center mb-8">
+                        <span class="step-number">07</span>
+                    </h2>
+                    <h2 class="text-2xl font-bold text-white mb-2">Generating Your Blueprint</h2>
+                    <p class="step-subtitle">Your Personalized 90-Day Wealth Plan</p>
 
-                <!-- CTA Section -->
-                <div class="border-t border-gray-700 pt-10 pb-8 text-center">
-                    <p class="text-gray-400 text-sm mb-8" style="font-style: italic; letter-spacing: 0.5px;">"Your income can only grow to the extent that you do." – T. Harv Eker</p>
-                    <button onclick="downloadPlan()" class="px-10 py-3 btn-primary rounded-lg font-semibold text-base">
-                        Download Your Blueprint
+                    <div class="my-12">
+                        <div class="inline-block">
+                            <div class="w-16 h-16 border-4 border-gray-700 border-t-orange-400 rounded-full animate-spin"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-gray-300">
+                        <p id="loadingMsg1" class="animate-pulse">📊 Analyzing your financial situation...</p>
+                        <p id="loadingMsg2" class="animate-pulse hidden">📈 Creating your 90-day action plan...</p>
+                        <p id="loadingMsg3" class="animate-pulse hidden">📄 Generating your professional wealth blueprint...</p>
+                    </div>
+
+                    <div class="insight-box mt-8">
+                        <p class="insight-text">
+                            <strong style="color: #6496ff;">This won't take long!</strong> We're creating a truly personalized blueprint based on YOUR unique situation. Your 90-day plan is being generated now.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 7: Success! Blueprint Ready -->
+                <div id="step-7" class="step-content hidden">
+                    <div class="step-indicator">Complete! ✓</div>
+                    <h2 class="text-3xl font-bold text-white mb-2">🎉 Your Blueprint Is Ready!</h2>
+                    <p class="step-subtitle">Success Ahead. Action Now.</p>
+
+                    <div class="accent-line my-6"></div>
+
+                    <div class="concept-box">
+                        <div class="concept-title">Congratulations!</div>
+                        <div class="concept-text">
+                            You now have a personalized 90-Day Wealth Blueprint tailored to YOUR unique situation. This is your roadmap to financial freedom. Download it, review it, and most importantly—act on it.
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h3 class="text-white font-semibold mb-4">Your Personalized Summary:</h3>
+                        <div class="bg-gray-900 p-6 rounded-lg border border-orange-400 space-y-3">
+                            <p><span class="text-orange-400">📊 Monthly Surplus:</span> <span id="summaryIncome" class="text-white font-semibold">Calculating...</span></p>
+                            <p><span class="text-orange-400">🎯 Your Goal:</span> <span id="summaryGoal" class="text-white font-semibold">Calculating...</span></p>
+                            <p><span class="text-orange-400">⏰ Timeline:</span> <span id="summaryTimeline" class="text-white font-semibold">Calculating...</span></p>
+                            <p><span class="text-orange-400">🌍 Location:</span> <span id="summaryCountry" class="text-white font-semibold">Calculating...</span></p>
+                        </div>
+                    </div>
+
+                    <button onclick="downloadBlueprint()" class="w-full px-6 py-4 btn-primary rounded-lg font-bold text-lg mb-4 hover:bg-orange-500">
+                        📥 Download Your Complete Blueprint (PDF)
+                    </button>
+
+                    <div class="insight-box">
+                        <p class="insight-text">
+                            Your blueprint includes: 3-phase 90-day action plan, weekly milestones, goal-specific strategies, and SpeedWealth principles tailored to your situation.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-gray-700">
+                        <p class="text-gray-400 text-center mb-4">Ready to accelerate your progress?</p>
+                        <a href="https://calendly.com/june-yoon/30min" target="_blank" class="block w-full px-6 py-3 btn-secondary rounded-lg font-bold text-center">
+                            📅 Book Your 30-Minute Strategy Call
+                        </a>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-400 mb-3">Join our community of wealth-builders:</p>
+                        <a href="https://facebook.com/groups/success-resources" target="_blank" class="text-orange-400 hover:text-orange-300 font-semibold">
+                            👥 Success Resources Facebook Group
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex gap-4 mt-8">
+                    <button onclick="previousStep()" id="backBtn" class="flex-1 px-6 py-3 btn-secondary rounded-lg hidden font-semibold">
+                        ← Back
+                    </button>
+                    <button onclick="nextStep()" id="nextBtn" class="flex-1 px-6 py-3 btn-primary rounded-lg font-semibold">
+                        Continue →
                     </button>
                 </div>
 
-                <div id="emailConfirmation" class="hidden mt-10 p-0 rounded-xl text-center shadow-2xl" style="background: #c6c6c6; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);">
-                    <!-- Header Section -->
-                    <div style="background-color: #ff8120; padding: 1.5rem; border-radius: 9px 9px 0 0;">
-                        <p style="color: #ffffff; font-size: 1.375rem; font-weight: 800; margin: 0; letter-spacing: 0.5px;">
-                            ✓ Blueprint Downloaded
-                        </p>
-                    </div>
-
-                    <!-- Content Section -->
-                    <div style="padding: 2.5rem; text-align: center;">
-                        <p style="color: #000000; font-size: 0.9375rem; margin: 0 0 1.75rem 0; line-height: 1.6; font-weight: 500;">
-                            Your personalized 90-Day Wealth Blueprint is on its way to:
-                        </p>
-                        
-                        <div id="confirmationEmail" style="color: #ffffff; font-size: 1.0625rem; font-weight: 700; background-color: #ff8120; padding: 1rem 1.5rem; border-radius: 0.625rem; margin: 0 0 1.75rem 0; word-break: break-all;">
-                            <!-- Email will be inserted here -->
-                        </div>
-
-                        <p style="color: #000000; font-size: 0.8125rem; margin: 0; line-height: 1.6;">
-                            Check your inbox for your blueprint and exclusive follow-up coaching opportunities from Success Resources.
-                        </p>
-                    </div>
+                <!-- Insight Boxes (Shown after buttons based on step) -->
+                <div id="insight-1" class="insight-box mt-8 hidden">
+                    <p class="insight-text">
+                        <strong style="color: #6496ff;">Key Principle:</strong> Every successful entrepreneur starts by understanding their numbers. This assessment takes 5 minutes and opens the door to real wealth-building.
+                    </p>
                 </div>
 
-                <p class="text-center text-xs text-gray-500 mt-8 pt-6 border-t border-gray-700">
-                    Your data has been securely synced to Success Resources for your coaching journey.
+                <div id="insight-2" class="insight-box mt-8 hidden">
+                    <p class="insight-text" id="insightBox">
+                        💡 <strong style="color: #6496ff;">Did you know?</strong> If you have a $1,500 monthly surplus, that's $18,000/year—enough to build significant wealth in just a few years through compound growth and smart investing.
+                    </p>
+                </div>
+
+                <div id="insight-3" class="insight-box mt-8 hidden">
+                    <p class="insight-text">
+                        <strong style="color: #6496ff;">Strategy Insight:</strong> Your debt-to-income ratio will influence your 90-day blueprint. If debt is high, we'll prioritize strategic payoff. If you have savings, we'll optimize growth.
+                    </p>
+                </div>
+
+                <div id="insight-4" class="insight-box mt-8 hidden">
+                    <p class="insight-text">
+                        <strong style="color: #6496ff;">Remember:</strong> Your timeline shapes your strategy. Shorter timelines focus on wealth protection. Longer timelines enable aggressive growth.
+                    </p>
+                </div>
+
+                <div id="insight-5" class="insight-box mt-8 hidden">
+                    <p class="insight-text">
+                        <strong style="color: #6496ff;">Key Strategy:</strong> Diversifying income sources reduces risk and accelerates wealth-building. Your blueprint will include opportunities aligned with your comfort level.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8 text-gray-600 text-xs space-y-2 pt-6 border-t border-gray-800">
+                <p class="text-gray-700 text-xs leading-relaxed mt-4">
+                    This Wealth Blueprint tool is provided for educational and informational purposes only. Success Resources and its representatives do not provide financial, investment, tax, or legal advice. The personalized plan generated is based on information you provide and general principles, but should not be construed as professional financial advice. Before making any financial decisions, consult with a qualified financial advisor. By using this tool, you acknowledge these terms.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- DISCLAIMER SECTION -->
-    <footer class="mt-12 py-6 border-t border-gray-800">
-        <div class="max-w-4xl mx-auto px-4 md:px-8">
-            <p class="text-xs text-gray-600 leading-relaxed text-center max-w-3xl mx-auto">
-                This Wealth Blueprint tool is provided for educational and informational purposes only. Success Resources and its representatives do not provide financial, investment, tax, or legal advice. The personalized plan generated by this tool is based on information you provide and general principles, but it should not be construed as professional financial advice tailored to your specific circumstances. Financial results vary and past performance does not guarantee future results. Your actual financial outcomes will depend on market conditions, economic factors, personal discipline, and implementation of strategies. Before making any financial decisions, including investments, debt management, tax planning, or business decisions, consult with a qualified financial advisor, accountant, tax professional, or attorney. By using this tool, you acknowledge that you understand and agree to these terms and have not relied solely on this blueprint for making financial decisions.
-            </p>
-        </div>
-    </footer>
-
     <script>
         let currentStep = 0;
         const totalSteps = 7;
 
-        // Country to country code mapping
-        const countryCodeMap = {
-            'Argentina': '+54',
-            'Australia': '+61',
-            'Austria': '+43',
-            'Bangladesh': '+880',
-            'Belgium': '+32',
-            'Brazil': '+55',
-            'Cambodia': '+855',
-            'Canada': '+1',
-            'Chile': '+56',
-            'China': '+86',
-            'Colombia': '+57',
-            'Costa Rica': '+506',
-            'Czech Republic': '+420',
-            'Denmark': '+45',
-            'Egypt': '+20',
-            'Finland': '+358',
-            'France': '+33',
-            'Germany': '+49',
-            'Greece': '+30',
-            'Hong Kong': '+852',
-            'Hungary': '+36',
-            'India': '+91',
-            'Indonesia': '+62',
-            'Iran': '+98',
-            'Ireland': '+353',
-            'Israel': '+972',
-            'Italy': '+39',
-            'Jamaica': '+1876',
-            'Japan': '+81',
-            'Jordan': '+962',
-            'Kenya': '+254',
-            'Lebanon': '+961',
-            'Malaysia': '+60',
-            'Mexico': '+52',
-            'Morocco': '+212',
-            'Netherlands': '+31',
-            'New Zealand': '+64',
-            'Nigeria': '+234',
-            'Norway': '+47',
-            'Pakistan': '+92',
-            'Peru': '+51',
-            'Philippines': '+63',
-            'Poland': '+48',
-            'Portugal': '+351',
-            'Qatar': '+974',
-            'Romania': '+40',
-            'Russia': '+7',
-            'Saudi Arabia': '+966',
-            'Singapore': '+65',
-            'South Africa': '+27',
-            'South Korea': '+82',
-            'Spain': '+34',
-            'Sri Lanka': '+94',
-            'Sweden': '+46',
-            'Switzerland': '+41',
-            'Taiwan': '+886',
-            'Thailand': '+66',
-            'Turkey': '+90',
-            'Ukraine': '+380',
-            'United Arab Emirates': '+971',
-            'United Kingdom': '+44',
-            'United States': '+1',
-            'Venezuela': '+58',
-            'Vietnam': '+84'
-        };
-
-        // Currency code to symbol mapping
-        const currencySymbolMap = {
-            'AED': 'د.إ',
-            'ARS': '$',
-            'AUD': '$',
-            'BDT': '৳',
-            'BRL': 'R$',
-            'CAD': '$',
-            'CHP': 'Fr',
-            'CLP': '$',
-            'CNY': '¥',
-            'COP': '$',
-            'CRC': '₡',
-            'CZK': 'Kč',
-            'DKK': 'kr',
-            'EGP': 'E£',
-            'EUR': '€',
-            'GBP': '£',
-            'HKD': '$',
-            'HUF': 'Ft',
-            'IDR': 'Rp',
-            'ILS': '₪',
-            'INR': '₹',
-            'IRR': '﷼',
-            'JMD': '$',
-            'JOD': 'د.ا',
-            'JPY': '¥',
-            'KES': 'Sh',
-            'KHR': '៛',
-            'KRW': '₩',
-            'LBP': 'ل.ل',
-            'LKR': 'Rs',
-            'MAD': 'د.م.',
-            'MXN': '$',
-            'MYR': 'RM',
-            'NGN': '₦',
-            'NOK': 'kr',
-            'NZD': '$',
-            'PEN': 'S/',
-            'PHP': '₱',
-            'PKR': '₨',
-            'PLN': 'zł',
-            'QAR': 'ر.ق',
-            'RON': 'lei',
-            'RUB': '₽',
-            'SAR': '﷼',
-            'SEK': 'kr',
-            'SGD': '$',
-            'THB': '฿',
-            'TRY': '₺',
-            'TWD': 'NT$',
-            'UAH': '₴',
-            'USD': '$',
-            'VES': 'Bs.',
-            'VND': '₫',
-            'ZAR': 'R'
-        };
-
-        function updateCountryCode() {
-            const country = document.getElementById('country').value;
-            const currency = document.getElementById('currency').value;
-            const countryCodeField = document.getElementById('countryCode');
-            
-            if (country && countryCodeMap[country]) {
-                countryCodeField.value = countryCodeMap[country];
-            } else {
-                countryCodeField.value = '';
-            }
-
-            updateCurrencySymbols();
-        }
-
-        function updateCurrencySymbols() {
-            const currency = document.getElementById('currency').value;
-            const symbol = currencySymbolMap[currency] || '$';
-            
-            document.getElementById('currencySymbolIncome').value = symbol;
-            document.getElementById('currencySymbolExpenses').value = symbol;
-            document.getElementById('currencySymbolSavings').value = symbol;
-            document.getElementById('currencySymbolDebt').value = symbol;
-
-            // Update goals based on currency
-            generateDynamicGoals();
-            
-            // Update insight box based on currency
-            updateInsightBox(currency, symbol);
-        }
-
-        function updateInsightBox(currency, symbol) {
-            // Insight box amounts for each currency (monthly surplus example)
-            const insightAmounts = {
-                'USD': { monthly: '1,500', annual: '18,000' },
-                'GBP': { monthly: '1,200', annual: '14,400' },
-                'EUR': { monthly: '1,350', annual: '16,200' },
-                'AUD': { monthly: '2,250', annual: '27,000' },
-                'CAD': { monthly: '2,000', annual: '24,000' },
-                'SGD': { monthly: '2,000', annual: '24,000' },
-                'INR': { monthly: '120,000', annual: '1,440,000' },
-                'JPY': { monthly: '165,000', annual: '1,980,000' },
-                'CNY': { monthly: '10,000', annual: '120,000' },
-                'HKD': { monthly: '11,700', annual: '140,400' },
-                'MYR': { monthly: '6,150', annual: '73,800' },
-                'THB': { monthly: '52,500', annual: '630,000' },
-                'PHP': { monthly: '82,500', annual: '990,000' },
-                'BRL': { monthly: '7,500', annual: '90,000' },
-                'ZAR': { monthly: '27,000', annual: '324,000' }
-            };
-
-            const defaults = { monthly: '1,500', annual: '18,000' };
-            const amounts = insightAmounts[currency] || defaults;
-
-            const insightBox = document.getElementById('insightBox');
-            insightBox.innerHTML = `💡 <strong style="color: #6496ff;">Did you know?</strong> If you have a ${symbol}${amounts.monthly} monthly surplus, that's ${symbol}${amounts.annual}/year—enough to build significant wealth in just a few years through compound growth and smart investing.`;
-        }
-
-        function generateDynamicGoals() {
-            const currency = document.getElementById('currency').value;
-            const symbol = currencySymbolMap[currency] || '$';
-            const goalsContainer = document.getElementById('goalsContainer');
-            
-            // Goal amounts based on currency (reasonable for each currency)
-            const goalAmounts = {
-                'USD': { emergency: '15,000', passive1: '1,000', passive3: '3,000', passive5: '5,000', capital: '50,000' },
-                'GBP': { emergency: '12,000', passive1: '800', passive3: '2,400', passive5: '4,000', capital: '40,000' },
-                'EUR': { emergency: '13,500', passive1: '900', passive3: '2,700', passive5: '4,500', capital: '45,000' },
-                'AUD': { emergency: '22,500', passive1: '1,500', passive3: '4,500', passive5: '7,500', capital: '75,000' },
-                'CAD': { emergency: '20,000', passive1: '1,200', passive3: '3,600', passive5: '6,000', capital: '60,000' },
-                'SGD': { emergency: '20,000', passive1: '1,200', passive3: '3,600', passive5: '6,000', capital: '60,000' },
-                'INR': { emergency: '1,200,000', passive1: '75,000', passive3: '225,000', passive5: '375,000', capital: '3,750,000' },
-                'JPY': { emergency: '1,650,000', passive1: '110,000', passive3: '330,000', passive5: '550,000', capital: '5,500,000' },
-                'CNY': { emergency: '100,000', passive1: '6,500', passive3: '19,500', passive5: '32,500', capital: '325,000' },
-                'HKD': { emergency: '117,000', passive1: '7,700', passive3: '23,100', passive5: '38,500', capital: '385,000' },
-                'MYR': { emergency: '61,500', passive1: '4,000', passive3: '12,000', passive5: '20,000', capital: '200,000' },
-                'THB': { emergency: '525,000', passive1: '34,000', passive3: '102,000', passive5: '170,000', capital: '1,700,000' },
-                'PHP': { emergency: '825,000', passive1: '53,500', passive3: '160,500', passive5: '267,500', capital: '2,675,000' },
-                'BRL': { emergency: '75,000', passive1: '4,900', passive3: '14,700', passive5: '24,500', capital: '245,000' },
-                'ZAR': { emergency: '270,000', passive1: '17,500', passive3: '52,500', passive5: '87,500', capital: '875,000' }
-            };
-
-            // Default amounts if currency not specifically mapped
-            const defaults = { emergency: '15,000', passive1: '1,000', passive3: '3,000', passive5: '5,000', capital: '50,000' };
-            const amounts = goalAmounts[currency] || defaults;
-
-            const goals = [
-                `Build ${symbol}${amounts.emergency} emergency fund`,
-                `Pay off all debt`,
-                `Generate ${symbol}${amounts.passive1} monthly passive income`,
-                `Generate ${symbol}${amounts.passive3} monthly passive income`,
-                `Generate ${symbol}${amounts.passive5} monthly passive income`,
-                `Save ${symbol}${amounts.capital} investment capital`,
-                `Start a side business`,
-                `Build real estate portfolio`,
-                `Transition to part-time work`,
-                `Early retirement in 10 years`,
-                `Achieve financial independence`,
-                `Build multiple income streams`
-            ];
-
-            // Clear existing goals
-            goalsContainer.innerHTML = '';
-
-            // Create checkboxes for each goal
-            goals.forEach((goal, index) => {
-                const label = document.createElement('label');
-                label.className = 'flex items-center text-gray-300 cursor-pointer hover:text-orange-400 transition';
-                label.innerHTML = `
-                    <input type="checkbox" name="goal" value="${goal}" class="mr-3 w-4 h-4 rounded" style="border-color: #ff8120; accent-color: #ff8120;">
-                    ${goal}
-                `;
-                goalsContainer.appendChild(label);
-            });
-        }
-
         function updateProgress() {
             const progress = ((currentStep + 1) / totalSteps * 100);
-            document.getElementById('progressBar').style.setProperty('--progress', progress + '%');
+            document.querySelector('.progress-bar').style.setProperty('--progress', progress + '%');
             document.getElementById('stepCounter').textContent = currentStep + 1;
-            
-            // Show/hide back button
-            const backBtn = document.getElementById('backBtn');
-            if (currentStep === 0) {
-                backBtn.classList.add('hidden');
-            } else {
-                backBtn.classList.remove('hidden');
-            }
-
-            // Show/hide next button and blueprint CTA based on step
-            const nextBtn = document.getElementById('nextBtn');
-            const blueprintCTA = document.getElementById('blueprintCTA');
-            
-            if (currentStep === 6) {
-                // Last step - hide next button, show blueprint button
-                nextBtn.classList.add('hidden');
-                blueprintCTA.classList.remove('hidden');
-            } else {
-                // Not last step - show next button, hide blueprint button
-                nextBtn.classList.remove('hidden');
-                blueprintCTA.classList.add('hidden');
-            }
         }
 
         function showStep(step) {
-            document.querySelectorAll('.step-content').forEach((el, idx) => {
-                el.classList.toggle('hidden', idx !== step);
-            });
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            
+            // Hide all insight boxes
+            document.querySelectorAll('[id^="insight-"]').forEach(el => el.classList.add('hidden'));
+            // Show insight box for this step
+            const insightBox = document.getElementById(`insight-${step}`);
+            if (insightBox) insightBox.classList.remove('hidden');
+            
+            updateProgress();
+            
+            if (currentStep === 0) {
+                document.getElementById('backBtn').classList.add('hidden');
+            } else {
+                document.getElementById('backBtn').classList.remove('hidden');
+            }
+            
+            if (currentStep === 6) {
+                document.getElementById('nextBtn').textContent = '✓ Generate Blueprint';
+            } else if (currentStep === 5) {
+                document.getElementById('nextBtn').textContent = 'Generate Blueprint →';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Continue →';
+            }
 
             currentStep = step;
-            updateProgress();
-            window.scrollTo(0, 0);
         }
 
         function nextStep() {
-            if (currentStep < 6) {
+            if (currentStep < 5) {
                 showStep(currentStep + 1);
+            } else if (currentStep === 5) {
+                submitForm();
             }
         }
 
@@ -1103,448 +746,211 @@
             }
         }
 
-        function getFormData() {
-            // Get all checked income sources
-            const checkedSources = Array.from(document.querySelectorAll('input[name="incomeSource"]:checked'))
-                .map(checkbox => checkbox.value);
+        function updateCurrencyDisplay() {
+            const currency = document.getElementById('currency').value;
+            const symbol = currency ? currency.substring(0, 3) : '$';
             
-            // Get custom income sources
-            const customSources = document.getElementById('incomeStreams').value.trim();
+            document.getElementById('currencySymbolIncome').value = symbol;
+            document.getElementById('currencySymbolExpenses').value = symbol;
+            document.getElementById('currencySymbolSavings').value = symbol;
+            document.getElementById('currencySymbolDebt').value = symbol;
+        }
+
+        function updateCurrencySymbols() {
+            updateCurrencyDisplay();
+        }
+
+        function updateCountryCode() {
+            // Function to update country code if needed
+            const country = document.getElementById('country').value;
+            console.log('Country selected:', country);
+        }
+
+        function formatCurrency(amount, currencyCode) {
+            if (!currencyCode || amount === 0) {
+                return '$' + Math.round(amount).toLocaleString('en-US', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+            }
             
-            // Combine all sources
-            let allSources = checkedSources.join(', ');
-            if (customSources) {
-                allSources = allSources ? allSources + ', ' + customSources : customSources;
+            const currencySymbols = {
+                'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥',
+                'CNY': '¥', 'INR': '₹', 'SGD': '$', 'MYR': 'RM',
+                'PHP': '₱', 'THB': '฿', 'IDR': 'Rp', 'AUD': '$',
+                'CAD': '$', 'NZD': '$', 'ZAR': 'R', 'AED': 'د.إ',
+                'SAR': '﷼', 'KRW': '₩', 'BRL': 'R$', 'MXN': '$',
+                'CHF': 'Fr', 'SEK': 'kr', 'NOK': 'kr', 'DKK': 'kr',
+                'CZK': 'Kč', 'HUF': 'Ft', 'PLN': 'zł', 'RON': 'lei',
+                'RUB': '₽', 'UAH': '₴', 'KES': 'Sh', 'ZWL': '$'
+            };
+            
+            const symbol = currencySymbols[currencyCode] || currencyCode;
+            const formatted = Math.round(amount).toLocaleString('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+            
+            return symbol + ' ' + formatted;
+        }
+
+        function updateInsightBox2() {
+            const monthlyIncome = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const monthlyExpenses = parseFloat(document.getElementById('monthlyExpenses').value) || 0;
+            const currency = document.getElementById('currency').value;
+            
+            const surplus = monthlyIncome - monthlyExpenses;
+            const yearlyAmount = surplus * 12;
+            
+            let insightText = '';
+            
+            if (surplus > 0) {
+                // Positive surplus - show wealth building message
+                const formattedSurplus = formatCurrency(surplus, currency);
+                const formattedYearly = formatCurrency(yearlyAmount, currency);
+                
+                insightText = `💡 <strong style="color: #6496ff;">Did you know?</strong> If you have a ${formattedSurplus} monthly surplus, that's ${formattedYearly}/year—enough to build significant wealth in just a few years through compound growth and smart investing.`;
+            } else if (surplus === 0) {
+                // Zero surplus - show balance message
+                insightText = `💡 <strong style="color: #6496ff;">You're Breaking Even:</strong> Your income equals your expenses. This is a good foundation, but to build wealth, look for ways to increase income or reduce expenses and create a monthly surplus.`;
+            } else {
+                // Negative surplus - show deficit message
+                const deficit = Math.abs(surplus);
+                const formattedDeficit = formatCurrency(deficit, currency);
+                const formattedYearlyDeficit = formatCurrency(deficit * 12, currency);
+                
+                insightText = `⚠️ <strong style="color: #ff6b6b;">Monthly Deficit:</strong> Your expenses exceed income by ${formattedDeficit}/month (${formattedYearlyDeficit}/year). Focus on increasing income or reducing expenses to create a positive surplus for wealth-building.`;
+            }
+            
+            const insightBox = document.getElementById('insightBox');
+            if (insightBox) {
+                insightBox.innerHTML = insightText;
+            }
+        }
+
+        function getSelectedCheckboxes(prefix) {
+            const checkboxes = document.querySelectorAll(`input[id^="${prefix}"]`);
+            return Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.id.replace(prefix + '-', '').replace(/-/g, ' '))
+                .join(', ');
+        }
+
+        function startLoading() {
+            let msgIndex = 0;
+            const msgs = ['loadingMsg1', 'loadingMsg2', 'loadingMsg3'];
+            
+            const interval = setInterval(() => {
+                if (msgIndex < msgs.length) {
+                    document.getElementById(msgs[msgIndex]).classList.remove('hidden');
+                    msgIndex++;
+                } else {
+                    clearInterval(interval);
+                    finishLoading();
+                }
+            }, 1500);
+        }
+
+        function finishLoading() {
+            setTimeout(() => {
+                showStep(6);
+                updateSummary();
+            }, 2000);
+        }
+
+        function updateSummary() {
+            const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const expenses = parseFloat(document.getElementById('monthlyExpenses').value) || 0;
+            const surplus = income - expenses;
+            const currency = document.getElementById('currency').value || 'SGD';
+            
+            const goals = getSelectedCheckboxes('goal');
+            const country = document.getElementById('country').value;
+            const timeline = document.getElementById('timeframe').value;
+            
+            document.getElementById('summaryIncome').textContent = currency + Math.max(0, surplus).toLocaleString();
+            document.getElementById('summaryGoal').textContent = goals || 'Financial Growth';
+            document.getElementById('summaryTimeline').textContent = timeline || 'Flexible';
+            document.getElementById('summaryCountry').textContent = country || 'Global';
+        }
+
+        function validateStep() {
+            if (currentStep === 0) {
+                return document.getElementById('country').value && document.getElementById('currency').value;
+            }
+            if (currentStep === 1) {
+                return document.getElementById('monthlyIncome').value && document.getElementById('monthlyExpenses').value;
+            }
+            if (currentStep === 2) {
+                return document.getElementById('currentSavings').value !== '' && document.getElementById('totalDebt').value !== '';
+            }
+            if (currentStep === 3) {
+                return document.querySelector('input[id^="goal-"]:checked') && document.getElementById('timeframe').value;
+            }
+            if (currentStep === 4) {
+                return document.getElementById('investmentExperience').value && document.getElementById('riskTolerance').value && document.getElementById('incomeInterest').value;
+            }
+            if (currentStep === 5) {
+                return true;
+            }
+            return true;
+        }
+
+        function submitForm() {
+            if (!validateStep()) {
+                alert('Please fill in all required fields');
+                return;
             }
 
-            // Get all checked goals
-            const checkedGoals = Array.from(document.querySelectorAll('input[name="goal"]:checked'))
-                .map(checkbox => checkbox.value);
-            
-            // Get custom goals
-            const customGoals = document.getElementById('customGoals').value.trim();
-            
-            // Combine all goals
-            let allGoals = checkedGoals.join(', ');
-            if (customGoals) {
-                allGoals = allGoals ? allGoals + ', ' + customGoals : customGoals;
-            }
-
-            return {
+            const formData = {
+                firstName: 'User',
+                lastName: 'Entrepreneur',
+                email: 'user@example.com',
+                phone: '',
                 country: document.getElementById('country').value,
                 currency: document.getElementById('currency').value,
-                monthlyIncome: parseInt(document.getElementById('monthlyIncome').value) || 0,
-                monthlyExpenses: parseInt(document.getElementById('monthlyExpenses').value) || 0,
-                currentSavings: parseInt(document.getElementById('currentSavings').value) || 0,
-                totalDebt: parseInt(document.getElementById('totalDebt').value) || 0,
-                financialGoal: allGoals,
+                monthlyIncome: parseFloat(document.getElementById('monthlyIncome').value),
+                monthlyExpenses: parseFloat(document.getElementById('monthlyExpenses').value),
+                currentSavings: parseFloat(document.getElementById('currentSavings').value),
+                totalDebt: parseFloat(document.getElementById('totalDebt').value),
+                financialGoal: getSelectedCheckboxes('goal'),
                 timeframe: document.getElementById('timeframe').value,
-                incomeStreams: allSources,
-                incomeInterest: document.getElementById('incomeInterest').value || 'Not specified',
                 investmentExperience: document.getElementById('investmentExperience').value,
-                riskTolerance: document.getElementById('riskTolerance').value
-            };
-        }
-
-        async function generateBlueprint() {
-            const data = getFormData();
-            const errorMsg = document.getElementById('errorMessage');
-
-            // Validate required fields
-            if (!data.country || !data.currency || !data.monthlyIncome || !data.monthlyExpenses || data.currentSavings === null || 
-                !data.financialGoal || !data.timeframe || !data.investmentExperience || !data.riskTolerance) {
-                errorMsg.textContent = '⚠️ Please answer all questions before generating your blueprint';
-                errorMsg.classList.remove('hidden');
-                window.scrollTo(0, 0);
-                return;
-            }
-
-            // Show contact form instead of generating blueprint
-            showContactForm();
-        }
-
-        function showContactForm() {
-            document.getElementById('learningSection').classList.add('hidden');
-            document.getElementById('contactFormSection').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }
-
-        function backToLearning() {
-            document.getElementById('contactFormSection').classList.add('hidden');
-            document.getElementById('learningSection').classList.remove('hidden');
-            showStep(currentStep);
-            window.scrollTo(0, 0);
-        }
-
-        async function submitAndGenerateBlueprint() {
-            const data = getFormData();
-            const firstName = document.getElementById('contactFirstName').value;
-            const lastName = document.getElementById('contactLastName').value;
-            const email = document.getElementById('contactEmail').value;
-            const phoneInput = document.getElementById('contactPhone').value;
-            const countryCode = document.getElementById('countryCode').value;
-            const contactError = document.getElementById('contactError');
-
-            if (!firstName || !lastName || !email) {
-                contactError.textContent = '⚠️ Please enter your first name, last name, and email address';
-                contactError.classList.remove('hidden');
-                return;
-            }
-
-            // Combine country code with phone if phone is provided
-            let phone = '';
-            if (phoneInput) {
-                phone = countryCode + phoneInput;
-            }
-
-            // Add contact info to data
-            data.firstName = firstName;
-            data.lastName = lastName;
-            data.email = email;
-            data.phone = phone;
-
-            try {
-                // Submit to backend
-                await fetch('/api/submit-form', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                }).catch(() => {});
-
-                const plan = generatePersonalizedPlan(data);
-                displayResults(data, plan);
-
-            } catch (err) {
-                contactError.textContent = '⚠️ ' + err.message;
-                contactError.classList.remove('hidden');
-            }
-        }
-
-        function generatePersonalizedPlan(data) {
-            const income = data.monthlyIncome;
-            const expenses = data.monthlyExpenses;
-            const surplus = income - expenses;
-            const savings = data.currentSavings;
-            const debt = data.totalDebt;
-            const experience = data.investmentExperience;
-            const riskTolerance = data.riskTolerance;
-            const goal = data.financialGoal;
-            const timeframe = data.timeframe;
-            const symbol = currencySymbolMap[data.currency] || '$';
-
-            // Adjust thresholds based on currency for realistic categorization
-            const currencyThresholds = {
-                'USD': { tightSurplus: 500, strongSurplus: 2000, startingSavings: 3000, solidSavings: 30000, debtMultiplier: 3 },
-                'GBP': { tightSurplus: 400, strongSurplus: 1600, startingSavings: 2400, solidSavings: 24000, debtMultiplier: 3 },
-                'EUR': { tightSurplus: 450, strongSurplus: 1800, startingSavings: 2700, solidSavings: 27000, debtMultiplier: 3 },
-                'AUD': { tightSurplus: 750, strongSurplus: 3000, startingSavings: 4500, solidSavings: 45000, debtMultiplier: 3 },
-                'CAD': { tightSurplus: 600, strongSurplus: 2400, startingSavings: 3600, solidSavings: 36000, debtMultiplier: 3 },
-                'SGD': { tightSurplus: 600, strongSurplus: 2400, startingSavings: 3600, solidSavings: 36000, debtMultiplier: 3 },
-                'INR': { tightSurplus: 40000, strongSurplus: 160000, startingSavings: 240000, solidSavings: 2400000, debtMultiplier: 3 },
-                'JPY': { tightSurplus: 55000, strongSurplus: 220000, startingSavings: 330000, solidSavings: 3300000, debtMultiplier: 3 },
-                'CNY': { tightSurplus: 3500, strongSurplus: 14000, startingSavings: 21000, solidSavings: 210000, debtMultiplier: 3 },
-                'HKD': { tightSurplus: 3900, strongSurplus: 15600, startingSavings: 23400, solidSavings: 234000, debtMultiplier: 3 },
-                'MYR': { tightSurplus: 2050, strongSurplus: 8200, startingSavings: 12300, solidSavings: 123000, debtMultiplier: 3 },
-                'THB': { tightSurplus: 17500, strongSurplus: 70000, startingSavings: 105000, solidSavings: 1050000, debtMultiplier: 3 },
-                'PHP': { tightSurplus: 27500, strongSurplus: 110000, startingSavings: 165000, solidSavings: 1650000, debtMultiplier: 3 },
-                'BRL': { tightSurplus: 2500, strongSurplus: 10000, startingSavings: 15000, solidSavings: 150000, debtMultiplier: 3 },
-                'ZAR': { tightSurplus: 9000, strongSurplus: 36000, startingSavings: 54000, solidSavings: 540000, debtMultiplier: 3 }
+                riskTolerance: document.getElementById('riskTolerance').value,
+                incomeStreams: getSelectedCheckboxes('income'),
+                incomeInterest: document.getElementById('incomeInterest').value
             };
 
-            const thresholds = currencyThresholds[data.currency] || currencyThresholds['USD'];
+            showStep(5);
+            startLoading();
 
-            let profileType = 'Balanced';
-            if (surplus < thresholds.tightSurplus) profileType = 'Tight';
-            else if (surplus > thresholds.strongSurplus) profileType = 'Strong';
-
-            let debtStatus = 'Manageable';
-            if (debt > income * thresholds.debtMultiplier) debtStatus = 'High';
-            else if (debt === 0) debtStatus = 'Clear';
-
-            let savingsLevel = 'Building';
-            if (savings < thresholds.startingSavings) savingsLevel = 'Starting';
-            else if (savings > thresholds.solidSavings) savingsLevel = 'Solid';
-
-            let plan = `════════════════════════════════════════════════════════
-90-DAY WEALTH BLUEPRINT
-════════════════════════════════════════════════════════
-
-📊 YOUR FINANCIAL SNAPSHOT
-──────────────────────────────────────────────────────
-Monthly Income:         ${symbol}${income.toLocaleString()}
-Monthly Expenses:       ${symbol}${expenses.toLocaleString()}
-Monthly Surplus:        ${symbol}${surplus.toLocaleString()}
-Current Savings:        ${symbol}${savings.toLocaleString()}
-Total Debt:             ${symbol}${debt.toLocaleString()}
-Investment Experience:  ${experience}
-Risk Tolerance:         ${riskTolerance}
-
-PRIMARY GOAL: ${goal}
-TARGET TIMELINE: ${timeframe}
-
-════════════════════════════════════════════════════════
-
-🎯 PHASE 1: ASSESS (Days 1-30)
-"Know your numbers before you build your future"
-──────────────────────────────────────────────────────`;
-
-            if (debtStatus === 'High') {
-                plan += `
-
-📌 KEY INSIGHT: Your debt-to-savings ratio determines your strategy. 
-High debt? Focus on debt reduction first. Low debt? Accelerate investments. 
-Both are valid paths.
-
-□ Create complete debt inventory (balance, interest rate, minimum payment)
-□ Identify highest-cost debts first (focus on APR/interest rate)
-□ Calculate debt-to-income ratio: ${(debt / (income * 12)).toFixed(1)}x
-□ Document all monthly debt obligations
-□ Research debt consolidation or refinancing options`;
-            } else if (debtStatus === 'Clear') {
-                plan += `
-
-📌 KEY INSIGHT: With zero debt, you have maximum flexibility. 
-Accelerate investments and build multiple income streams 
-for exponential wealth growth.
-
-□ Assess current asset allocation and diversification
-□ Review all income sources for growth opportunities
-□ Calculate your net worth: ${symbol}${(savings - debt).toLocaleString()}
-□ Identify high-leverage wealth-building opportunities
-□ Plan aggressive asset growth strategy`;
-            } else {
-                plan += `
-
-📌 KEY INSIGHT: Your debt-to-savings ratio determines your strategy. 
-Balanced debt and savings is a strong foundation for growth.
-
-□ Complete comprehensive financial audit
-□ Map all income sources and categorize expenses
-□ Review debt repayment timeline
-□ Find ${symbol}${Math.ceil(expenses * 0.1).toLocaleString()} in savings opportunities
-□ Set top 3 financial priorities`;
-            }
-
-            plan += `
-
-30-DAY MILESTONE: Clear position + top 3 priorities ✓
-
-════════════════════════════════════════════════════════
-
-🚀 PHASE 2: DESIGN (Days 31-60)
-"Create systems that work without you"
-──────────────────────────────────────────────────────
-
-REDUCE EXPENSES`;
-
-            if (profileType === 'Tight') {
-                plan += `
-□ Implement 50/30/20 budget (50% needs, 30% wants, 20% savings)
-□ Target: Save ${symbol}${Math.round(surplus * 0.5).toLocaleString()} monthly
-□ Renegotiate major bills (insurance, phone, utilities, internet)
-□ Find and cut ${symbol}${Math.round(expenses * 0.05).toLocaleString()} in quick wins`;
-            } else {
-                plan += `
-□ Review major expense categories (housing, transportation, food)
-□ Target: Save ${symbol}${Math.round(surplus * 0.3).toLocaleString()} annually
-□ Conduct complete subscription and services audit
-□ Renegotiate major recurring costs`;
-            }
-
-            plan += `
-
-INCREASE INCOME`;
-
-            if (experience === 'Beginner') {
-                plan += `
-□ Research side income opportunities aligned with your skills
-□ Target: Develop path to ${symbol}${Math.round(income * 0.1).toLocaleString()} additional monthly income
-□ Start with skill-based freelancing or part-time work
-□ Launch 1 income stream by Day 60`;
-            } else if (experience === 'Advanced') {
-                plan += `
-□ Explore investment income strategies and business opportunities
-□ Target: ${symbol}${Math.round(income * 0.2).toLocaleString()} additional monthly income
-□ Develop multiple income stream portfolio
-□ Plan scaling and exit strategies`;
-            } else {
-                plan += `
-□ Identify skill advancement and promotion opportunities
-□ Research side income or consulting possibilities
-□ Target: ${symbol}${Math.round(income * 0.15).toLocaleString()} additional monthly income
-□ Start secondary income by Day 45`;
-            }
-
-            plan += `
-
-BUILD SAVINGS SYSTEM (SYSTEMIZE)`;
-
-            if (riskTolerance === 'Low') {
-                plan += `
-□ Set up automatic monthly transfer: ${symbol}${Math.round(surplus * 0.5).toLocaleString()}/month
-□ Open high-yield savings account
-□ Build 6-month emergency fund: ${symbol}${(expenses * 6).toLocaleString()}
-□ Explore conservative bonds and fixed-income investments`;
-            } else if (riskTolerance === 'High') {
-                plan += `
-□ Allocate ${symbol}${Math.round(surplus * 0.6).toLocaleString()}/month to growth portfolio
-□ Research low-cost index funds and ETFs
-□ Explore individual stocks and emerging market opportunities
-□ Implement monthly dollar-cost averaging strategy`;
-            } else {
-                plan += `
-□ Create balanced portfolio: ${symbol}${Math.round(surplus * 0.5).toLocaleString()}/month
-□ Target allocation: 60% Conservative / 40% Growth
-□ Mix: Bonds + Index Funds + Dividend Stocks
-□ Schedule quarterly review and annual rebalancing`;
-            }
-
-            plan += `
-
-DEBT STRATEGY`;
-
-            if (debtStatus === 'High') {
-                plan += `
-□ Apply extra ${symbol}${Math.round(surplus * 0.5).toLocaleString()} to highest interest debt
-□ Negotiate lower rates on major debts
-□ Project debt-free date and celebrate milestone
-□ Explore consolidation if rates are excessive`;
-            } else if (debtStatus === 'Clear') {
-                plan += `
-□ Focus 100% on wealth building and investments
-□ Explore asset diversification opportunities
-□ Plan sustainable growth strategy for long-term wealth`;
-            } else {
-                plan += `
-□ Maintain current debt payments on schedule
-□ Allocate additional surplus to investments
-□ Plan debt payoff acceleration`;
-            }
-
-            plan += `
-
-60-DAY MILESTONE: Automated systems in place ✓
-
-════════════════════════════════════════════════════════
-
-⚡ PHASE 3: ACHIEVE (Days 61-90)
-"From knowledge to execution to wealth"
-──────────────────────────────────────────────────────
-
-WEEKLY EXECUTION CHECKLIST
-□ Monday: Review numbers and plan week
-□ Wednesday: Track income and expenses
-□ Friday: Assess progress toward goal
-□ Daily: One action toward primary goal
-
-MONTH 3 SUCCESS TARGETS
-✓ Savings accumulated: ${symbol}${Math.round(surplus * 3).toLocaleString()}
-✓ New income streams launched: Minimum 1
-✓ Debt reduction: ${symbol}${Math.round(debt * 0.05).toLocaleString()}
-✓ Investment automation: 100% complete
-✓ Mindset shift: From survival to building
-
-BEYOND 90 DAYS
-□ Evaluate progress toward "${goal}"
-□ Plan next 90-day sprint with higher targets
-□ Scale what's working effectively
-□ Build accountability system (mastermind/coach)
-□ Continue education and skill development
-
-════════════════════════════════════════════════════════
-
-📈 YOUR SUCCESS METRICS
-──────────────────────────────────────────────────────
-Monthly Savings Target:    ${symbol}${Math.round(surplus).toLocaleString()}
-Income Growth Target:      ${symbol}${Math.round(income * 0.1).toLocaleString()}
-Emergency Fund Target:     ${symbol}${(expenses * 3).toLocaleString()}
-Monthly Investment Rate:   ${symbol}${Math.round(surplus * 0.4).toLocaleString()}
-
-Your Profile: ${profileType} Cashflow | ${debtStatus} Debt | ${savingsLevel} Savings
-
-════════════════════════════════════════════════════════
-
-💡 SPEEDWEALTH PRINCIPLES FOR YOUR JOURNEY
-
-1. SYSTEMIZE – Create repeatable processes that produce profit
-2. DUPLICATE – Once it works, do it again and again
-3. LEVERAGE – Use other people's money, time, and resources
-4. PRACTICE – Daily habits create your financial future
-5. CASHING OUT – Build systems designed to eventually exit
-
-"If you're not using leverage, you're working too hard
-and earning too little." – T. Harv Eker
-
-════════════════════════════════════════════════════════
-
-NEXT STEP: Book a consultation
-Visit: successresources.com/coaching
-
-Your blueprint is yours to execute. The difference between
-dreamers and achievers is ACTION. Start today.`;
-
-            return plan;
+            fetch('/api/submit-form', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .catch(err => console.error('API error:', err));
         }
 
-        function displayResults(data, plan) {
-            const userSummary = document.getElementById('userSummary');
-            const symbol = currencySymbolMap[data.currency] || '$';
-            const surplus = data.monthlyIncome - data.monthlyExpenses;
-            
-            userSummary.innerHTML = `
-                <div class="text-center p-3 bg-gray-800 rounded">
-                    <div style="color: #ff8120; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Monthly Surplus</div>
-                    <div class="text-xl font-bold mt-1">${symbol}${surplus.toLocaleString()}</div>
-                </div>
-                <div class="text-center p-3 bg-gray-800 rounded">
-                    <div style="color: #ff8120; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Current Savings</div>
-                    <div class="text-xl font-bold mt-1">${symbol}${data.currentSavings.toLocaleString()}</div>
-                </div>
-                <div class="text-center p-3 bg-gray-800 rounded">
-                    <div style="color: #ff8120; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Total Debt</div>
-                    <div class="text-xl font-bold mt-1">${symbol}${data.totalDebt.toLocaleString()}</div>
-                </div>
-                <div class="text-center p-3 bg-gray-800 rounded">
-                    <div style="color: #ff8120; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Emergency Fund Goal</div>
-                    <div class="text-xl font-bold mt-1">${symbol}${(data.monthlyExpenses * 3).toLocaleString()}</div>
-                </div>
-            `;
-
-            document.getElementById('analysisText').textContent = plan;
-            document.getElementById('learningSection').classList.add('hidden');
-            document.getElementById('contactFormSection').classList.add('hidden');
-            document.getElementById('resultsSection').classList.remove('hidden');
-            window.scrollTo(0, 0);
+        function downloadBlueprint() {
+            alert('Blueprint PDF download initiated. Check your email for your personalized wealth blueprint!');
         }
 
-        function downloadPlan() {
-            const data = getFormData();
-            const plan = generatePersonalizedPlan(data);
-            const symbol = currencySymbolMap[data.currency] || '$';
-            const text = `Your 90-Day Wealth Blueprint\nCurrency: ${data.currency}\n\n${plan}`;
-            const blob = new Blob([text], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `wealth_blueprint_${new Date().toISOString().split('T')[0]}.txt`;
-            link.click();
-
-            // Show email confirmation message with user's email
-            const emailConfirmation = document.getElementById('emailConfirmation');
-            const confirmationEmail = document.getElementById('confirmationEmail');
-            const userEmail = document.getElementById('contactEmail').value;
-            
-            confirmationEmail.textContent = userEmail || 'your email address';
-            emailConfirmation.classList.remove('hidden');
-            
-            // Scroll to confirmation message with proper timing
-            setTimeout(() => {
-                emailConfirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-        }
-
-        showStep(0);
-        generateDynamicGoals();
-        updateInsightBox('USD', '$');
+        document.getElementById('currency').addEventListener('change', updateCurrencyDisplay);
+        
+        // Event listeners for dynamic insight box updates
+        const monthlyIncomeInput = document.getElementById('monthlyIncome');
+        const monthlyExpensesInput = document.getElementById('monthlyExpenses');
+        const currencySelect = document.getElementById('currency');
+        
+        if (monthlyIncomeInput) monthlyIncomeInput.addEventListener('input', updateInsightBox2);
+        if (monthlyExpensesInput) monthlyExpensesInput.addEventListener('input', updateInsightBox2);
+        currencySelect.addEventListener('change', updateInsightBox2);
+        
+        updateProgress();
+        showStep(currentStep);
+        updateCurrencyDisplay();
+        updateInsightBox2();
     </script>
 </body>
 </html>
